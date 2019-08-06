@@ -81,6 +81,7 @@ var (
 	btcoiLevelFour = 4
 	btcoiFourMindv = float64(1500)
 	btcoiFourGreaterodds = 1.8
+	btcoiFourLessodds = 0
 
 	shcioisy = "SHCI"
 	shcioiLevelOne = 1
@@ -104,6 +105,7 @@ var (
 	shcioiLevelFour = 4
 	shcioiFourMindv = float64(1500)
 	shcioiFourGreaterodds = 1.8
+	shcioiFourLessodds = 0
 
 	szcioisy = "SZCI"
 	szcioiLevelOne = 1
@@ -127,6 +129,7 @@ var (
 	szcioiLevelFour = 4
 	szcioiFourMindv = float64(1500)
 	szcioiFourGreaterodds = 1.8
+	szcioiFourLessodds = 0
 )
 
 
@@ -155,7 +158,7 @@ func main() {
 	mysql.AddOneRecord(&mysql.OddsInfo{Symbol:btcioisy,Level:btcoiLevelThree,Mindv:btcoiThreeMindv,Maxdv:btcoiThreeMaxdv,
 		Greaterodds:btcoiThreeGreaterodds,Lessodds:btcoiThreeLessodds})
 	mysql.AddOneRecord(&mysql.OddsInfo{Symbol:btcioisy,Level:btcoiLevelFour,Mindv:btcoiFourMindv,
-		Greaterodds:btcoiFourGreaterodds})
+		Greaterodds:btcoiFourGreaterodds,Lessodds:btcoiFourLessodds})
 
 
 	mysql.AddOneRecord(&mysql.OddsInfo{Symbol:shcioisy,Level:shcioiLevelOne,Mindv:shcioiOneMindv,Maxdv:shcioiOneMaxdv,
@@ -165,7 +168,7 @@ func main() {
 	mysql.AddOneRecord(&mysql.OddsInfo{Symbol:shcioisy,Level:shcioiLevelThree,Mindv:shcioiThreeMindv,Maxdv:shcioiThreeMaxdv,
 		Greaterodds:shcioiThreeGreaterodds,Lessodds:shcioiThreeLessodds})
 	mysql.AddOneRecord(&mysql.OddsInfo{Symbol:shcioisy,Level:shcioiLevelFour,Mindv:shcioiFourMindv,
-		Greaterodds:shcioiFourGreaterodds})
+		Greaterodds:shcioiFourGreaterodds,Lessodds:shcioiFourLessodds})
 
 	mysql.AddOneRecord(&mysql.OddsInfo{Symbol:szcioisy,Level:szcioiLevelOne,Mindv:szcioiOneMindv,Maxdv:szcioiOneMaxdv,
 		Greaterodds:szcioiOneGreaterodds,Lessodds:szcioiOneLessodds})
@@ -174,7 +177,7 @@ func main() {
 	mysql.AddOneRecord(&mysql.OddsInfo{Symbol:szcioisy,Level:szcioiLevelThree,Mindv:szcioiThreeMindv,Maxdv:szcioiThreeMaxdv,
 		Greaterodds:szcioiThreeGreaterodds,Lessodds:szcioiThreeLessodds})
 	mysql.AddOneRecord(&mysql.OddsInfo{Symbol:szcioisy,Level:szcioiLevelFour,Mindv:szcioiFourMindv,
-		Greaterodds:szcioiFourGreaterodds})
+		Greaterodds:szcioiFourGreaterodds,Lessodds:szcioiFourLessodds})
 
 
 }
