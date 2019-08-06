@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+option go_package = "hpgrpc";
+
+//ws当做client clearing当做server 数据处理可能超过1s 尤其是这1s结算的单子比较多 所以采用流 一个单子结算完了就推 而不是所有的单子结束完才推
+service Hpgrpcservice {
+    rpc QuotationSettleData(stream QuotationReqData) returns (stream SettleResData) {}
+}
+
+message QuotationReqData {
+    double price = 1;
+    int64 timestamp = 2;
+}
+
+message SettleResData {
+    string uid = 1;
+    string tid = 2;
+    int64 handletime = 3;
+    int64 settletime = 4;
+    double inputamount = 5;
+    double outputamount = 6;
+    double ordervalue = 7;
+    double settlevalue = 8;
+    uint32  side = 9;
+    uint32 interval = 10;
+    string symbol = 11;
+    int32 orderresult = 12;
+    double balance = 13;
+    double vitualbalance = 14;
+}
+
+/*
+gprc安装
+# git clone https://github.com/grpc/grpc-go.git $GOPATH/src/google.golang.org/grpc
+
+# git clone https://github.com/golang/net.git $GOPATH/src/golang.org/x/net
+
+# git clone https://github.com/golang/text.git $GOPATH/src/golang.org/x/text
+
+# git clone https://github.com/golang/sys.git $GOPATH/src/golang.org/x/sys
+
+# go get -u github.com/golang/protobuf/{proto,protoc-gen-go}
+
+# git clone https://github.com/google/go-genproto.git $GOPATH/src/google.golang.org/genproto
+
+# cd $GOPATH/src/
+
+# go install google.golang.org/grpc
+
+文件编译
+protoc --proto_path=./hpproto/ ./hpproto/hp.proto  --go_out=plugins=grpc:hpgrpc
+最后面grpc冒号都是编译的目录 加plugins是生成go的server和client code 否则没有的
+*/
