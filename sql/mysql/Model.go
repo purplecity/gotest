@@ -6,7 +6,180 @@ package mysql
 //以后要改为区分大小写
 
 //实际账户下单记录表
+type Realtrade struct {
+	Id 				int			`orm:"pk;auto"`
+	Uid 			string		`orm:"index" description:"用户id"`
+	Tid				string		`orm:"index" description:"订单id"`
+	Handletime 		int64		`description:"下单处理时间"`
+	Settletime 		int64		`orm:"default(0)" description:"下单结算时间"`
+	Inputamount 	float64		`orm:"digits(12);decimals(2)" description:"下单金额"`
+	Outputamount	float64		`orm:"digits(12);decimals(2)" description:"结算金额"`
+	Ordervalue		float64		`orm:"digits(16);decimals(8)" description:"下单指数"`
+	Settlevalue		float64		`orm:"digits(16);decimals(8)" description:"结算指数"`
+	Side   			int32		`description:"看涨看跌"`
+	Interval		int32		`description:"下单周期时间"`
+	Symbol			string		`orm:"index" description:"标的物"`
+	Orderresult		int32		`orm:"index;default(1)" description:"下单结果"`
+	Settlereason  	string  	`description:"结算原因"`
+	Odds 			float64     `orm:"digits(12);decimals(2)" description:"赔率"`
+}
 
+//虚拟账户下单记录表
+type Vitualtrade struct {
+	Id 				int			`orm:"pk;auto"`
+	Uid 			string		`orm:"index" description:"用户id"`
+	Tid				string		`orm:"index" description:"订单id"`
+	Handletime 		int64		`description:"下单处理时间"`
+	Settletime 		int64		`orm:"default(0)" description:"下单结算时间"`
+	Inputamount 	float64		`orm:"digits(12);decimals(2)" description:"下单金额"`
+	Outputamount	float64		`orm:"digits(12);decimals(2)" description:"结算金额"`
+	Ordervalue		float64		`orm:"digits(16);decimals(8)" description:"下单指数"`
+	Settlevalue		float64		`orm:"digits(16);decimals(8)" description:"结算指数"`
+	Side   			int32		`description:"看涨看跌"`
+	Interval		int32		`description:"下单周期时间"`
+	Symbol			string		`orm:"index" description:"标的物"`
+	Orderresult		int32		`orm:"index;default(1)" description:"下单结果"`
+	Settlereason  	string  	`description:"结算原因"`
+	Odds 			float64     `orm:"digits(12);decimals(2)" description:"赔率"`
+}
+
+//用户表 包括合伙人 总监 玩家
+type AdminUsers struct {
+	Id 					int			`orm:"pk;auto"`
+	Uid				string		`orm:"index" description:"用户id"`
+	Username			string		`orm:"index" description:"用户名"`
+	Phonenumber			string		`orm:"index" description:"手机号码"`
+	Password			string		`description:"密码"`
+	Invitationcode	string			`orm:"index" description:"邀请码"`
+	Type 				string		`orm:"index" description:"玩家类型"`
+	Registtime 			int64		`description:"注册时间"`
+	Lastlogintime		int64		`description:"最后登录时间"`
+	Valid    			int			`description:"是否有效"` //0 无效 1有效
+	RememberToken				string		`description:"代理token"`
+}
+
+//资金表 包括总监 玩家
+type Asset struct {
+	Id 					int			`orm:"pk;auto"`
+	Uid					string		`orm:"index" description:"用户id"`
+	Balance				float64		`orm:"digits(12);decimals(2)" description:"实际账户余额"`
+	Freezebalance		float64		`orm:"digits(12);decimals(2)" description:"实际账户冻结余额"`
+	Vitualbalance 		float64     `orm:"digits(12);decimals(2)" description:"虚拟账户余额"`
+	Vitualfreezebalance	float64		`orm:"digits(12);decimals(2)" description:"虚拟账户冻结余额"`
+}
+
+//合伙人信息
+type Parter struct {
+	Id 			int			`orm:"pk;auto"`
+	Uid			string		`orm:"index" description:"合伙人id"`
+	Invitationcode	string			`orm:"index" description:"邀请码"`
+	Isvip		int		`orm:"index" description:"是否vip"` //1 是 0 不是
+}
+
+// 总监代理关系
+type Director struct {
+	Id 			int			`orm:"pk;auto"`
+	Directorid	string		`orm:"index" description:"总监id"`
+	Partnerid	string		`orm:"index" description:"所属合伙人id"`
+	Isvip		int		`orm:"index" description:"所属合伙人是否vip"`
+}
+
+//玩家代理关系
+type Player struct {
+	Id 			int			`orm:"pk;auto"`
+	Uid			string		`orm:"index" description:"用户id"`
+	Playerid	string		`orm:"index" description:"所属玩家id"`
+	Directorid	string		`orm:"index" description:"所属总监id"`
+}
+
+//积分记录
+type Scorerecord struct {
+	Id 				int			`orm:"pk;auto"`
+	Directorid		string		`orm:"index" description:"总监id"`
+	Playerid		string		`orm:"index" description:"玩家id"`
+	Settletime 		int64  		`description:"下单结算时间"`
+	Amount			float64  	`orm:"digits(12);decimals(2)" description:"下单金额"`
+	Contributorid	string   	`description:"贡献玩家的id"`
+	Tid   			string   	`description:"订单号"`
+}
+
+//每天24点05分计算 所以24点-1点不可提取积分 否则会出现 total != hadwithdraw + remain
+type Score struct {
+	Id 				int			`orm:"pk;auto"`
+	Uid			string			`orm:"index" description:"用户id"`
+	Total 			float64		`orm:"digits(12);decimals(2)" description:"总积分"`
+	Hadwithdraw		float64		`orm:"digits(12);decimals(2)" description:"已经提取积分"`
+	Remain 			float64		`orm:"digits(12);decimals(2)" description:"剩余积分"`
+}
+
+
+type Takescorerecord struct {
+	Id 				int			`orm:"pk;auto"`
+	Uid			string			`orm:"index" description:"用户id"`
+	Handletime 		int64		`description:"提取积分时间"`
+	Amount 	float64		`orm:"digits(12);decimals(2)" description:"提取数量"`
+
+}
+
+
+type Depositrecord struct {
+	Id              int             `orm:"pk;auto"`
+	Uid          	string          `orm:"index" description:"用户id"`
+	Payway          int8            `orm:"index" description:"支付方式"` // 1 支付宝 2微信 3 银行卡
+	Amount          float64			`orm:"index;digits(12);decimals(2)" description:"辨识充值数量"`
+	RealAmount		float64			`orm:"index;digits(12);decimals(2)" description:"真实充值数量"`
+	Createtime      int64			`description:"创建订单时间"`
+	Finishtime  	int64			`description:"确认充值订单时间"`
+	Tid             string      	`orm:"index" description:"充值订单id" `
+	Status     		int  			`orm:"index" description:"充值状态"`// 0 pending  1 成功
+	Isclick			int				`orm:"index" description:"是否点击"`// 0 未点击  1 点击
+	Bank		string			`description:"银行名称"`
+	Banknumber 	string 			`orm:"index" description:"银行卡号"`
+	Bankname	string 			`orm:"index" description:"开户人"`
+	City		string			`description:"开户城市"`
+	Province   	string			`description:"开户省份"`
+	Bankbranch 	string			`description:"开户支行"`
+}
+
+
+type Withdrawrecord struct {
+	Id          int             `orm:"pk;auto"`
+	Uid      	string          `orm:"index" description:"用户id"`
+	Amount		float64			`orm:"index;digits(12);decimals(2)" description:"提现数量"`
+	Bank		string			`description:"银行名称"`
+	Banknumber 	string 			`orm:"index" description:"银行卡号"`
+	Bankname	string 			`orm:"index" description:"开户人"`
+	City		string			`description:"开户城市"`
+	Province   	string			`description:"开户省份"`
+	Bankbranch 	string			`description:"开户支行"`
+	Createtime  int64			`description:"创建订单时间"`
+	Finishtime  int64			`description:"确认提现订单时间"`
+	Tid         string      	`orm:"index" description:"提现订单id" `
+	Status  	int				`orm:"index" description:"提现状态"`
+}
+
+type DepositEnsureRecord struct {
+	Id              int             `orm:"pk;auto"`
+	Tid             string      	`orm:"index" description:"充值订单id" `
+	Uid          	string          `orm:"index" description:"用户id"`
+	Gid				string			`orm:"index" description:"商家下单时传递的商品id"`
+	Amount          float64			`orm:"index;digits(12);decimals(2)" description:"充值数量"`
+	Ptid			string			`orm:"index" description:"平台订单流水号"`
+	Sn 				string  		`orm:"index" descripton:"签名验证值"`
+	Createtime      int64			`description:"接收回调时间"`
+
+}
+
+type BankInfo struct {
+	Id          int         	`orm:"pk;auto"`
+	Uid         string      	`orm:"index" description:"用户id"`
+	Bank		string			`description:"银行名称"`
+	Banknumber 	string 			`orm:"index" description:"银行卡号"`
+	Bankname	string 			`orm:"index" description:"姓名"`
+	City		string			`description:"开户城市"`
+	Province   	string			`description:"开户省份"`
+	Bankbranch 	string			`orm:"index" description:"开户支行"`
+}
 
 //内部操作 增加配置或者更新配置
 type Subject struct {
@@ -31,6 +204,27 @@ type Clientversion struct {
 	Createtime  int64      	`orm:"index" description:"创建版本时间"`
 }
 
+type AdminRoleUsers struct {
+	Id 			int		`orm:"pk;auto"`
+	RoleId		int  	`orm:"index"`
+	UserId		int 	`orm:"index"`
+}
+
+type Lastconnect struct {
+	Id          int         	`orm:"pk;auto"`
+	Uid         string      	`orm:"index" description:"用户id"`
+	Symbol 		string      `orm:"index" description:"标的物名称"`
+}
+
+type Depositbank struct {
+	Id          int         	`orm:"pk;auto"`
+	Bank		string			`description:"银行名称"`
+	Banknumber 	string 			`orm:"index" description:"银行卡号"`
+	Bankname	string 			`orm:"index" description:"开户人"`
+	City		string			`description:"开户城市"`
+	Province   	string			`description:"开户省份"`
+	Bankbranch 	string			`orm:"index" description:"开户支行"`
+}
 
 //默认等级为1 赔率也要写
 type Odds struct {
@@ -50,3 +244,14 @@ type OddsInfo struct {
 	Lessodds	float64			`orm:"digits(12);decimals(2)" description:"小方赔率"`
 }
 
+//每天1点结算
+type Reconciliation struct {
+	Id          int         	`orm:"pk;auto"`
+	Uid         string      	`orm:"index" description:"用户id"`
+	Balance 	float64			`orm:"digits(12);decimals(2)" description:"1点余额"`
+	Win 		float64			`orm:"digits(12);decimals(2)" description:"截止当天1点累计盈利收入"`
+	Deposit 	float64 		`orm:"digits(12);decimals(2)" description:"截止当天1点累计充值收入"`
+	Withdraw  	float64			`orm:"digits(12);decimals(2)" description:"截止当天1点累计提现支出"`
+	Score  		float64  		`orm:"digits(12);decimals(2)" description:"截止当天1点累计提取积分收入"`
+	Handletime 		int64		`description:"对账时间"`
+}

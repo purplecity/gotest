@@ -22,8 +22,12 @@ func init() {
 		fmt.Sprintf("%s:%s@tcp(%s:%v)/%s?charset=utf8&allowNativePasswords=true",
 			MysqlUserName, MysqlPassWord, MysqlIP, MysqlPort, MysqlDefaultDatabase))
 	//注册模型
-	orm.RegisterModel(new(Subject),new(Clientversion),
-		new(Odds),new(OddsInfo))
+	orm.RegisterModel(new(AdminUsers),new(Realtrade),new(Vitualtrade),
+		new(Asset),new(Parter),new(Director),new(Player),new(Score),
+		new(Scorerecord),new(Depositrecord),new(Withdrawrecord),
+		new(BankInfo),new(Subject),new(DepositEnsureRecord),new(Clientversion),
+		new(AdminRoleUsers),new(Lastconnect),new(Depositbank),new(Odds),new(OddsInfo),
+		new(Takescorerecord),new(Reconciliation))
 	//自动创建表 参数二为是否drop然后创建表   参数三是否打印创建表过程
 	orm.RunSyncdb("default",false,true)
 }

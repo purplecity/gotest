@@ -5,6 +5,8 @@ import (
 	"time"
 )
 
+//启动shci和szci之前要先插入数据  所以这里要modle
+//邀请码要自己操作
 //subject clientversion odds oddsInfo
 
 var (
