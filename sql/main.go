@@ -1,10 +1,5 @@
 package main
 
-import (
-	"test/sql/mysql"
-	"time"
-)
-
 //启动shci和szci之前要先插入数据  所以这里要modle
 //邀请码要自己操作
 //subject clientversion odds oddsInfo
@@ -134,6 +129,7 @@ var (
 
 
 func main() {
+	/*
 	mysql.AddOneRecord(&mysql.Subject{Symbol:btcsy,Type:btctype,Isopen:btcisopen,Firstopenhour:btcFirstopenhour,
 		Firstopenmin:btcFirstopenmin,Firstclosehour:btcFirstclosehour,Firstclosemin:btcFirstclosemin})
 	mysql.AddOneRecord(&mysql.Subject{Symbol:shcisy,Type:shcitype,Isopen:shciisopen,Firstopenhour:shciFirstopenhour,
@@ -178,6 +174,9 @@ func main() {
 		Greaterodds:szcioiThreeGreaterodds,Lessodds:szcioiThreeLessodds})
 	mysql.AddOneRecord(&mysql.OddsInfo{Symbol:szcioisy,Level:szcioiLevelFour,Mindv:szcioiFourMindv,
 		Greaterodds:szcioiFourGreaterodds,Lessodds:szcioiFourLessodds})
+
+	 */
+	//mysql.UpdateByCond("AdminUsers", map[string]interface{}{}, map[string]interface{}{"Valid":1})
 
 
 }

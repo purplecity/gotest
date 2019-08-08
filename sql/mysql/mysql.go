@@ -45,3 +45,12 @@ func AddOneRecord(record interface{}) {
 	o := getOrm()
 	o.Insert(record)
 }
+
+func UpdateByCond(table string,cond,updateMap map[string]interface{}) {
+	o := getOrm()
+	qs := o.QueryTable(table)
+	for key,value := range cond {
+		qs = qs.Filter(key,value)
+	}
+	qs.Update(orm.Params(updateMap))
+}
