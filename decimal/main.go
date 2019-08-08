@@ -19,5 +19,6 @@ func HPSub(x,y float64)  float64 {
 }
 
 func main() {
-	fmt.Println(0.5-0.3)
+	//fmt.Printf("%T",decimal.NewFromFloat(1.34).Floor())
+	fmt.Println(2.0000 == 1.99999999999999999999999999999999999999999999999999)
 }
