@@ -250,6 +250,7 @@ type Reconciliation struct {
 	Uid         string      	`orm:"index" description:"用户id"`
 	Balance 	float64			`orm:"digits(12);decimals(2)" description:"1点余额"`
 	Win 		float64			`orm:"digits(12);decimals(2)" description:"截止当天1点累计盈利收入"`
+	Lose 		float64			`orm:"digits(12);decimals(2)" description:"截止当天1点累计亏损"`
 	Deposit 	float64 		`orm:"digits(12);decimals(2)" description:"截止当天1点累计充值收入"`
 	Withdraw  	float64			`orm:"digits(12);decimals(2)" description:"截止当天1点累计提现支出"`
 	Score  		float64  		`orm:"digits(12);decimals(2)" description:"截止当天1点累计提取积分收入"`

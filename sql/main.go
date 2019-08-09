@@ -1,5 +1,10 @@
 package main
 
+import (
+	"gotest/sql/mysql"
+	"time"
+)
+
 //启动shci和szci之前要先插入数据  所以这里要modle
 //邀请码要自己操作
 //subject clientversion odds oddsInfo
@@ -76,7 +81,7 @@ var (
 	btcoiLevelFour = 4
 	btcoiFourMindv = float64(1500)
 	btcoiFourGreaterodds = 1.8
-	btcoiFourLessodds = 0
+	btcoiFourLessodds = float64(0)
 
 	shcioisy = "SHCI"
 	shcioiLevelOne = 1
@@ -100,7 +105,7 @@ var (
 	shcioiLevelFour = 4
 	shcioiFourMindv = float64(1500)
 	shcioiFourGreaterodds = 1.8
-	shcioiFourLessodds = 0
+	shcioiFourLessodds = float64(0)
 
 	szcioisy = "SZCI"
 	szcioiLevelOne = 1
@@ -124,12 +129,12 @@ var (
 	szcioiLevelFour = 4
 	szcioiFourMindv = float64(1500)
 	szcioiFourGreaterodds = 1.8
-	szcioiFourLessodds = 0
+	szcioiFourLessodds = float64(0)
 )
 
 
 func main() {
-	/*
+
 	mysql.AddOneRecord(&mysql.Subject{Symbol:btcsy,Type:btctype,Isopen:btcisopen,Firstopenhour:btcFirstopenhour,
 		Firstopenmin:btcFirstopenmin,Firstclosehour:btcFirstclosehour,Firstclosemin:btcFirstclosemin})
 	mysql.AddOneRecord(&mysql.Subject{Symbol:shcisy,Type:shcitype,Isopen:shciisopen,Firstopenhour:shciFirstopenhour,
@@ -175,7 +180,7 @@ func main() {
 	mysql.AddOneRecord(&mysql.OddsInfo{Symbol:szcioisy,Level:szcioiLevelFour,Mindv:szcioiFourMindv,
 		Greaterodds:szcioiFourGreaterodds,Lessodds:szcioiFourLessodds})
 
-	 */
+
 	//mysql.UpdateByCond("AdminUsers", map[string]interface{}{}, map[string]interface{}{"Valid":1})
 
 
