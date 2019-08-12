@@ -51,7 +51,7 @@ func genValidateCode(width int) string {
 	return sb.String()
 }
 
-func main() {
+func do() {
 
 	ph := "9" + genValidateCode(10)
 	x := map[string]string{}
@@ -144,4 +144,12 @@ func main() {
 		log.Printf("ERROR----dial  ws failed----err:%+v\n", err)
 	}
 	<-doneC
+}
+
+func main() {
+	doneC := make(chan struct{})
+	for i:=0;i<10;i++ {
+		go do()
+	}
+	<- doneC
 }
