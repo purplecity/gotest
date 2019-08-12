@@ -16,7 +16,7 @@ import (
 var Mu sync.Mutex
 var LastPrice float64
 
-var BaseURL = "https://api.wmcloud.com/data/v1/api/market/getTickRTSnapshotL2.json?securityID=600519.XSHG&field="
+var BaseURL = "https://api.wmcloud.com/data/v1/api/market/getTickRTSnapshotL2.json?securityID=399001.XSHE&field="
 func main() {
 	request, err := http.NewRequest("GET",BaseURL,nil)
 	if err != nil {
@@ -28,7 +28,7 @@ func main() {
 	count := 0
 
 
-	tick := time.Tick(Conf.TaskInterval * time.Microsecond)
+	tick := time.Tick(1000 * time.Microsecond)
 	for range tick {
 
 		for count < Conf.ReconnctMaxTime {

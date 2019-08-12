@@ -8,12 +8,13 @@ import (
 
 const (
 	MysqlUserName = "root"
-	//MysqlPassWord = "k"
-	MysqlPassWord = "HP@123"
-	MysqlIP = "47.244.212.51"
-	//MysqlIP = "127.0.0.1"
+	MysqlPassWord = "k"
+	//MysqlPassWord = "HP@123"
+	//MysqlIP = "47.244.212.51"
+	MysqlIP = "127.0.0.1"
 	MysqlPort = 3306
-	MysqlDefaultDatabase = "test3"
+	MysqlDefaultDatabase = "test2"
+	//MysqlDefaultDatabase = "test3"
 )
 
 func init() {
