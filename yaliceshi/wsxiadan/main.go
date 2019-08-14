@@ -51,7 +51,7 @@ func genValidateCode(width int) string {
 	return sb.String()
 }
 
-func do() {
+func main() {
 
 	ph := "9" + genValidateCode(10)
 	x := map[string]string{}
@@ -122,7 +122,7 @@ func do() {
 	}()
 
 	now := time.Now()
-	st := time.Unix(1565606520,0)
+	st := time.Unix(1565792940,0)
 	time.Sleep(st.Sub(now))
 
 	z := map[string]interface{}{}
@@ -146,10 +146,11 @@ func do() {
 	<-doneC
 }
 
+/*
 func main() {
 	doneC := make(chan struct{})
 	for i:=0;i<10;i++ {
 		go do()
 	}
 	<- doneC
-}
+}*/
