@@ -8,13 +8,13 @@ import (
 
 const (
 	MysqlUserName = "root"
-	MysqlPassWord = "k"
-	//MysqlPassWord = "HP@123"
-	//MysqlIP = "47.244.212.51"
-	MysqlIP = "127.0.0.1"
+	//MysqlPassWord = "k"
+	MysqlPassWord = "HP@123"
+	MysqlIP = "47.244.212.51"
+	//MysqlIP = "127.0.0.1"
 	MysqlPort = 3306
-	MysqlDefaultDatabase = "test2"
-	//MysqlDefaultDatabase = "test3"
+	//MysqlDefaultDatabase = "test2"
+	MysqlDefaultDatabase = "test3"
 )
 
 func init() {
@@ -171,4 +171,5 @@ func GetOffsetByCondStruct(table,orderFiled string, m,skip int,cond map[string]i
 func GetGroupOneList(table,groupFiled,orderFiled string,resultStruct interface{}) {
 	o := getOrm()
 	qs := o.QueryTable(table)
-	qs.GroupBy(groupFiled).OrderBy("-"+orderFiled).All(resultStruct)
+	qs.GroupBy(groupFiled).OrderBy("-" + orderFiled).All(resultStruct)
+}
