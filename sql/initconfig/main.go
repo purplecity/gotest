@@ -2,6 +2,7 @@ package main
 
 import (
 	"gotest/sql/mysql"
+	"time"
 )
 
 //启动shci和szci之前要先插入数据  所以这里要modle
@@ -134,7 +135,7 @@ var (
 
 func main() {
 
-	/*
+
 	mysql.AddOneRecord(&mysql.Subject{Symbol:btcsy,Type:btctype,Isopen:btcisopen,Firstopenhour:btcFirstopenhour,
 		Firstopenmin:btcFirstopenmin,Firstclosehour:btcFirstclosehour,Firstclosemin:btcFirstclosemin})
 	mysql.AddOneRecord(&mysql.Subject{Symbol:shcisy,Type:shcitype,Isopen:shciisopen,Firstopenhour:shciFirstopenhour,
@@ -179,7 +180,7 @@ func main() {
 		Greaterodds:szcioiThreeGreaterodds,Lessodds:szcioiThreeLessodds})
 	mysql.AddOneRecord(&mysql.OddsInfo{Symbol:szcioisy,Level:szcioiLevelFour,Mindv:szcioiFourMindv,
 		Greaterodds:szcioiFourGreaterodds,Lessodds:szcioiFourLessodds})
-	*/
+
 	mysql.AddOneRecord(&mysql.Depositway{Way:1,Isopen:1})
 	mysql.AddOneRecord(&mysql.Depositway{Way:2,Isopen:1})
 	mysql.AddOneRecord(&mysql.Depositway{Way:3,Isopen:1})

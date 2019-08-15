@@ -10,6 +10,7 @@ func main() {
 
 	userlist := []mysql.AdminUsers{}
 	mysql.GetAllRecord("AdminUsers", map[string]interface{}{"Phonenumber__startswith":"02"},&userlist)
+	fmt.Println(len(userlist))
 	for _,x := range userlist {
 
 		tradeInfo := []mysql.Realtrade{}

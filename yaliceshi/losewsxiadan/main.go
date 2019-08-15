@@ -1,17 +1,19 @@
 package main
 
 import (
-"bytes"
-"encoding/json"
-"fmt"
-"github.com/gorilla/websocket"
-"io/ioutil"
-"log"
-"net/http"
-"strings"
-"time"
-r "math/rand"
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"github.com/gorilla/websocket"
+	"io/ioutil"
+	"log"
+	r "math/rand"
+	"net/http"
+	"strings"
+	"time"
 )
+
+
 
 
 type hpPingPong struct {
@@ -50,11 +52,12 @@ func genValidateCode(width int) string {
 }
 
 func main() {
-	ph := "5" + genValidateCode(10)
+
+	ph := "02" + genValidateCode(10)
 	x := map[string]string{}
 	x["pn"] = ph
 	x["pw"] = ph
-	x["ic"] = "96Tv56"
+	x["ic"] = "AGnOFq"
 	m, _ := json.Marshal(x)
 	var jsonStr= []byte(m)
 	url := "http://47.244.212.51:8888/register"
@@ -63,8 +66,9 @@ func main() {
 	client := &http.Client{}
 	_,err := client.Do(req)
 	if err != nil {
-		log.Printf("ERROR----dial  ws failed----err:%+v\n", err)
+		log.Printf("ERROR----regist failed----err:%+v\n", err)
 	}
+
 	y := map[string]string{}
 	y["pn"] = ph
 	y["pw"] = ph
@@ -76,14 +80,14 @@ func main() {
 	req2.Header.Set("Content-Type", "application/json")
 	resp, err := client.Do(req2)
 	if err != nil {
-		log.Printf("ERROR----dial  ws failed----err:%+v\n", err)
+		log.Printf("ERROR----login failed----err:%+v\n", err)
 	}
 	data := loginResponse{}
 	body, _ := ioutil.ReadAll(resp.Body)
 	json.Unmarshal([]byte(body), &data)
 	token := data.Token
 
-	endpoint := "ws://47.244.212.51:55555/ws/SHCI"
+	endpoint := "ws://47.244.212.51:55555/ws/BTCUSDT"
 	hpdial := &websocket.Dialer{}
 	wsConn, _, err := hpdial.Dial(endpoint, nil)
 	if err != nil {
@@ -118,8 +122,9 @@ func main() {
 	}()
 
 
+
 	now := time.Now()
-	st := time.Unix(1565835900,0)
+	st := time.Unix(1565866500,0)
 	time.Sleep(st.Sub(now))
 	count := 1
 	for count <= 60 {
@@ -127,7 +132,7 @@ func main() {
 		z["am"] = 10
 		z["si"] = 0
 		z["in"] = 30
-		z["sy"] = "SHCI"
+		z["sy"] = "BTC"
 		z["ts"] = time.Now().Unix()
 		z["at"] = 1
 		o, _ := json.Marshal(z)
@@ -144,7 +149,6 @@ func main() {
 		time.Sleep(time.Second*1)
 		count++
 	}
-
 
 
 	<-doneC
