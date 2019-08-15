@@ -53,11 +53,11 @@ func genValidateCode(width int) string {
 
 func main() {
 
-	ph := "9" + genValidateCode(10)
+	ph := "2" + genValidateCode(10)
 	x := map[string]string{}
 	x["pn"] = ph
 	x["pw"] = ph
-	x["ic"] = "8ykZqi"
+	x["ic"] = "96Tv56"
 	m, _ := json.Marshal(x)
 	var jsonStr= []byte(m)
 	url := "http://47.244.212.51:8888/register"
@@ -87,7 +87,7 @@ func main() {
 	json.Unmarshal([]byte(body), &data)
 	token := data.Token
 
-	endpoint := "ws://47.244.212.51:55555/ws/BTCUSDT"
+	endpoint := "ws://47.244.212.51:55556/ws/SHCI"
 	hpdial := &websocket.Dialer{}
 	wsConn, _, err := hpdial.Dial(endpoint, nil)
 	if err != nil {
@@ -121,28 +121,36 @@ func main() {
 		}
 	}()
 
-	now := time.Now()
-	st := time.Unix(1565792940,0)
-	time.Sleep(st.Sub(now))
 
-	z := map[string]interface{}{}
-	z["am"] = 100
-	z["si"] = 1
-	z["in"] = 30
-	z["sy"] = "BTC"
-	z["ts"] = time.Now().Unix()
-	z["at"] = 1
-	o, _ := json.Marshal(z)
-	var jsonStr3= []byte(o)
-	url3 := "http://47.244.212.51:8888/trade"
-	req3, _ := http.NewRequest("POST", url3, bytes.NewBuffer(jsonStr3))
-	req3.Header.Set("Content-Type", "application/json")
-	req3.Header.Set("Authorization",fmt.Sprintf("Bearer %s",token))
-	req3.Header.Set("accept-encoding","gzip")
-	_,err = client.Do(req3)
-	if err != nil {
-		log.Printf("ERROR----dial  ws failed----err:%+v\n", err)
+
+	now := time.Now()
+	st := time.Unix(1565837520,0)
+	time.Sleep(st.Sub(now))
+	count := 1
+	for count <= 60 {
+		z := map[string]interface{}{}
+		z["am"] = 10
+		z["si"] = 1
+		z["in"] = 30
+		z["sy"] = "SHCI"
+		z["ts"] = time.Now().Unix()
+		z["at"] = 1
+		o, _ := json.Marshal(z)
+		var jsonStr3= []byte(o)
+		url3 := "http://47.244.212.51:8888/trade"
+		req3, _ := http.NewRequest("POST", url3, bytes.NewBuffer(jsonStr3))
+		req3.Header.Set("Content-Type", "application/json")
+		req3.Header.Set("Authorization",fmt.Sprintf("Bearer %s",token))
+		req3.Header.Set("accept-encoding","gzip")
+		_,err = client.Do(req3)
+		if err != nil {
+			log.Printf("ERROR----dial  ws failed----err:%+v\n", err)
+		}
+		time.Sleep(time.Second*1)
+		count++
 	}
+
+
 	<-doneC
 }
 
