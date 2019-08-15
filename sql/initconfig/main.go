@@ -1,6 +1,8 @@
-package initconfig
+package main
 
-import "gotest/sql/mysql"
+import (
+	"gotest/sql/mysql"
+)
 
 //启动shci和szci之前要先插入数据  所以这里要modle
 //邀请码要自己操作
@@ -178,8 +180,15 @@ func main() {
 	mysql.AddOneRecord(&mysql.OddsInfo{Symbol:szcioisy,Level:szcioiLevelFour,Mindv:szcioiFourMindv,
 		Greaterodds:szcioiFourGreaterodds,Lessodds:szcioiFourLessodds})
 	*/
+	mysql.AddOneRecord(&mysql.Depositway{Way:1,Isopen:1})
+	mysql.AddOneRecord(&mysql.Depositway{Way:2,Isopen:1})
+	mysql.AddOneRecord(&mysql.Depositway{Way:3,Isopen:1})
 
-	mysql.UpdateByCond("AdminUsers", map[string]interface{}{}, map[string]interface{}{"Valid":1})
+
+
+
+
+	//mysql.UpdateByCond("AdminUsers", map[string]interface{}{}, map[string]interface{}{"Valid":1})
 
 
 }

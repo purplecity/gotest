@@ -14,7 +14,7 @@ const (
 	//MysqlIP = "127.0.0.1"
 	MysqlPort = 3306
 	//MysqlDefaultDatabase = "test2"
-	MysqlDefaultDatabase = "test3"
+	MysqlDefaultDatabase = "HPOption"
 )
 
 func init() {
@@ -28,7 +28,7 @@ func init() {
 		new(Scorerecord),new(Depositrecord),new(Withdrawrecord),
 		new(BankInfo),new(Subject),new(DepositEnsureRecord),new(Clientversion),
 		new(AdminRoleUsers),new(Lastconnect),new(Depositbank),new(Odds),new(OddsInfo),
-		new(Takescorerecord),new(Reconciliation))
+		new(Takescorerecord),new(Reconciliation),new(Depositway))
 	//自动创建表 参数二为是否drop然后创建表   参数三是否打印创建表过程
 	orm.RunSyncdb("default",false,true)
 }

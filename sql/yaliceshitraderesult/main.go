@@ -9,7 +9,7 @@ import (
 func main() {
 
 	userlist := []mysql.AdminUsers{}
-	mysql.GetAllRecord("AdminUsers", map[string]interface{}{"Phonenumber__startswith":"2"},&userlist)
+	mysql.GetAllRecord("AdminUsers", map[string]interface{}{"Phonenumber__startswith":"02"},&userlist)
 	for _,x := range userlist {
 
 		tradeInfo := []mysql.Realtrade{}

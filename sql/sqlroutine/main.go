@@ -12,6 +12,7 @@ func hehe() {
 }
 func main() {
 	go hehe()
-
+	doneC := make(chan struct{})
+	<- doneC
 
 }

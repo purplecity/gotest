@@ -121,6 +121,12 @@ type Takescorerecord struct {
 
 }
 
+type Depositway struct {
+	Id 				int			`orm:"pk;auto"`
+	Way 			int 		`orm:"index" description:"充值方式"` // 1 支付宝 2微信 3 银行卡
+	Isopen 			int  		`orm:"index" description:"充值开关"` // 0 关闭 1开启
+}
+
 
 type Depositrecord struct {
 	Id              int             `orm:"pk;auto"`
