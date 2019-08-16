@@ -53,7 +53,7 @@ func genValidateCode(width int) string {
 
 func main() {
 
-	ph := "02" + genValidateCode(10)
+	ph := "0311" + genValidateCode(10)
 	x := map[string]string{}
 	x["pn"] = ph
 	x["pw"] = ph
@@ -64,10 +64,15 @@ func main() {
 	req, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
 	client := &http.Client{}
-	_,err := client.Do(req)
+	registrs,err := client.Do(req)
 	if err != nil {
 		log.Printf("ERROR----regist failed----err:%+v\n", err)
 	}
+	registdata := loginResponse{}
+	registbody, _ := ioutil.ReadAll(registrs.Body)
+	json.Unmarshal([]byte(registbody), &registdata)
+	log.Printf("%+v,+v\n",ph,registdata)
+
 
 	y := map[string]string{}
 	y["pn"] = ph
@@ -123,6 +128,7 @@ func main() {
 
 
 
+	/*
 	now := time.Now()
 	st := time.Unix(1565866500,0)
 	time.Sleep(st.Sub(now))
@@ -149,6 +155,8 @@ func main() {
 		time.Sleep(time.Second*1)
 		count++
 	}
+	*/
+	 
 
 
 	<-doneC
