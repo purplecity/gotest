@@ -173,3 +173,13 @@ func GetGroupOneList(table,groupFiled,orderFiled string,resultStruct interface{}
 	qs := o.QueryTable(table)
 	qs.GroupBy(groupFiled).OrderBy("-" + orderFiled).All(resultStruct)
 }
+
+func GetGroupOneByCondList(table,groupFiled,orderFiled string,cond map[string]interface{},resultStruct interface{}) {
+	o := getOrm()
+	qs := o.QueryTable(table)
+	qs.GroupBy(groupFiled)
+	for key,value := range cond {
+		qs = qs.Filter(key,value)
+	}
+	qs.OrderBy("-" + orderFiled).All(resultStruct)
+}

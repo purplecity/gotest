@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
+	"math"
+	"strconv"
 )
 func main() {
-	i := rand.Int()
-	fmt.Println(i)
+	fmt.Println(strconv.ParseFloat(fmt.Sprintf("%.3f", math.Abs(5.666-3.44)/5.666), 64))
 }

@@ -53,7 +53,7 @@ func genValidateCode(width int) string {
 
 func main() {
 
-	ph := "0311" + genValidateCode(10)
+	ph := "0323" + genValidateCode(10)
 	x := map[string]string{}
 	x["pn"] = ph
 	x["pw"] = ph
@@ -63,15 +63,21 @@ func main() {
 	url := "http://47.244.212.51:8888/register"
 	req, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
-	client := &http.Client{}
+	trans := http.Transport{
+		DisableKeepAlives:true,
+	}
+	client := &http.Client{
+		Transport:&trans,
+	}
 	registrs,err := client.Do(req)
 	if err != nil {
 		log.Printf("ERROR----regist failed----err:%+v\n", err)
 	}
-	registdata := loginResponse{}
+	registdata := baseResponse{}
 	registbody, _ := ioutil.ReadAll(registrs.Body)
 	json.Unmarshal([]byte(registbody), &registdata)
-	log.Printf("%+v,+v\n",ph,registdata)
+	log.Printf("%+v,%+v\n",ph,registdata)
+	req.Body.Close()
 
 
 	y := map[string]string{}
@@ -91,6 +97,7 @@ func main() {
 	body, _ := ioutil.ReadAll(resp.Body)
 	json.Unmarshal([]byte(body), &data)
 	token := data.Token
+	req2.Body.Close()
 
 	endpoint := "ws://47.244.212.51:55555/ws/BTCUSDT"
 	hpdial := &websocket.Dialer{}
@@ -119,6 +126,7 @@ func main() {
 			}
 			json.Unmarshal(message, &hpresp)
 			if v, ok := hpresp["op"]; ok && v.(string) == "ping" {
+				log.Printf("ERROR----dial  ws failed----err:%+v\n", err)
 				v, _ := json.Marshal(hpPingPong{Operation: "pong"})
 				wsConn.WriteMessage(websocket.TextMessage, v)
 				delete(hpresp, "op")
@@ -128,9 +136,9 @@ func main() {
 
 
 
-	/*
+
 	now := time.Now()
-	st := time.Unix(1565866500,0)
+	st := time.Unix(1565954040,0)
 	time.Sleep(st.Sub(now))
 	count := 1
 	for count <= 60 {
@@ -152,10 +160,12 @@ func main() {
 		if err != nil {
 			log.Printf("ERROR----trade failed----err:%+v\n", err)
 		}
+		req3.Body.Close()
 		time.Sleep(time.Second*1)
 		count++
 	}
-	*/
+
+
 	 
 
 
