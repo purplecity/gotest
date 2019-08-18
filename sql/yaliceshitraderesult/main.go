@@ -16,7 +16,7 @@ func main() {
 
 
 	userlist := []mysql.AdminUsers{}
-	mysql.GetAllRecord("AdminUsers", map[string]interface{}{"Phonenumber__startswith":"0332"},&userlist)
+	mysql.GetAllRecord("AdminUsers", map[string]interface{}{"Phonenumber__startswith":"0103"},&userlist)
 	fmt.Println(len(userlist))
 
 	for _,x := range userlist {
@@ -32,11 +32,11 @@ func main() {
 		assetInfo := mysql.Asset{}
 		mysql.GetOneRecord("Asset", map[string]interface{}{"Uid":x.Uid},&assetInfo)
 
-
+		/*
 		if !Operation.HPEqual(assetInfo.Freezebalance,float64(0)) || !Operation.HPEqual(Operation.HPSub(assetInfo.Balance,float64(5000)),Operation.HPSub(out,in)) {
 			fmt.Printf("asset %+v\n",x.Uid)
 
-		}
+		}*/
 
 		tradeInfo2 := []mysql.Realtrade{}
 		mysql.GetAllRecord("Realtrade", map[string]interface{}{"Uid":x.Uid,"Orderresult":1},&tradeInfo2)

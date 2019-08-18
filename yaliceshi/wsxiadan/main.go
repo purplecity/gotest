@@ -52,7 +52,7 @@ func genValidateCode(width int) string {
 
 func main() {
 
-	ph := "0102" + genValidateCode(10)
+	ph := "0104" + genValidateCode(10)
 	x := map[string]string{}
 	x["pn"] = ph
 	x["pw"] = ph
@@ -138,7 +138,7 @@ func main() {
 
 
 	now := time.Now()
-	st := time.Unix(1566140940,0)
+	st := time.Unix(1566141960,0)
 	time.Sleep(st.Sub(now))
 	count := 1
 	for count <= 20 {
