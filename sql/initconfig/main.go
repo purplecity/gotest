@@ -1,6 +1,9 @@
 package main
 
-import "gotest/sql/mysql"
+import (
+	"gotest/sql/mysql"
+	"time"
+)
 
 //启动shci和szci之前要先插入数据  所以这里要modle
 //邀请码要自己操作
@@ -133,7 +136,7 @@ var (
 func main() {
 
 
-	/*
+
 	mysql.AddOneRecord(&mysql.Subject{Symbol:btcsy,Type:btctype,Isopen:btcisopen,Firstopenhour:btcFirstopenhour,
 		Firstopenmin:btcFirstopenmin,Firstclosehour:btcFirstclosehour,Firstclosemin:btcFirstclosemin})
 	mysql.AddOneRecord(&mysql.Subject{Symbol:shcisy,Type:shcitype,Isopen:shciisopen,Firstopenhour:shciFirstopenhour,
@@ -185,9 +188,9 @@ func main() {
 
 
 
-	*/
 
-	mysql.UpdateByCond("AdminUsers", map[string]interface{}{}, map[string]interface{}{"Valid":1})
+
+	//mysql.UpdateByCond("AdminUsers", map[string]interface{}{}, map[string]interface{}{"Valid":1})
 
 
 }

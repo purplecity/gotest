@@ -4,13 +4,12 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/gorilla/websocket"
 	"io/ioutil"
 	"log"
+	r "math/rand"
 	"net/http"
 	"strings"
 	"time"
-	r "math/rand"
 )
 
 
@@ -53,11 +52,11 @@ func genValidateCode(width int) string {
 
 func main() {
 
-	ph := "0332" + genValidateCode(10)
+	ph := "0102" + genValidateCode(10)
 	x := map[string]string{}
 	x["pn"] = ph
 	x["pw"] = ph
-	x["ic"] = "AGnOFq"
+	x["ic"] = "jNNICt"
 	m, _ := json.Marshal(x)
 	var jsonStr= []byte(m)
 	url := "http://47.244.212.51:8888/register"
@@ -98,7 +97,8 @@ func main() {
 	json.Unmarshal([]byte(body), &data)
 	token := data.Token
 	req2.Body.Close()
-
+	doneC := make(chan struct{})
+	/*
 	endpoint := "ws://47.244.212.51:55555/ws/BTCUSDT"
 	hpdial := &websocket.Dialer{}
 	wsConn, _, err := hpdial.Dial(endpoint, nil)
@@ -111,7 +111,7 @@ func main() {
 	wsConn.WriteMessage(websocket.TextMessage, dataByte)
 	_, _, _ = wsConn.ReadMessage()
 
-	doneC := make(chan struct{})
+
 
 	var hpresp map[string]interface{}
 	go func() {
@@ -133,12 +133,12 @@ func main() {
 			}
 		}
 	}()
-
+	*/
 
 
 
 	now := time.Now()
-	st := time.Unix(1566040324,0)
+	st := time.Unix(1566140940,0)
 	time.Sleep(st.Sub(now))
 	count := 1
 	for count <= 20 {
@@ -164,10 +164,6 @@ func main() {
 		time.Sleep(time.Second*1)
 		count++
 	}
-
-
-	 
-
 
 	<-doneC
 }
