@@ -13,7 +13,14 @@ import (
 )
 
 
-
+type tradeResponse struct {
+	baseResponse
+	Tid     string  // 0 order id
+	Bal     map[string]float64
+	Pe  	float64
+	Ht 		int64
+	Si 		int32
+}
 
 type hpPingPong struct {
 	Operation  string `json:"op"`  // sub  ping pong
@@ -52,7 +59,7 @@ func genValidateCode(width int) string {
 
 func main() {
 
-	ph := "0104" + genValidateCode(10)
+	ph := "0108" + genValidateCode(10)
 	x := map[string]string{}
 	x["pn"] = ph
 	x["pw"] = ph
@@ -75,7 +82,7 @@ func main() {
 	registdata := baseResponse{}
 	registbody, _ := ioutil.ReadAll(registrs.Body)
 	json.Unmarshal([]byte(registbody), &registdata)
-	log.Printf("%+v,%+v\n",ph,registdata)
+	log.Printf("regist %+v,%+v\n",ph,registdata)
 	req.Body.Close()
 
 
@@ -138,10 +145,11 @@ func main() {
 
 
 	now := time.Now()
-	st := time.Unix(1566141960,0)
+	st := time.Unix(1566180960,0)
 	time.Sleep(st.Sub(now))
+
 	count := 1
-	for count <= 20 {
+	for count <= 5 {
 		z := map[string]interface{}{}
 		z["am"] = 10
 		z["si"] = 1
@@ -156,14 +164,19 @@ func main() {
 		req3.Header.Set("Content-Type", "application/json")
 		req3.Header.Set("Authorization",fmt.Sprintf("Bearer %s",token))
 		req3.Header.Set("accept-encoding","gzip")
-		_,err = client.Do(req3)
+		traderesp,err := client.Do(req3)
 		if err != nil {
 			log.Printf("ERROR----trade failed----err:%+v\n", err)
 		}
+		tradedata := tradeResponse{}
+		tradebody, _ := ioutil.ReadAll(traderesp.Body)
+		json.Unmarshal([]byte(tradebody), &tradedata)
+		log.Printf("trade::%+v,%+v\n",ph,tradedata)
 		req3.Body.Close()
 		time.Sleep(time.Second*1)
 		count++
 	}
+
 
 	<-doneC
 }

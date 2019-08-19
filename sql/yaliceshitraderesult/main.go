@@ -16,7 +16,7 @@ func main() {
 
 
 	userlist := []mysql.AdminUsers{}
-	mysql.GetAllRecord("AdminUsers", map[string]interface{}{"Phonenumber__startswith":"0103"},&userlist)
+	mysql.GetAllRecord("AdminUsers", map[string]interface{}{"Phonenumber__startswith":"0106"},&userlist)
 	fmt.Println(len(userlist))
 
 	for _,x := range userlist {
