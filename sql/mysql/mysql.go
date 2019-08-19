@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
+	"log"
+	"time"
 )
 
 const (
@@ -30,6 +32,9 @@ func init() {
 		new(AdminRoleUsers),new(Lastconnect),new(Depositbank),new(Odds),new(OddsInfo),
 		new(Takescorerecord),new(Reconciliation),new(Depositway))
 	//自动创建表 参数二为是否drop然后创建表   参数三是否打印创建表过程
+	db,_ := orm.GetDB("default")
+	db.SetConnMaxLifetime(time.Second*5)
+	//自动创建表 参数二为是否drop然后创建表   参数三是否打印创建表过程
 	orm.RunSyncdb("default",false,true)
 }
 
@@ -43,13 +48,25 @@ func getOrm() orm.Ormer {
 }
 
 func AddOneRecord(record interface{}) {
-	o := getOrm()
-	o.Insert(record)
+	o := orm.NewOrm()
+	err := o.Begin()
+	if _,err = o.Insert(record); err != nil {
+		o.Rollback()
+		log.Printf("ERROR----AddOneRecord failed:%+v\n",err)
+	} else {
+		o.Commit()
+	}
 }
 
 func AddMultiRecord(num int, record interface{}){
-	o := getOrm()
-	o.InsertMulti(num,record)
+	o := orm.NewOrm()
+	err := o.Begin()
+	if _,err = o.InsertMulti(num,record); err != nil {
+		o.Rollback()
+		log.Printf("ERROR----AddOneRecord failed:%+v\n",err)
+	} else {
+		o.Commit()
+	}
 }
 
 func Exist(table,filed string, value interface{}) bool {
@@ -68,12 +85,18 @@ func MultiExist(table string, cond map[string]interface{}) bool {
 }
 
 func UpdateByCond(table string,cond,updateMap map[string]interface{}) {
-	o := getOrm()
+	o := orm.NewOrm()
 	qs := o.QueryTable(table)
 	for key,value := range cond {
 		qs = qs.Filter(key,value)
 	}
-	qs.Update(orm.Params(updateMap))
+	err := o.Begin()
+	if _, err = qs.Update(orm.Params(updateMap));err != nil {
+		o.Rollback()
+		log.Printf("ERROR----AddOneRecord failed:%+v\n",err)
+	} else {
+		o.Commit()
+	}
 }
 
 func GetOneRecord(table string,cond map[string]interface{},resultStruct interface{}) {
@@ -171,15 +194,5 @@ func GetOffsetByCondStruct(table,orderFiled string, m,skip int,cond map[string]i
 func GetGroupOneList(table,groupFiled,orderFiled string,resultStruct interface{}) {
 	o := getOrm()
 	qs := o.QueryTable(table)
-	qs.GroupBy(groupFiled).OrderBy("-" + orderFiled).All(resultStruct)
-}
-
-func GetGroupOneByCondList(table,groupFiled,orderFiled string,cond map[string]interface{},resultStruct interface{}) {
-	o := getOrm()
-	qs := o.QueryTable(table)
-	qs.GroupBy(groupFiled)
-	for key,value := range cond {
-		qs = qs.Filter(key,value)
-	}
-	qs.OrderBy("-" + orderFiled).All(resultStruct)
+	qs.GroupBy(groupFiled).OrderBy("-"+orderFiled).All(resultStruct)
 }

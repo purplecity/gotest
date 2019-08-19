@@ -8,7 +8,7 @@ package mysql
 //实际账户下单记录表
 type Realtrade struct {
 	Id 				int			`orm:"pk;auto"`
-	Uid 			string		`orm:"unique" description:"用户id"`
+	Uid 			string		`orm:"index" description:"用户id"`
 	Tid				string		`orm:"unique" description:"订单id"`
 	Handletime 		int64		`description:"下单处理时间"`
 	Settletime 		int64		`orm:"default(0)" description:"下单结算时间"`
@@ -27,7 +27,7 @@ type Realtrade struct {
 //虚拟账户下单记录表
 type Vitualtrade struct {
 	Id 				int			`orm:"pk;auto"`
-	Uid 			string		`orm:"unique" description:"用户id"`
+	Uid 			string		`orm:"index" description:"用户id"`
 	Tid				string		`orm:"unique" description:"订单id"`
 	Handletime 		int64		`description:"下单处理时间"`
 	Settletime 		int64		`orm:"default(0)" description:"下单结算时间"`
@@ -115,7 +115,7 @@ type Score struct {
 
 type Takescorerecord struct {
 	Id 				int			`orm:"pk;auto"`
-	Uid			string			`orm:"unique" description:"用户id"`
+	Uid			string			`orm:"index" description:"用户id"`
 	Handletime 		int64		`description:"提取积分时间"`
 	Amount 	float64		`orm:"digits(12);decimals(2)" description:"提取数量"`
 
@@ -130,7 +130,7 @@ type Depositway struct {
 
 type Depositrecord struct {
 	Id              int             `orm:"pk;auto"`
-	Uid          	string          `orm:"unique" description:"用户id"`
+	Uid          	string          `orm:"index" description:"用户id"`
 	Payway          int8            `orm:"index" description:"支付方式"` // 1 支付宝 2微信 3 银行卡
 	Amount          float64			`orm:"index;digits(12);decimals(2)" description:"辨识充值数量"`
 	RealAmount		float64			`orm:"index;digits(12);decimals(2)" description:"真实充值数量"`
@@ -150,7 +150,7 @@ type Depositrecord struct {
 
 type Withdrawrecord struct {
 	Id          int             `orm:"pk;auto"`
-	Uid      	string          `orm:"unique" description:"用户id"`
+	Uid      	string          `orm:"index" description:"用户id"`
 	Amount		float64			`orm:"index;digits(12);decimals(2)" description:"提现数量"`
 	Bank		string			`description:"银行名称"`
 	Banknumber 	string 			`orm:"index" description:"银行卡号"`
@@ -178,7 +178,7 @@ type DepositEnsureRecord struct {
 
 type BankInfo struct {
 	Id          int         	`orm:"pk;auto"`
-	Uid         string      	`orm:"unique" description:"用户id"`
+	Uid         string      	`orm:"index" description:"用户id"`
 	Bank		string			`description:"银行名称"`
 	Banknumber 	string 			`orm:"index" description:"银行卡号"`
 	Bankname	string 			`orm:"index" description:"姓名"`

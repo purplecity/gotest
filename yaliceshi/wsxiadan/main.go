@@ -59,11 +59,11 @@ func genValidateCode(width int) string {
 
 func main() {
 
-	ph := "0108" + genValidateCode(10)
+	ph := "0102" + genValidateCode(10)
 	x := map[string]string{}
 	x["pn"] = ph
 	x["pw"] = ph
-	x["ic"] = "jNNICt"
+	x["ic"] = "UD1sbE"
 	m, _ := json.Marshal(x)
 	var jsonStr= []byte(m)
 	url := "http://47.244.212.51:8888/register"
@@ -145,7 +145,7 @@ func main() {
 
 
 	now := time.Now()
-	st := time.Unix(1566180960,0)
+	st := time.Unix(1566207840,0)
 	time.Sleep(st.Sub(now))
 
 	count := 1
