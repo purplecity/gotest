@@ -1,14 +1,13 @@
 package main
 
 import (
-"HPOptionServer/Quotation/Stock/SHCI/Conf"
-"encoding/json"
-	"fmt"
+	"HPOptionServer/Quotation/Stock/SHCI/Conf"
+	"encoding/json"
 	"io/ioutil"
-"log"
-"net/http"
-"sync"
-"time"
+	"log"
+	"net/http"
+	"sync"
+	"time"
 )
 
 
@@ -42,7 +41,6 @@ func main() {
 				respmap := map[string]interface{}{}
 				readBytes, _ := ioutil.ReadAll(resp.Body)
 				json.Unmarshal([]byte(readBytes), &respmap)
-				fmt.Printf("%v\n",respmap)
 				if respmap["retMsg"].(string) != "Success" {
 					count++
 					log.Printf("ERROR----xshg reponse err----resp:%v\n", respmap)
@@ -50,6 +48,7 @@ func main() {
 				} else {
 					Mu.Lock()
 					log.Printf("%+v,%+v\n", time.Now().Unix(),respmap)
+					//log.Printf("%T\n", respmap["data"])
 					//LastPrice = respmap["data"].([]interface{})[0].(map[string]interface{})["lastPrice"].(float64)
 					//log.Printf("%+v\n", LastPrice)
 					Mu.Unlock()
