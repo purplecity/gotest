@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/gorilla/websocket"
 	"io/ioutil"
 	"log"
 	r "math/rand"
@@ -14,7 +13,14 @@ import (
 )
 
 
-
+type tradeResponse struct {
+	baseResponse
+	Tid     string  // 0 order id
+	Bal     map[string]float64
+	Pe  	float64
+	Ht 		int64
+	Si 		int32
+}
 
 type hpPingPong struct {
 	Operation  string `json:"op"`  // sub  ping pong
@@ -53,21 +59,32 @@ func genValidateCode(width int) string {
 
 func main() {
 
-	ph := "02" + genValidateCode(10)
+	ph := "0104" + genValidateCode(10)
 	x := map[string]string{}
 	x["pn"] = ph
 	x["pw"] = ph
-	x["ic"] = "AGnOFq"
+	x["ic"] = "XRQ3nm"
 	m, _ := json.Marshal(x)
 	var jsonStr= []byte(m)
-	url := "http://47.244.212.51:8888/register"
+	url := "http://app-hpoption-web.azfaster.com:8081/register"
 	req, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
-	client := &http.Client{}
-	_,err := client.Do(req)
+	trans := http.Transport{
+		DisableKeepAlives:true,
+	}
+	client := &http.Client{
+		Transport:&trans,
+	}
+	registrs,err := client.Do(req)
 	if err != nil {
 		log.Printf("ERROR----regist failed----err:%+v\n", err)
 	}
+	registdata := baseResponse{}
+	registbody, _ := ioutil.ReadAll(registrs.Body)
+	json.Unmarshal([]byte(registbody), &registdata)
+	log.Printf("regist %+v,%+v\n",ph,registdata)
+	req.Body.Close()
+
 
 	y := map[string]string{}
 	y["pn"] = ph
@@ -75,7 +92,7 @@ func main() {
 	y["v"] = "0.2.0"
 	n, _ := json.Marshal(y)
 	var jsonStr2= []byte(n)
-	url2 := "http://47.244.212.51:8888/loginByPassword"
+	url2 := "http://app-hpoption-web.azfaster.com:8081/loginByPassword"
 	req2, _ := http.NewRequest("POST", url2, bytes.NewBuffer(jsonStr2))
 	req2.Header.Set("Content-Type", "application/json")
 	resp, err := client.Do(req2)
@@ -86,46 +103,51 @@ func main() {
 	body, _ := ioutil.ReadAll(resp.Body)
 	json.Unmarshal([]byte(body), &data)
 	token := data.Token
-
-	endpoint := "ws://47.244.212.51:55555/ws/BTCUSDT"
-	hpdial := &websocket.Dialer{}
-	wsConn, _, err := hpdial.Dial(endpoint, nil)
-	if err != nil {
-		log.Printf("ERROR----dial  ws failed----err:%+v\n", err)
-	}
-
-	subdata := SubRequest{Operation: "sub", Token: token}
-	dataByte, _ := json.Marshal(subdata)
-	wsConn.WriteMessage(websocket.TextMessage, dataByte)
-	_, _, _ = wsConn.ReadMessage()
-
+	req2.Body.Close()
 	doneC := make(chan struct{})
-
-	var hpresp map[string]interface{}
-	go func() {
-		defer wsConn.Close()
-		defer close(doneC)
-
-		for {
-			_, message, err := wsConn.ReadMessage()
-			if err != nil {
-				fmt.Printf("ERROR----read  message failed----err:%+v\n", err.Error())
-				return
-			}
-			json.Unmarshal(message, &hpresp)
-			if v, ok := hpresp["op"]; ok && v.(string) == "ping" {
-				v, _ := json.Marshal(hpPingPong{Operation: "pong"})
-				wsConn.WriteMessage(websocket.TextMessage, v)
-				delete(hpresp, "op")
-			}
+	/*
+		endpoint := "ws:// app-hpoption-web.azfaster.com:55555/ws/BTCUSDT"
+		hpdial := &websocket.Dialer{}
+		wsConn, _, err := hpdial.Dial(endpoint, nil)
+		if err != nil {
+			log.Printf("ERROR----dial  ws failed----err:%+v\n", err)
 		}
-	}()
+
+		subdata := SubRequest{Operation: "sub", Token: token}
+		dataByte, _ := json.Marshal(subdata)
+		wsConn.WriteMessage(websocket.TextMessage, dataByte)
+		_, _, _ = wsConn.ReadMessage()
+
+
+
+		var hpresp map[string]interface{}
+		go func() {
+			defer wsConn.Close()
+			defer close(doneC)
+
+			for {
+				_, message, err := wsConn.ReadMessage()
+				if err != nil {
+					fmt.Printf("ERROR----read  message failed----err:%+v\n", err.Error())
+					return
+				}
+				json.Unmarshal(message, &hpresp)
+				if v, ok := hpresp["op"]; ok && v.(string) == "ping" {
+					log.Printf("ERROR----dial  ws failed----err:%+v\n", err)
+					v, _ := json.Marshal(hpPingPong{Operation: "pong"})
+					wsConn.WriteMessage(websocket.TextMessage, v)
+					delete(hpresp, "op")
+				}
+			}
+		}()
+	*/
 
 
 
 	now := time.Now()
-	st := time.Unix(1565866500,0)
+	st := time.Unix(1566529080,0)
 	time.Sleep(st.Sub(now))
+
 	count := 1
 	for count <= 60 {
 		z := map[string]interface{}{}
@@ -137,15 +159,20 @@ func main() {
 		z["at"] = 1
 		o, _ := json.Marshal(z)
 		var jsonStr3= []byte(o)
-		url3 := "http://47.244.212.51:8888/trade"
+		url3 := "http://app-hpoption-web.azfaster.com:8081/trade"
 		req3, _ := http.NewRequest("POST", url3, bytes.NewBuffer(jsonStr3))
 		req3.Header.Set("Content-Type", "application/json")
 		req3.Header.Set("Authorization",fmt.Sprintf("Bearer %s",token))
 		req3.Header.Set("accept-encoding","gzip")
-		_,err = client.Do(req3)
+		traderesp,err := client.Do(req3)
 		if err != nil {
 			log.Printf("ERROR----trade failed----err:%+v\n", err)
 		}
+		tradedata := tradeResponse{}
+		tradebody, _ := ioutil.ReadAll(traderesp.Body)
+		json.Unmarshal([]byte(tradebody), &tradedata)
+		log.Printf("trade::%+v,%+v\n",ph,tradedata)
+		req3.Body.Close()
 		time.Sleep(time.Second*1)
 		count++
 	}

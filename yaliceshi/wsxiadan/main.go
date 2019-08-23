@@ -59,14 +59,14 @@ func genValidateCode(width int) string {
 
 func main() {
 
-	ph := "0102" + genValidateCode(10)
+	ph := "0105" + genValidateCode(10)
 	x := map[string]string{}
 	x["pn"] = ph
 	x["pw"] = ph
-	x["ic"] = "UD1sbE"
+	x["ic"] = "XRQ3nm"
 	m, _ := json.Marshal(x)
 	var jsonStr= []byte(m)
-	url := "http://47.244.212.51:8888/register"
+	url := "http://app-hpoption-web.azfaster.com:8081/register"
 	req, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
 	trans := http.Transport{
@@ -92,7 +92,7 @@ func main() {
 	y["v"] = "0.2.0"
 	n, _ := json.Marshal(y)
 	var jsonStr2= []byte(n)
-	url2 := "http://47.244.212.51:8888/loginByPassword"
+	url2 := "http://app-hpoption-web.azfaster.com:8081/loginByPassword"
 	req2, _ := http.NewRequest("POST", url2, bytes.NewBuffer(jsonStr2))
 	req2.Header.Set("Content-Type", "application/json")
 	resp, err := client.Do(req2)
@@ -106,7 +106,7 @@ func main() {
 	req2.Body.Close()
 	doneC := make(chan struct{})
 	/*
-	endpoint := "ws://47.244.212.51:55555/ws/BTCUSDT"
+	endpoint := "ws:// app-hpoption-web.azfaster.com:55555/ws/BTCUSDT"
 	hpdial := &websocket.Dialer{}
 	wsConn, _, err := hpdial.Dial(endpoint, nil)
 	if err != nil {
@@ -145,11 +145,11 @@ func main() {
 
 
 	now := time.Now()
-	st := time.Unix(1566207840,0)
+	st := time.Unix(1566541980,0)
 	time.Sleep(st.Sub(now))
 
 	count := 1
-	for count <= 5 {
+	for count <= 60 {
 		z := map[string]interface{}{}
 		z["am"] = 10
 		z["si"] = 1
@@ -159,7 +159,7 @@ func main() {
 		z["at"] = 1
 		o, _ := json.Marshal(z)
 		var jsonStr3= []byte(o)
-		url3 := "http://47.244.212.51:8888/trade"
+		url3 := "http://app-hpoption-web.azfaster.com:8081/trade"
 		req3, _ := http.NewRequest("POST", url3, bytes.NewBuffer(jsonStr3))
 		req3.Header.Set("Content-Type", "application/json")
 		req3.Header.Set("Authorization",fmt.Sprintf("Bearer %s",token))

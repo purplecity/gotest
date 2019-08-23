@@ -34,6 +34,7 @@ func init() {
 	//自动创建表 参数二为是否drop然后创建表   参数三是否打印创建表过程
 	db,_ := orm.GetDB("default")
 	db.SetConnMaxLifetime(time.Second*5)
+	//orm.Debug = true
 	//自动创建表 参数二为是否drop然后创建表   参数三是否打印创建表过程
 	orm.RunSyncdb("default",false,true)
 }

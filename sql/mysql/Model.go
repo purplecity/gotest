@@ -225,7 +225,7 @@ type Lastconnect struct {
 type Depositbank struct {
 	Id          int         	`orm:"pk;auto"`
 	Bank		string			`description:"银行名称"`
-	Banknumber 	string 			`orm:"index" description:"银行卡号"`
+	Banknumber 	string 			`orm:"unique" description:"银行卡号"`
 	Bankname	string 			`orm:"index" description:"开户人"`
 	City		string			`description:"开户城市"`
 	Province   	string			`description:"开户省份"`
@@ -254,11 +254,13 @@ type OddsInfo struct {
 type Reconciliation struct {
 	Id          int         	`orm:"pk;auto"`
 	Uid         string      	`orm:"unique" description:"用户id"`
-	Balance 	float64			`orm:"digits(12);decimals(2)" description:"1点余额"`
-	Win 		float64			`orm:"digits(12);decimals(2)" description:"截止当天1点累计盈利收入"`
-	Lose 		float64			`orm:"digits(12);decimals(2)" description:"截止当天1点累计亏损"`
-	Deposit 	float64 		`orm:"digits(12);decimals(2)" description:"截止当天1点累计充值收入"`
-	Withdraw  	float64			`orm:"digits(12);decimals(2)" description:"截止当天1点累计提现支出"`
-	Score  		float64  		`orm:"digits(12);decimals(2)" description:"截止当天1点累计提取积分收入"`
+	Balance 	float64			`orm:"digits(12);decimals(2)" description:"3点余额"`
+	Lastbalance float64		`orm:"digits(12);decimals(2)" description:"昨天3点余额"`
+	Win 		float64			`orm:"digits(12);decimals(2)" description:"当天1点盈利收入"`
+	Lose 		float64			`orm:"digits(12);decimals(2)" description:"当天1点累计亏损"`
+	Deposit 	float64 		`orm:"digits(12);decimals(2)" description:"当天1点累计充值收入"`
+	Withdraw  	float64			`orm:"digits(12);decimals(2)" description:"当天1点累计提现支出"`
+	Score  		float64  		`orm:"digits(12);decimals(2)" description:"当天1点累计提取积分收入"`
+
 	Handletime 		int64		`description:"对账时间"`
 }

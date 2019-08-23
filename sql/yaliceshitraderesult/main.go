@@ -8,6 +8,7 @@ import (
 
 func main() {
 
+
 	/*
 	tradeInfo := []mysql.Realtrade{}
 	mysql.GetAllRecord("Realtrade", map[string]interface{}{"Uid":"1162292111426920448"},&tradeInfo)
@@ -15,8 +16,9 @@ func main() {
 	*/
 
 
+
 	userlist := []mysql.AdminUsers{}
-	mysql.GetAllRecord("AdminUsers", map[string]interface{}{"Phonenumber__startswith":"0101"},&userlist)
+	mysql.GetAllRecord("AdminUsers", map[string]interface{}{"Phonenumber__startswith":"0104"},&userlist)
 	fmt.Println(len(userlist))
 
 
@@ -56,6 +58,19 @@ func main() {
 
 	}
 
+
+
+
+	/*
+	assetInfo := []mysql.Asset{}
+	mysql.GetAllRecord("Asset", map[string]interface{}{},&assetInfo)
+	for _, x := range assetInfo {
+		if !mysql.Exist("AdminUsers", "Uid", x.Uid) {
+			fmt.Println(x.Uid)
+		}
+
+	}
+	*/
 
 
 }
