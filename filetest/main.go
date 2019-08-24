@@ -6,6 +6,7 @@ import (
 	"log"
 	"math"
 	"os"
+	"time"
 )
 
 
@@ -82,7 +83,36 @@ func BytesToInt64(buf []byte) int64 {
 }
 
 
+func testReadHistoryFile(cnt int64)  (price float64){
+	f, err := os.OpenFile(HistoryFilePath,os.O_CREATE|os.O_RDONLY,0666)
+	defer f.Close()
+	if err != nil {
+		log.Panicf("ERROR----OpenFile failed----err:%v\n",err)
+	}
+
+	buf := make([]byte, 24)
+
+	n, err :=f.ReadAt(buf,cnt*24)
+	if err != nil {
+		log.Printf("ERROR----read byte:%v----err:%v\n",n,err)
+	}
+
+	price = ByteToFloat64(buf[0:8])
+	fmt.Println(price)
+	return
+}
+
 func main() {
+
+	for i:=1;i<100;i++{
+		go WriteHistoryFile(1.34,1,1112)
+		go testReadHistoryFile(5)
+		time.Sleep(time.Second)
+	}
+
+	done := make(chan struct{})
+	<-done
+	/*
 	f, err := os.OpenFile("/root/hd/BTCUSDT.txt",os.O_CREATE|os.O_RDONLY,0666)
 	defer f.Close()
 	if err != nil {
@@ -138,6 +168,8 @@ func main() {
 	fmt.Printf("PCTEST---sp:%+v\n",sp)
 	v, _ := strconv.ParseFloat(fmt.Sprintf("%.2f", math.Abs(sp-p)/sp), 64)
 	fmt.Printf("%+v\n",v)
+	*/
+
 	//WriteHistoryFile(1.35,1113)
 	//[91 123 34 80 34 58 49 46 51 53 44 34 84 34 58 49 49 49 51 125 93]
 	//ReadHistoryFile(1,2)

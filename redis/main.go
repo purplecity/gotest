@@ -7,18 +7,18 @@ import (
 	"log"
 	r "math/rand"
 	"strconv"
-	"strings"
-	"sync"
 	"time"
 )
 
 var (
 	RedisAddr = "127.0.0.1:6379"
-	//RedisPassword = "k"
-	RedisPassword = "HP@123"
+	RedisPassword = "k"
+	//RedisPassword = "HP@123"
 	RedisDB = 0
 	RedisOrderDB = 2
+	RedisLockDB = 2
 	RedisMaxRetries = 1
+	RedisLockExpireTime = 2
 )
 
 type hpRedisClient struct {
@@ -75,6 +75,42 @@ func genRandomInvitationCode(n int) string {
 	return string(bytes)
 }
 
+func GetRedisLockClient() *hpRedisClient {
+	if hporderclient == nil {
+		client := redis.NewClient(&redis.Options{
+			Addr:       RedisAddr,
+			Password:   RedisPassword,
+			DB:         RedisLockDB,
+			MaxRetries: RedisMaxRetries,
+		})
+		_, err := client.Ping().Result()
+		if err != nil {
+			log.Panicf("ERROR----connect Cache failed----err:%v\n", err)
+		}
+		hporderclient = &hpRedisClient{redisClient: client}
+	}
+	return hporderclient
+}
+
+func SetRedisLock(key string, value interface{}) (x bool){
+	client := GetRedisOrderClient()
+	x,err := client.redisClient.SetNX(key,value,time.Second*time.Duration(RedisLockExpireTime)).Result()
+	if  err!= nil {
+		log.Printf("ERROR----GetRedisLock failed ----err:%+v\n",err)
+	}
+	return
+}
+
+func GetRedisLock(key string) int64 {
+	client := GetRedisOrderClient()
+	x,err  := client.redisClient.Get(key).Result()
+	if  err!= nil {
+		log.Printf("ERROR----GetRedisLock failed ----err:%+v\n",err)
+	}
+	v,_ := strconv.ParseInt(x,10,64)
+	return v
+}
+
 
 func main() {
 
@@ -85,7 +121,7 @@ func main() {
 		"LevelThreeMinDV":200000,"LevelThreeMaxDV":500000,"LevelThreeMinOdds":0.1,"LevelThreeMaxOdds":1.7,
 		"LevelFourMinDV":500000,"LevelFourMinOdds":0,"LevelFourMaxOdds":1.8,
 	})
-*/
+
 	c := sync.WaitGroup{}
 	c.Add(1200000)
 	for i := 0; i< 600000;i++ {
@@ -129,4 +165,14 @@ func main() {
 	cnt.Wait()
 	et := time.Now().UnixNano()
 	fmt.Printf("%+v,%+v,%+v,%+v\n",len(l1),len(l2),nt,et)
+
+	 */
+	fmt.Println(SetRedisLock("testhehe",1))
+	fmt.Println(time.Now().UnixNano())
+	fmt.Println(SetRedisLock("testhehe",1))
+	fmt.Println(time.Now().UnixNano()) //大概是0.2毫秒
+	time.Sleep(time.Second*2)
+	fmt.Println(SetRedisLock("testhehe",1))
+
+
 }

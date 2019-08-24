@@ -186,11 +186,5 @@ func main() {
 	mysql.AddOneRecord(&mysql.Depositway{Way:2,Isopen:1})
 	mysql.AddOneRecord(&mysql.Depositway{Way:3,Isopen:1})
 
-
-
-
-
 	//mysql.UpdateByCond("AdminUsers", map[string]interface{}{}, map[string]interface{}{"Valid":1})
-
-
 }
