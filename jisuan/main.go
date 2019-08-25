@@ -53,5 +53,9 @@ func main() {
 	fmt.Println(Operation.HPdiv(Operation.HPMul(a,float64(100)),float64(6)))
 
 
-
+	/*
+		a := Operation.HPSum(Operation.HPMul(ab,ac),Operation.HPMul(ab,bc),Operation.HPMul(ac,cb))
+		b := Operation.HPSum(Operation.HPMul(ba,bc),Operation.HPMul(ba,ac),Operation.HPMul(bc,ca))
+		c := Operation.HPSum(Operation.HPMul(ca,cb),Operation.HPMul(cb,ba),Operation.HPMul(ca,ab))
+	*/
 }
