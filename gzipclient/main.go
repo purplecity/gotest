@@ -6,6 +6,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 )
@@ -54,6 +55,7 @@ func main() {
 
 	 */
 
+	/*
 	reader,err := gzip.NewReader(resp.Body)
 	if err != nil {
 		fmt.Println("http resp unzip is failed,err: ", err)
@@ -65,6 +67,20 @@ func main() {
 	json.Unmarshal([]byte(your_to_byte),&reqStruct)
 	log.Printf("Info----get response----%+v\n",reqStruct)
 	defer reader.Close()
+	defer resp.Body.Close()
+	req.Body.Close()
+
+
+	 */
+	gr,err := gzip.NewReader(resp.Body)
+	if err != nil {
+		fmt.Println("http resp unzip is failed,err: ", err)
+	}
+	readBytes, _ := ioutil.ReadAll(gr)
+	your_to_byte, _ := base64.StdEncoding.DecodeString(string(readBytes))
+	reqStruct := map[string]interface{}{}
+	json.Unmarshal([]byte(your_to_byte),&reqStruct)
+	log.Printf("Info----get response----%+v\n",reqStruct)
 	defer resp.Body.Close()
 	req.Body.Close()
 
