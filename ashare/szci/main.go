@@ -15,7 +15,7 @@ var Token = "Bearer b6275e695f9442f2b08f2f7604e42607e1f9d24157e52d21e0abc9f9947b
 var Mu sync.Mutex
 var LastPrice float64
 
-var BaseURL = "https://api.wmcloud.com/data/v1/api/market/getTickRTSnapshotL2.json?securityID=399001.XSHE&field="
+var BaseURL = "https://api.wmcloud.com/data/v1/api/market2/getTickRTSnapshotL2.json?securityID=399001.XSHE&field="
 func main() {
 	request, err := http.NewRequest("GET",BaseURL,nil)
 	if err != nil {

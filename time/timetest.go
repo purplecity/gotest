@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 func main() {
@@ -86,11 +87,22 @@ func main() {
 		fmt.Println(time.Now().UnixNano())
 	}*/
 
+	/*
 	nt := 1564416000
-	//nt1 := time.Unix(int64(nt),0)
+	nt1 := time.Unix(int64(nt),0)
 	et := 1564302876
-	///et1 := time.Unix(int64(et),0)
+	et1 := time.Unix(int64(et),0)
 
-	fmt.Printf("%v\n",(nt-et)/86400)
-	//fmt.Printf("%v,\n",int64(nt1.Sub(et1).Hours()))
+	//fmt.Printf("%v\n",(nt-et)/86400)
+	fmt.Printf("%v,\n",int64(nt1.Sub(et1).Seconds()))
+	fmt.Println(nt-et)
+
+	 */
+	tick := time.Tick(time.Second)
+	for x := range tick {
+		fmt.Printf("%+v,%+v\n",x,time.Now() )
+		time.Sleep(2*time.Second)
+
+
+	}
 }

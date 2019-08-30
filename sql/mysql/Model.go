@@ -99,7 +99,7 @@ type Scorerecord struct {
 	Playerid		string		`orm:"index" description:"玩家id"`
 	Settletime 		int64  		`description:"下单结算时间"`
 	Amount			float64  	`orm:"digits(12);decimals(2)" description:"下单金额"`
-	Contributorid	string   	`description:"贡献玩家的id"`
+	Contributorid	string   	`orm:"index" description:"贡献玩家的id"`
 	Tid   			string   	`description:"订单号"`
 }
 

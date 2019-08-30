@@ -6,10 +6,75 @@ import (
 	"log"
 	"math"
 	"os"
-	"time"
 )
 
 
+var HistoryFilePath = "/root/hd/SHCI.txt"
+
+type HistoryData struct {
+	P float64	`json:"hp"`
+	C int64		`json:"hc"`
+	T int64		`json:"ht"`
+}
+
+
+func Float64ToByte(float float64) []byte {
+	bits := math.Float64bits(float)
+	bytes := make([]byte, 8)
+	binary.LittleEndian.PutUint64(bytes, bits)
+	return bytes
+}
+
+func ByteToFloat64(bytes []byte) float64 {
+	bits := binary.LittleEndian.Uint64(bytes)
+
+	return math.Float64frombits(bits)
+}
+
+func Int64ToBytes(i int64) []byte {
+	var buf = make([]byte, 8)
+	binary.BigEndian.PutUint64(buf, uint64(i))
+	return buf
+}
+
+func BytesToInt64(buf []byte) int64 {
+	return int64(binary.BigEndian.Uint64(buf))
+}
+
+func main() {
+	end :=  int64(57420)  //1566869460
+	start := int64(53820)
+	f, err := os.OpenFile(HistoryFilePath,os.O_CREATE|os.O_RDONLY,0666)
+	defer f.Close()
+	if err != nil {
+		log.Panicf("ERROR----OpenFile failed----err:%v\n",err)
+	}
+	buf := make([]byte, (end-start+1)*24)
+
+	n, err :=f.ReadAt(buf,start*24)
+	if err != nil {
+		log.Printf("ERROR----read byte:%v----err:%v\n",n,err)
+	}
+
+	var m int64= 0
+	var datalist []HistoryData
+
+	for m < (end-start+1)*24 {
+		price := ByteToFloat64(buf[m:m+8])
+		cnt := BytesToInt64(buf[m+8:m+16])
+		ts := BytesToInt64(buf[m+16:m+24])
+		ds := HistoryData{P:price,C:cnt,T:ts}
+		datalist = append(datalist,ds)
+		m += 24
+	}
+	for _,x := range datalist {
+		fmt.Printf("%+v\n",x)
+	}
+
+}
+
+
+/*
 var HistoryFilePath = "/Users/ludongdong/zaqizaba/BTCUSDT.txt"
 
 type HistoryData struct {
@@ -188,4 +253,3 @@ func main() {
 	//[91 123 34 80 34 58 49 46 51 51 44 34 84 34 58 49 49 49 49 125 44 123 34 80 34 58 49 46 51 52 44 34 84 34 58 49 49 49 50 125 93]
 
 	//fmt.Println(byte(91))
-}

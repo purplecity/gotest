@@ -62,72 +62,72 @@ var (
 	btcioisy = "BTC"
 	btcoiLevelOne = 1
 	btcoiOneMindv = float64(0)
-	btcoiOneMaxdv = float64(10000)
+	btcoiOneMaxdv = float64(5000)
 	btcoiOneGreaterodds = 0.9
 	btcoiOneLessodds = 0.9
 
 	btcoiLevelTwo = 2
-	btcoiTwoMindv = float64(10000)
-	btcoiTwoMaxdv = float64(20000)
+	btcoiTwoMindv = float64(5000)
+	btcoiTwoMaxdv = float64(10000)
 	btcoiTwoGreaterodds = 1.2
 	btcoiTwoLessodds = 0.6
 
 	btcoiLevelThree = 3
-	btcoiThreeMindv = float64(20000)
-	btcoiThreeMaxdv = float64(50000)
+	btcoiThreeMindv = float64(10000)
+	btcoiThreeMaxdv = float64(20000)
 	btcoiThreeGreaterodds = 1.7
 	btcoiThreeLessodds = 0.1
 
 	btcoiLevelFour = 4
-	btcoiFourMindv = float64(50000)
+	btcoiFourMindv = float64(20000)
 	btcoiFourGreaterodds = 1.8
 	btcoiFourLessodds = float64(0)
 
 	shcioisy = "SHCI"
 	shcioiLevelOne = 1
 	shcioiOneMindv = float64(0)
-	shcioiOneMaxdv = float64(10000)
+	shcioiOneMaxdv = float64(5000)
 	shcioiOneGreaterodds = 0.9
 	shcioiOneLessodds = 0.9
 
 	shcioiLevelTwo = 2
-	shcioiTwoMindv = float64(10000)
-	shcioiTwoMaxdv = float64(20000)
+	shcioiTwoMindv = float64(5000)
+	shcioiTwoMaxdv = float64(10000)
 	shcioiTwoGreaterodds = 1.2
 	shcioiTwoLessodds = 0.6
 
 	shcioiLevelThree = 3
-	shcioiThreeMindv = float64(20000)
-	shcioiThreeMaxdv = float64(50000)
+	shcioiThreeMindv = float64(10000)
+	shcioiThreeMaxdv = float64(20000)
 	shcioiThreeGreaterodds = 1.7
 	shcioiThreeLessodds = 0.1
 
 	shcioiLevelFour = 4
-	shcioiFourMindv = float64(50000)
+	shcioiFourMindv = float64(20000)
 	shcioiFourGreaterodds = 1.8
 	shcioiFourLessodds = float64(0)
 
 	szcioisy = "SZCI"
 	szcioiLevelOne = 1
 	szcioiOneMindv = float64(0)
-	szcioiOneMaxdv = float64(10000)
+	szcioiOneMaxdv = float64(5000)
 	szcioiOneGreaterodds = 0.9
 	szcioiOneLessodds = 0.9
 
 	szcioiLevelTwo = 2
-	szcioiTwoMindv = float64(10000)
-	szcioiTwoMaxdv = float64(20000)
+	szcioiTwoMindv = float64(5000)
+	szcioiTwoMaxdv = float64(10000)
 	szcioiTwoGreaterodds = 1.2
 	szcioiTwoLessodds = 0.6
 
 	szcioiLevelThree = 3
-	szcioiThreeMindv = float64(20000)
-	szcioiThreeMaxdv = float64(50000)
+	szcioiThreeMindv = float64(10000)
+	szcioiThreeMaxdv = float64(20000)
 	szcioiThreeGreaterodds = 1.7
 	szcioiThreeLessodds = 0.1
 
 	szcioiLevelFour = 4
-	szcioiFourMindv = float64(50000)
+	szcioiFourMindv = float64(20000)
 	szcioiFourGreaterodds = 1.8
 	szcioiFourLessodds = float64(0)
 )
