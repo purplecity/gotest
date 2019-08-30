@@ -65,8 +65,7 @@ func requestBegin2(req *http.Request)  {
 	your_to_byte, _ := base64.StdEncoding.DecodeString(string(readBytes))
 	your_string := string(your_to_byte)
 	log.Printf("string %+v\n",your_string)
-
-	 */
+	*/
 	return
 }
 

@@ -29,7 +29,7 @@ func main() {
 	wr.Write([]byte(b64Str))
 
 	 */
-	url := "http://127.0.0.1:8888/helloworld"
+	url := "https://app-hpoption-web.azfaster.com:8081/helloworld"
 	req, _ := http.NewRequest("POST", url, buf)
 	req.Header.Set("Content-Type", "application/json")
 	//req.Header.Add("Content-Encoding", "gzip")
