@@ -1,16 +1,7 @@
 package main
 
-import (
-	"fmt"
-	"math/rand"
-)
-
-
+import "fmt"
 
 func main() {
-	for i:=0;i<=100;i++{
-		y := rand.Intn(9)
-		fmt.Println(y)
-	}
-
+	fmt.Println(int(float64(1.00)))
 }
