@@ -28,7 +28,7 @@ var (
 	shciSecondopenhour = 13
 	shciSecondopenmin = 0
 	shciSecondclosehour = 15
-	shciSecondclosemin = 0
+	shciSecondclosemin = 5
 
 
 	szcisy = "SZCI"
@@ -43,7 +43,7 @@ var (
 	szciSecondclosehour = 15
 	szciSecondclosemin = 0
 
-	version = "0.3.0"
+	version = "0.4.1"
 	isforce = 1
 
 	btcoddssy = "BTC"
@@ -62,72 +62,72 @@ var (
 	btcioisy = "BTC"
 	btcoiLevelOne = 1
 	btcoiOneMindv = float64(0)
-	btcoiOneMaxdv = float64(5000)
+	btcoiOneMaxdv = float64(50000)
 	btcoiOneGreaterodds = 0.9
 	btcoiOneLessodds = 0.9
 
 	btcoiLevelTwo = 2
-	btcoiTwoMindv = float64(5000)
-	btcoiTwoMaxdv = float64(10000)
+	btcoiTwoMindv = float64(50000)
+	btcoiTwoMaxdv = float64(100000)
 	btcoiTwoGreaterodds = 1.2
 	btcoiTwoLessodds = 0.6
 
 	btcoiLevelThree = 3
-	btcoiThreeMindv = float64(10000)
-	btcoiThreeMaxdv = float64(20000)
+	btcoiThreeMindv = float64(100000)
+	btcoiThreeMaxdv = float64(200000)
 	btcoiThreeGreaterodds = 1.7
 	btcoiThreeLessodds = 0.1
 
 	btcoiLevelFour = 4
-	btcoiFourMindv = float64(20000)
+	btcoiFourMindv = float64(200000)
 	btcoiFourGreaterodds = 1.8
 	btcoiFourLessodds = float64(0)
 
 	shcioisy = "SHCI"
 	shcioiLevelOne = 1
 	shcioiOneMindv = float64(0)
-	shcioiOneMaxdv = float64(5000)
+	shcioiOneMaxdv = float64(50000)
 	shcioiOneGreaterodds = 0.9
 	shcioiOneLessodds = 0.9
 
 	shcioiLevelTwo = 2
-	shcioiTwoMindv = float64(5000)
-	shcioiTwoMaxdv = float64(10000)
+	shcioiTwoMindv = float64(50000)
+	shcioiTwoMaxdv = float64(100000)
 	shcioiTwoGreaterodds = 1.2
 	shcioiTwoLessodds = 0.6
 
 	shcioiLevelThree = 3
-	shcioiThreeMindv = float64(10000)
-	shcioiThreeMaxdv = float64(20000)
+	shcioiThreeMindv = float64(100000)
+	shcioiThreeMaxdv = float64(200000)
 	shcioiThreeGreaterodds = 1.7
 	shcioiThreeLessodds = 0.1
 
 	shcioiLevelFour = 4
-	shcioiFourMindv = float64(20000)
+	shcioiFourMindv = float64(200000)
 	shcioiFourGreaterodds = 1.8
 	shcioiFourLessodds = float64(0)
 
 	szcioisy = "SZCI"
 	szcioiLevelOne = 1
 	szcioiOneMindv = float64(0)
-	szcioiOneMaxdv = float64(5000)
+	szcioiOneMaxdv = float64(50000)
 	szcioiOneGreaterodds = 0.9
 	szcioiOneLessodds = 0.9
 
 	szcioiLevelTwo = 2
-	szcioiTwoMindv = float64(5000)
-	szcioiTwoMaxdv = float64(10000)
+	szcioiTwoMindv = float64(50000)
+	szcioiTwoMaxdv = float64(100000)
 	szcioiTwoGreaterodds = 1.2
 	szcioiTwoLessodds = 0.6
 
 	szcioiLevelThree = 3
-	szcioiThreeMindv = float64(10000)
-	szcioiThreeMaxdv = float64(20000)
+	szcioiThreeMindv = float64(100000)
+	szcioiThreeMaxdv = float64(200000)
 	szcioiThreeGreaterodds = 1.7
 	szcioiThreeLessodds = 0.1
 
 	szcioiLevelFour = 4
-	szcioiFourMindv = float64(20000)
+	szcioiFourMindv = float64(200000)
 	szcioiFourGreaterodds = 1.8
 	szcioiFourLessodds = float64(0)
 )
@@ -183,11 +183,10 @@ func main() {
 		Greaterodds:szcioiFourGreaterodds,Lessodds:szcioiFourLessodds})
 
 	mysql.AddOneRecord(&mysql.Depositway{Way:1,Isopen:1})
-	mysql.AddOneRecord(&mysql.Depositway{Way:2,Isopen:1})
+	mysql.AddOneRecord(&mysql.Depositway{Way:2,Isopen:0})
 	mysql.AddOneRecord(&mysql.Depositway{Way:3,Isopen:1})
 
 	mysql.AddOneRecord(&mysql.Payamount{Payway:1,One:156,Two:298,Three:498,Four:998,Five:2098,Six:4908})
-
 
 	//mysql.UpdateByCond("AdminUsers", map[string]interface{}{}, map[string]interface{}{"Valid":1})
 }

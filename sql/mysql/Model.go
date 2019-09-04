@@ -291,4 +291,5 @@ type Alipayensure struct {
 	Sn 				string  		`orm:"index" descripton:"回调返回的签名验证值"`
 	Ts   			string  		`orm:"index" descripton:"请求平台时候返回的交易号"`
 	Createtime      int64			`description:"接收回调时间"`
+	Status   		int  			`description:"状态"`
 }
