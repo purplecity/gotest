@@ -43,7 +43,7 @@ var (
 	szciSecondclosehour = 15
 	szciSecondclosemin = 0
 
-	version = "0.2.0"
+	version = "0.3.0"
 	isforce = 1
 
 	btcoddssy = "BTC"
@@ -185,6 +185,9 @@ func main() {
 	mysql.AddOneRecord(&mysql.Depositway{Way:1,Isopen:1})
 	mysql.AddOneRecord(&mysql.Depositway{Way:2,Isopen:1})
 	mysql.AddOneRecord(&mysql.Depositway{Way:3,Isopen:1})
+
+	mysql.AddOneRecord(&mysql.Payamount{Payway:1,One:156,Two:298,Three:498,Four:998,Five:2098,Six:4908})
+
 
 	//mysql.UpdateByCond("AdminUsers", map[string]interface{}{}, map[string]interface{}{"Valid":1})
 }

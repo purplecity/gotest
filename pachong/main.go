@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/gocolly/colly"
 	"github.com/gocolly/colly/debug"
-	"strconv"
 )
 
 func main() {
@@ -23,14 +22,19 @@ func main() {
 
 	})
 	c.OnHTML("div[id=price]", func(e *colly.HTMLElement) {
-		fmt.Printf("test----%+v\n",e.Text)
-		price,err := strconv.ParseFloat(e.Text,64)
-		fmt.Printf("********* price----%+v\n",price)
+		fmt.Printf("test----%+v\n",e.Response)
+		//price,err := strconv.ParseFloat(e.,64)
+		//price := e.Text
+		//fmt.Printf("********* price----%+v\n",price)
+
+		/*
 		if err != nil {
 
 			fmt.Printf("parse err---%+v\n",err)
 
 		}
+	*/
+
 	})
 
 	c.OnScraped(func(_ *colly.Response) {

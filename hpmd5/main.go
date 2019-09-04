@@ -7,7 +7,7 @@ import (
 
 func main() {
 	pw :="123456"
-	ph := "13786365403"
+	ph := "13760377012"
 	data := []byte(pw)
 	has := md5.Sum(data)
 	md5str := fmt.Sprintf("%x", has)

@@ -47,7 +47,7 @@ type Vitualtrade struct {
 type AdminUsers struct {
 	Id 					int			`orm:"pk;auto"`
 	Uid				string		`orm:"unique" description:"用户id"`
-	Username			string		`orm:"index" description:"用户名"`
+	Username			string		`orm:"unique" description:"用户名"`
 	Phonenumber			string		`orm:"unique" description:"手机号码"`
 	Password			string		`description:"密码"`
 	Invitationcode	string			`orm:"index" description:"邀请码"`
@@ -145,6 +145,7 @@ type Depositrecord struct {
 	City		string			`description:"开户城市"`
 	Province   	string			`description:"开户省份"`
 	Bankbranch 	string			`description:"开户支行"`
+	Postscript  string			`orm:"unique" description:"附言" `
 }
 
 
@@ -164,17 +165,6 @@ type Withdrawrecord struct {
 	Status  	int				`orm:"index" description:"提现状态"`
 }
 
-type DepositEnsureRecord struct {
-	Id              int             `orm:"pk;auto"`
-	Tid             string      	`orm:"unique" description:"充值订单id" `
-	Uid          	string          `orm:"index" description:"用户id"`
-	Gid				string			`orm:"index" description:"商家下单时传递的商品id"`
-	Amount          float64			`orm:"index;digits(12);decimals(2)" description:"充值数量"`
-	Ptid			string			`orm:"index" description:"平台订单流水号"`
-	Sn 				string  		`orm:"index" descripton:"签名验证值"`
-	Createtime      int64			`description:"接收回调时间"`
-
-}
 
 type BankInfo struct {
 	Id          int         	`orm:"pk;auto"`
@@ -263,4 +253,42 @@ type Reconciliation struct {
 	Score  		float64  		`orm:"digits(12);decimals(2)" description:"当天1点累计提取积分收入"`
 
 	Handletime 		int64		`description:"对账时间"`
+}
+
+type Remarks struct {
+	Id 					int			`orm:"pk;auto"`
+	Uid				string		`orm:"unique" description:"用户id"` //可能是合伙人总监玩家
+	Directorremark 	string		`description:"总监备注"`
+	Parterremark 	string		`description:"合伙人备注"`
+	Csremark 		string		`description:"客服备注"`
+	Csid 			string   	`orm:"index" description:"客服id"`
+}
+
+type Sounds struct {
+	Id 					int			`orm:"pk;auto"`
+	Uid				string		`orm:"unique" description:"用户id"`
+	Bgm  			int  		`description:"bgm开关"`
+	Buttonsound     int 		`description:"按钮声音"`
+}
+
+type Payamount struct {
+	Id 					int			`orm:"pk;auto"`
+	Payway				int		`orm:"unique" description:"充值方式"` //1支付宝 2微信 3银行卡
+	One 				int		`description:"第一个充值数额"`
+	Two 				int		`description:"第二个充值数额"`
+	Three 				int		`description:"第三个充值数额"`
+	Four				int		`description:"第四个充值数额"`
+	Five 				int		`description:"第五个充值数额"`
+	Six					int		`description:"第六个充值数额"`
+
+}
+
+type Alipayensure struct {
+	Id              int             `orm:"pk;auto"`
+	Tid             string      	`orm:"unique" description:"充值订单id" `
+	Uid          	string          `orm:"index" description:"用户id"`
+	Amount          float64			`orm:"index;digits(12);decimals(2)" description:"充值数量"`
+	Sn 				string  		`orm:"index" descripton:"回调返回的签名验证值"`
+	Ts   			string  		`orm:"index" descripton:"请求平台时候返回的交易号"`
+	Createtime      int64			`description:"接收回调时间"`
 }

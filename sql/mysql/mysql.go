@@ -12,7 +12,8 @@ const (
 	MysqlUserName = "root"
 	//MysqlPassWord = "k"
 	MysqlPassWord = "7U'G~1LzI+]3_~D"
-	MysqlIP = "47.244.212.51"
+	MysqlIP = "47.244.217.66"
+	//MysqlIP = "47.244.212.51"
 	//MysqlIP = "127.0.0.1"
 	MysqlPort = 3306
 	//MysqlDefaultDatabase = "test2"
@@ -28,9 +29,9 @@ func init() {
 	orm.RegisterModel(new(AdminUsers),new(Realtrade),new(Vitualtrade),
 		new(Asset),new(Parter),new(Director),new(Player),new(Score),
 		new(Scorerecord),new(Depositrecord),new(Withdrawrecord),
-		new(BankInfo),new(Subject),new(DepositEnsureRecord),new(Clientversion),
+		new(BankInfo),new(Subject),new(Clientversion),
 		new(AdminRoleUsers),new(Lastconnect),new(Depositbank),new(Odds),new(OddsInfo),
-		new(Takescorerecord),new(Reconciliation),new(Depositway))
+		new(Takescorerecord),new(Reconciliation),new(Depositway),new(Remarks),new(Sounds),new(Payamount),new(Alipayensure))
 	//自动创建表 参数二为是否drop然后创建表   参数三是否打印创建表过程
 	db,_ := orm.GetDB("default")
 	db.SetConnMaxLifetime(time.Second*5)
