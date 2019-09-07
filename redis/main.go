@@ -174,5 +174,13 @@ func main() {
 	time.Sleep(time.Second*2)
 	fmt.Println(SetRedisLock("testhehe",1))
 
+	/*
+	key uid_标的物
+	filed 赔率 value 下单时间
+	filed 是否经过赔率变化 value 0/1
+
+
+	*/
+
 
 }

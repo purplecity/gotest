@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"gotest/sql/Operation"
 	"gotest/sql/mysql"
+	"sync"
 )
 
 func main() {
@@ -18,10 +18,19 @@ func main() {
 
 
 	userlist := []mysql.AdminUsers{}
-	mysql.GetAllRecord("AdminUsers", map[string]interface{}{"Phonenumber__startswith":"0104"},&userlist)
+	mysql.GetAllRecord("AdminUsers", map[string]interface{}{"Phonenumber__startswith":"1688"},&userlist)
 	fmt.Println(len(userlist))
 
-
+	done := sync.WaitGroup{}
+	done.Add(1000)
+	for _,x := range userlist {
+		go func() {
+			mysql.UpdateByCond("Asset", map[string]interface{}{"Uid":x.Uid}, map[string]interface{}{"Balance":1000000})
+			done.Done()
+		}()
+	}
+	done.Wait()
+	/*
 	for _,x := range userlist {
 
 		tradeInfo := []mysql.Realtrade{}
@@ -57,7 +66,7 @@ func main() {
 		}
 
 	}
-
+	*/
 
 
 

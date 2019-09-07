@@ -12,7 +12,8 @@ const (
 	MysqlUserName = "root"
 	//MysqlPassWord = "k"
 	MysqlPassWord = "7U'G~1LzI+]3_~D"
-	MysqlIP = "47.244.212.51"
+	MysqlIP = "47.244.217.66"
+	//MysqlIP = "47.244.212.51"
 	//MysqlIP = "127.0.0.1"
 	MysqlPort = 3306
 	//MysqlDefaultDatabase = "test2"
@@ -37,7 +38,7 @@ func init() {
 	db.SetConnMaxLifetime(time.Second*5)
 	//orm.Debug = true
 	//自动创建表 参数二为是否drop然后创建表   参数三是否打印创建表过程
-	orm.RunSyncdb("default",false,true)
+	orm.RunSyncdb("default",true,true)
 }
 
 var hpOrm orm.Ormer
