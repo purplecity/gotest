@@ -177,7 +177,7 @@ func main() {
 	/*
 	key uid_标的物
 	filed 赔率 value 下单时间
-	filed 是否经过赔率变化 value 0/1
+	filed 第n次赔率变化
 
 
 	*/
