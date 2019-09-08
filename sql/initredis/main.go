@@ -123,7 +123,7 @@ func main() {
 	LevelFourGreaterOdds,_ := strconv.ParseFloat(btcoddsinfo["LevelFourGreaterOdds"],64)
 	LevelFourLessOdds,_ := strconv.ParseFloat(btcoddsinfo["LevelFourLessOdds"],64)
 	log.Printf("%+v\n",btcoddsinfo)
-	log.Printf("%+v,%+v,%+v,%+v\n%+v,%+v,%+v,%+v\n%+v,%+v,%+v,%+v\n%+v,%+v,%+v\n",
+	log.Printf("%+v,%+v,%+v\n%+v,%+v,%+v\n%+v,%+v,%+v\n%+v,%+v\n",
 		LevelOneMaxDv,LevelOneGreaterOdds,LevelOneLessOdds,
 		LevelTwoMaxDv,LevelTwoGreaterOdds,LevelTwoLessOdds,
 		LevelThreeMaxDv,LevelThreeGreaterOdds,LevelThreeLessOdds,
