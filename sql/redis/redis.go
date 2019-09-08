@@ -226,8 +226,16 @@ func GetRedisOddsClient() *hpRedisClient {
 }
 
 
-func HPHMSetOdds(key string, value map[string]interface{}) {
+func HPOddsHMSet(key string, value map[string]interface{}) {
 	client := GetRedisOddsClient()
 	client.redisClient.HMSet(key,value)
 }
 
+func HPOddsHGetAll(key string) map[string]string {
+	client := GetRedisOddsClient()
+	vc, err := client.redisClient.HGetAll(key).Result()
+	if err != nil {
+		log.Printf("ERROR----HPOddsHGetAll failed----err:%+v\n",err)
+	}
+	return vc
+}
