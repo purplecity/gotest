@@ -47,31 +47,7 @@ func main() {
 	if err != nil {
 		log.Printf("ERROR----helloworld failed----err:%+v\n", err)
 	}
-	/*
-	data := baseResponse{}
-	body, _ := ioutil.ReadAll(resp.Body)
-	json.Unmarshal([]byte(body), &data)
-	log.Printf("get response %+v\n",data)
 
-	 */
-
-	/*
-	reader,err := gzip.NewReader(resp.Body)
-	if err != nil {
-		fmt.Println("http resp unzip is failed,err: ", err)
-	}
-	var buf2 []byte
-	readBytes, _ := reader.Read(buf2)
-	your_to_byte, _ := base64.StdEncoding.DecodeString(string(readBytes))
-	reqStruct := map[string]interface{}{}
-	json.Unmarshal([]byte(your_to_byte),&reqStruct)
-	log.Printf("Info----get response----%+v\n",reqStruct)
-	defer reader.Close()
-	defer resp.Body.Close()
-	req.Body.Close()
-
-
-	 */
 	gr,err := gzip.NewReader(resp.Body)
 	if err != nil {
 		fmt.Println("http resp unzip is failed,err: ", err)
