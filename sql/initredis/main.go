@@ -1,10 +1,5 @@
 package main
 
-import (
-	"gotest/sql/redis"
-	"log"
-	"strconv"
-)
 var(
 	BTCOddsInfo = "BTCOddsInfo"
 	SHCIOddsInfo = "SHCIOddsInfo"
@@ -95,7 +90,7 @@ var(
 )
 
 func main() {
-
+	/*
 	redis.HPOddsHMSet(BTCOddsInfo,BTCMAP)
 	redis.HPOddsHMSet(SHCIOddsInfo,SHCIMAP)
 	redis.HPOddsHMSet(SZCIOddsInfo,SZCIMAP)
@@ -128,5 +123,5 @@ func main() {
 		LevelTwoMaxDv,LevelTwoGreaterOdds,LevelTwoLessOdds,
 		LevelThreeMaxDv,LevelThreeGreaterOdds,LevelThreeLessOdds,
 		LevelFourGreaterOdds,LevelFourLessOdds)
-
+	*/
 }
