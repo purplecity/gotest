@@ -4,9 +4,9 @@ import (
 	"gotest/sql/redis"
 )
 var(
-	BTCODDS = "BTCODDS"
-	SHCIODDS = "SHCIODDS"
-	SZCIODDS = "SZCIODDS"
+	BTCOddsInfo = "BTCOddsInfo"
+	SHCIOddsInfo = "SHCIOddsInfo"
+	SZCIOddsInfo = "SZCIOddsInfo"
 
 	BTCLevelOneMinDv = 0
 	BTCLevelOneMaxDv = 50000
@@ -107,10 +107,20 @@ var(
 		"LevelFourGreaterOdds":SZCILevelFourGreaterOdds,"LevelFourLessOdds":SZCILevelFourLessOdds,
 	}
 
+	BTCCurOdds = "BTCCurOdds"
+	SHCICurOdds = "SHCICurOdds"
+	SZCICurOdds = "SZCICurOdds"
+
+	BTCCURMAP = map[string]interface{}{"UpOdds":0.9,"DownOdds":0.9,"Count":0}
+	SHCICURMAP = map[string]interface{}{"UpOdds":0.9,"DownOdds":0.9,"Count":0}
+	SZCICURMAP = map[string]interface{}{"UpOdds":0.9,"DownOdds":0.9,"Count":0}
 )
 
 func main() {
-	redis.HPHMSetOdds(BTCODDS,BTCMAP)
-	redis.HPHMSetOdds(SHCIODDS,SHCIMAP)
-	redis.HPHMSetOdds(SZCIODDS,SZCIMAP)
+	redis.HPHMSetOdds(BTCOddsInfo,BTCMAP)
+	redis.HPHMSetOdds(SHCIOddsInfo,SHCIMAP)
+	redis.HPHMSetOdds(SZCIOddsInfo,SZCIMAP)
+	redis.HPHMSetOdds(BTCCurOdds,BTCCURMAP)
+	redis.HPHMSetOdds(SHCICurOdds,SHCICURMAP)
+	redis.HPHMSetOdds(SZCICurOdds,SZCICURMAP)
 }

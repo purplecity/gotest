@@ -26,13 +26,13 @@ func main() {
 		Transport:&trans,
 	}
 
-	ph := int(16880072)
-	for ph <= 16881000 {
+	ph := int(16880001)
+	for ph <= 168801000 {
 		x := map[string]string{}
 		s := strconv.Itoa(ph)
 		x["pn"] =  s
 		x["pw"] =  s
-		x["ic"] = "7r7Doi"
+		x["ic"] = "1KxlvP"
 		m, _ := json.Marshal(x)
 		var jsonStr= []byte(m)
 		url := "https://app-hpoption-web.azfaster.com:8081/register"
@@ -50,5 +50,4 @@ func main() {
 		time.Sleep(time.Second*1)
 		ph++
 	}
-
 }
