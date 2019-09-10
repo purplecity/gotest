@@ -136,7 +136,7 @@ var (
 func main() {
 
 
-
+	/*
 	mysql.AddOneRecord(&mysql.Subject{Symbol:btcsy,Type:btctype,Isopen:btcisopen,Firstopenhour:btcFirstopenhour,
 		Firstopenmin:btcFirstopenmin,Firstclosehour:btcFirstclosehour,Firstclosemin:btcFirstclosemin})
 	mysql.AddOneRecord(&mysql.Subject{Symbol:shcisy,Type:shcitype,Isopen:shciisopen,Firstopenhour:shciFirstopenhour,
@@ -147,6 +147,8 @@ func main() {
 		Firstopenmin:szciFirstopenmin,Firstclosehour:szciFirstclosehour,Firstclosemin:szciFirstclosemin,
 		Secondopenhour:szciSecondopenhour,Secondopenmin:szciSecondopenmin,Secondclosehour:szciSecondclosehour,
 		Secondclosemin:szciSecondclosemin})
+
+	 */
 
 	mysql.AddOneRecord(&mysql.Clientversion{Version:version,Isforce:isforce,Createtime:time.Now().Unix()})
 

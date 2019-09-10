@@ -10,10 +10,10 @@ import (
 )
 
 var (
-	RedisAddr = "127.0.0.1:6379"
-	//RedisAddr = "47.244.212.51:6379"
-	RedisPassword = "k"
-	//RedisPassword = "7U'G~1LzI+]3_~D"
+	//RedisAddr = "127.0.0.1:6379"
+	RedisAddr = "47.244.212.51:6379"
+	//RedisPassword = "k"
+	RedisPassword = "7U'G~1LzI+]3_~D"
 	RedisDB = 0 //验证码以及次数
 	RedisOrderDB = 1 //下单
 	RedisLockDB = 2 //锁
