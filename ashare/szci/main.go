@@ -36,7 +36,7 @@ func main() {
 	for range tick {
 
 		for count < ReconnctMaxTime {
-			resp, err := client.Do(request) //超时设置
+			resp, err := client.Do(request)
 			if err != nil  {
 				count++
 				log.Printf("ERROR----request xshg failed----err:%v\n", err)
@@ -46,18 +46,17 @@ func main() {
 				respmap := map[string]interface{}{}
 				readBytes, _ := ioutil.ReadAll(resp.Body)
 				json.Unmarshal([]byte(readBytes), &respmap)
-				if respmap["retMsg"].(string) != "Success" {
+				//fmt.Printf("%v\n",respmap)
+				if  _,ok := respmap["retMsg"];!ok || respmap["retMsg"] != "Success" {
 					count++
 					log.Printf("ERROR----xshg reponse err----resp:%v\n", respmap)
 					continue
 				} else {
 					Mu.Lock()
-					log.Printf("%+v,%+v\n", time.Now().Unix(),respmap)
-					//log.Printf("%T\n", respmap["data"])
-					//LastPrice = respmap["data"].([]interface{})[0].(map[string]interface{})["lastPrice"].(float64)
-					//log.Printf("%+v\n", LastPrice)
+					LastPrice = respmap["data"].([]interface{})[0].(map[string]interface{})["lastPrice"].(float64)
 					Mu.Unlock()
 					resp.Body.Close()
+					log.Printf("%+v\n",LastPrice)
 					break
 				}
 			}
@@ -65,7 +64,6 @@ func main() {
 
 		if count == ReconnctMaxTime {
 			log.Panicf("ERROR----request xshg 3th failed----err:%v\n", err)
-			//停止web下单a股
 		}
 		count = 0
 	}

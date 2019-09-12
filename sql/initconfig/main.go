@@ -136,7 +136,7 @@ var (
 func main() {
 
 
-	/*
+
 	mysql.AddOneRecord(&mysql.Subject{Symbol:btcsy,Type:btctype,Isopen:btcisopen,Firstopenhour:btcFirstopenhour,
 		Firstopenmin:btcFirstopenmin,Firstclosehour:btcFirstclosehour,Firstclosemin:btcFirstclosemin})
 	mysql.AddOneRecord(&mysql.Subject{Symbol:shcisy,Type:shcitype,Isopen:shciisopen,Firstopenhour:shciFirstopenhour,
@@ -148,10 +148,11 @@ func main() {
 		Secondopenhour:szciSecondopenhour,Secondopenmin:szciSecondopenmin,Secondclosehour:szciSecondclosehour,
 		Secondclosemin:szciSecondclosemin})
 
-	 */
+
 
 	mysql.AddOneRecord(&mysql.Clientversion{Version:version,Isforce:isforce,Createtime:time.Now().Unix()})
 
+	/*
 	mysql.AddOneRecord(&mysql.Odds{Symbol:btcoddssy,Upodds:btcoddsUpodds,Downodds:btcoddsDownodds})
 	mysql.AddOneRecord(&mysql.Odds{Symbol:shcioddssy,Upodds:shcioddsUpodds,Downodds:shcioddsDownodds})
 	mysql.AddOneRecord(&mysql.Odds{Symbol:szcioddssy,Upodds:szcioddsUpodds,Downodds:szcioddsDownodds})
@@ -183,7 +184,7 @@ func main() {
 		Greaterodds:szcioiThreeGreaterodds,Lessodds:szcioiThreeLessodds})
 	mysql.AddOneRecord(&mysql.OddsInfo{Symbol:szcioisy,Level:szcioiLevelFour,Mindv:szcioiFourMindv,
 		Greaterodds:szcioiFourGreaterodds,Lessodds:szcioiFourLessodds})
-
+	*/
 	mysql.AddOneRecord(&mysql.Depositway{Way:1,Isopen:1})
 	mysql.AddOneRecord(&mysql.Depositway{Way:2,Isopen:0})
 	mysql.AddOneRecord(&mysql.Depositway{Way:3,Isopen:1})
