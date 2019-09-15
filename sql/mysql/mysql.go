@@ -29,7 +29,7 @@ func init() {
 		new(Asset),new(Parter),new(Director),new(Player),new(Score),
 		new(Scorerecord),new(Depositrecord),new(Withdrawrecord),
 		new(BankInfo),new(Subject),new(Clientversion),
-		new(AdminRoleUsers),new(Lastconnect),new(Depositbank),new(Odds),new(OddsInfo),
+		new(AdminRoleUsers),new(Lastconnect),new(Depositbank),
 		new(Takescorerecord),new(Reconciliation),new(Depositway),new(Remarks),
 		new(Sounds),new(Payamount),new(Alipayensure))
 	//自动创建表 参数二为是否drop然后创建表   参数三是否打印创建表过程
@@ -37,7 +37,7 @@ func init() {
 	db.SetConnMaxLifetime(time.Second*5)
 	//orm.Debug = true
 	//自动创建表 参数二为是否drop然后创建表   参数三是否打印创建表过程
-	orm.RunSyncdb("default",false,true)
+	orm.RunSyncdb("default",true,true)
 }
 
 var hpOrm orm.Ormer

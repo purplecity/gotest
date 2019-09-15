@@ -137,18 +137,9 @@ func main() {
 
 
 
-	mysql.AddOneRecord(&mysql.Subject{Symbol:btcsy,Type:btctype,Isopen:btcisopen,Firstopenhour:btcFirstopenhour,
-		Firstopenmin:btcFirstopenmin,Firstclosehour:btcFirstclosehour,Firstclosemin:btcFirstclosemin})
-	mysql.AddOneRecord(&mysql.Subject{Symbol:shcisy,Type:shcitype,Isopen:shciisopen,Firstopenhour:shciFirstopenhour,
-		Firstopenmin:shciFirstopenmin,Firstclosehour:shciFirstclosehour,Firstclosemin:shciFirstclosemin,
-		Secondopenhour:shciSecondopenhour,Secondopenmin:shciSecondopenmin,Secondclosehour:shciSecondclosehour,
-	Secondclosemin:shciSecondclosemin})
-	mysql.AddOneRecord(&mysql.Subject{Symbol:szcisy,Type:szcitype,Isopen:szciisopen,Firstopenhour:szciFirstopenhour,
-		Firstopenmin:szciFirstopenmin,Firstclosehour:szciFirstclosehour,Firstclosemin:szciFirstclosemin,
-		Secondopenhour:szciSecondopenhour,Secondopenmin:szciSecondopenmin,Secondclosehour:szciSecondclosehour,
-		Secondclosemin:szciSecondclosemin})
-
-
+	mysql.AddOneRecord(&mysql.Subject{Symbol:btcsy,Type:btctype,Isopen:btcisopen})
+	mysql.AddOneRecord(&mysql.Subject{Symbol:shcisy,Type:shcitype,Isopen:shciisopen})
+	mysql.AddOneRecord(&mysql.Subject{Symbol:szcisy,Type:szcitype,Isopen:szciisopen})
 
 	mysql.AddOneRecord(&mysql.Clientversion{Version:version,Isforce:isforce,Createtime:time.Now().Unix()})
 
@@ -189,7 +180,7 @@ func main() {
 	mysql.AddOneRecord(&mysql.Depositway{Way:2,Isopen:0})
 	mysql.AddOneRecord(&mysql.Depositway{Way:3,Isopen:1})
 
-	mysql.AddOneRecord(&mysql.Payamount{Payway:1,One:156,Two:298,Three:498,Four:998,Five:2098,Six:4908})
+	//mysql.AddOneRecord(&mysql.Payamount{Payway:1,One:156,Two:298,Three:498,Four:998,Five:2098,Six:4908})
 
 	//mysql.UpdateByCond("AdminUsers", map[string]interface{}{}, map[string]interface{}{"Valid":1})
 }

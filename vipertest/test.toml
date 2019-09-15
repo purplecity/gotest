@@ -6,15 +6,13 @@ SZCIBaseURL = "https://api.wmcloud.com/data/v1/api/market2/getTickRTSnapshotL2.j
 KeepaliveInterval = 300
 PingPongTimeout = 10
 
-[ALiPayAmount]
 One = 156
 Two = 298
 Three = 498
 Four = 998
-Five = 2098
+Five = 20985
 Six = 4908
 
-[BTCOddsInfo]
 BTCLevelOneMaxDv = 50000
 BTCLevelOneGreaterOdds = 0.9
 BTCLevelOneLessOdds = 0.9
@@ -30,7 +28,6 @@ BTCLevelThreeLessOdds = 0.1
 BTCLevelFourGreaterOdds = 1.8
 BTCLevelFourLessOdds = 0
 
-[SHCIOddsInfo]
 SHCILevelOneMaxDv = 50000
 SHCILevelOneGreaterOdds = 0.9
 SHCILevelOneLessOdds = 0.9
@@ -46,7 +43,6 @@ SHCILevelThreeLessOdds = 0.1
 SHCILevelFourGreaterOdds = 1.8
 SHCILevelFourLessOdds = 0
 
-[SZCIOddsInfo]
 SZCILevelOneMaxDv = 50000
 SZCILevelOneGreaterOdds = 0.9
 SZCILevelOneLessOdds = 0.9

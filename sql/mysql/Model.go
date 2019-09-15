@@ -183,14 +183,6 @@ type Subject struct {
 	Symbol 			string      `orm:"index" description:"标的物名称"`
 	Type   			string 		`orm:"index" description:"标的物所属种类"`
 	Isopen			int 		`orm:"index" description:"是否开启该标的物竞猜服务"` //0 关闭 1开启
-	Firstopenhour 	int   	`description:"每天第一次开启小时"`
-	Firstopenmin 	int   	`description:"每天第一次开启分钟"`
-	Firstclosehour	int   	`description:"每天第一次关闭小时"`
-	Firstclosemin 	int   	`description:"每天第一次开启分钟"`
-	Secondopenhour 	int   	`description:"每天第二次开启小时"`
-	Secondopenmin 	int   	`description:"每天第二次开启分钟"`
-	Secondclosehour int   	`description:"每天第二次关闭小时"`
-	Secondclosemin  int   	`description:"每天第二次关闭分钟"`
 }
 
 type Clientversion struct {
@@ -220,24 +212,6 @@ type Depositbank struct {
 	City		string			`description:"开户城市"`
 	Province   	string			`description:"开户省份"`
 	Bankbranch 	string			`orm:"index" description:"开户支行"`
-}
-
-//默认等级为1 赔率也要写
-type Odds struct {
-	Id          int         	`orm:"pk;auto"`
-	Symbol 		string      `orm:"index" description:"标的物名称"`
-	Upodds 			float64		`orm:"digits(12);decimals(2)" description:"看涨赔率"`
-	Downodds		float64		`orm:"digits(12);decimals(2)" description:"看跌赔率"`
-}
-
-type OddsInfo struct {
-	Id          int         	`orm:"pk;auto"`
-	Symbol 		string      `orm:"index" description:"标的物名称"`
-	Level 		int      	`orm:"index" description:"风控等级"`
-	Mindv  		float64			`orm:"digits(12);decimals(2)" description:"最小差值"`
-	Maxdv  		float64			`orm:"digits(12);decimals(2)" description:"最大差值"`
-	Greaterodds 		float64			`orm:"digits(12);decimals(2)" description:"大方赔率"`
-	Lessodds	float64			`orm:"digits(12);decimals(2)" description:"小方赔率"`
 }
 
 //每天1点结算
@@ -274,13 +248,6 @@ type Sounds struct {
 type Payamount struct {
 	Id 					int			`orm:"pk;auto"`
 	Payway				int		`orm:"unique" description:"充值方式"` //1支付宝 2微信 3银行卡
-	One 				int		`description:"第一个充值数额"`
-	Two 				int		`description:"第二个充值数额"`
-	Three 				int		`description:"第三个充值数额"`
-	Four				int		`description:"第四个充值数额"`
-	Five 				int		`description:"第五个充值数额"`
-	Six					int		`description:"第六个充值数额"`
-
 }
 
 type Alipayensure struct {

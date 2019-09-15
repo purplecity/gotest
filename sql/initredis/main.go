@@ -2,8 +2,6 @@ package main
 
 import (
 	"gotest/sql/redis"
-	"log"
-	"strconv"
 )
 
 var(
@@ -97,13 +95,11 @@ var(
 
 func main() {
 
-	redis.HPOddsHMSet(BTCOddsInfo,BTCMAP)
-	redis.HPOddsHMSet(SHCIOddsInfo,SHCIMAP)
-	redis.HPOddsHMSet(SZCIOddsInfo,SZCIMAP)
 	redis.HPOddsHMSet(BTCCurOdds,BTCCURMAP)
 	redis.HPOddsHMSet(SHCICurOdds,SHCICURMAP)
 	redis.HPOddsHMSet(SZCICurOdds,SZCICURMAP)
 
+	/*
 	btccurodds := redis.HPOddsHGetAll(BTCCurOdds)
 	log.Printf("%+v\n",btccurodds)
 	count,_ := strconv.Atoi(btccurodds["Count"])
@@ -129,5 +125,5 @@ func main() {
 		LevelTwoMaxDv,LevelTwoGreaterOdds,LevelTwoLessOdds,
 		LevelThreeMaxDv,LevelThreeGreaterOdds,LevelThreeLessOdds,
 		LevelFourGreaterOdds,LevelFourLessOdds)
-
+	*/
 }
