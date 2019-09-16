@@ -25,6 +25,7 @@ func init() {
 		fmt.Sprintf("%s:%s@tcp(%s:%v)/%s?charset=utf8&allowNativePasswords=true",
 			MysqlUserName, MysqlPassWord, MysqlIP, MysqlPort, MysqlDefaultDatabase))
 	//注册模型
+	/*
 	orm.RegisterModel(new(AdminUsers),new(Realtrade),new(Vitualtrade),
 		new(Asset),new(Parter),new(Director),new(Player),new(Score),
 		new(Scorerecord),new(Depositrecord),new(Withdrawrecord),
@@ -32,12 +33,15 @@ func init() {
 		new(AdminRoleUsers),new(Lastconnect),new(Depositbank),
 		new(Takescorerecord),new(Reconciliation),new(Depositway),new(Remarks),
 		new(Sounds),new(Payamount),new(Alipayensure))
+
+	 */
+	orm.RegisterModel(new(Realtrade))
 	//自动创建表 参数二为是否drop然后创建表   参数三是否打印创建表过程
 	db,_ := orm.GetDB("default")
 	db.SetConnMaxLifetime(time.Second*5)
 	//orm.Debug = true
 	//自动创建表 参数二为是否drop然后创建表   参数三是否打印创建表过程
-	orm.RunSyncdb("default",true,true)
+	orm.RunSyncdb("default",false,true)
 }
 
 var hpOrm orm.Ormer
