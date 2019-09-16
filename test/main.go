@@ -1,7 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func main() {
-	fmt.Println(int(float64(1.00)))
+	fmt.Println(time.Now())
 }
