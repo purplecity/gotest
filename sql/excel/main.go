@@ -20,37 +20,37 @@ func main() {
 		fmt.Println(err.Error())
 	}
 
-	frow := sheet.AddRow()
-	phcell := frow.AddCell()
-	phcell.Value = "手机号"
+	ffrow := sheet.AddRow()
+	fphcell := ffrow.AddCell()
+	fphcell.Value = "手机号"
 
-	ovcell := frow.AddCell()
-	ovcell.Value = "下单价格"
+	fovcell := ffrow.AddCell()
+	fovcell.Value = "下单价格"
 
-	svcell := frow.AddCell()
-	svcell.Value = "结算价格"
+	fsvcell := ffrow.AddCell()
+	fsvcell.Value = "结算价格"
 
-	sycell := frow.AddCell()
-	sycell.Value = "标的物"
+	fsycell := ffrow.AddCell()
+	fsycell.Value = "标的物"
 
-	htcell := frow.AddCell()
-	htcell.Value = "下单时间"
+	fhtcell := ffrow.AddCell()
+	fhtcell.Value = "下单时间"
 
-	incell := frow.AddCell()
-	incell.Value = "下单金额"
+	fincell := ffrow.AddCell()
+	fincell.Value = "下单金额"
 
-	outcell := frow.AddCell()
-	outcell.Value = "结算金额"
+	foutcell := ffrow.AddCell()
+	foutcell.Value = "结算金额"
 
-	oddscell := frow.AddCell()
-	oddscell.Value = "赔率"
+	foddscell := ffrow.AddCell()
+	foddscell.Value = "赔率"
 
-	rscell := frow.AddCell()
-	rscell.Value = "输赢"
+	frscell := ffrow.AddCell()
+	frscell.Value = "输赢"
 
 
 
-	cond := map[string]interface{}{"Handletime__get":1567995000,"Handletime__lt":1568013000}
+	cond := map[string]interface{}{"Handletime__gte":1567995000,"Handletime__lt":1568013000}
 	rs := []mysql.Realtrade{}
 	mysql.GetAllRecord("Realtrade",cond,&rs)
 
