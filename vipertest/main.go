@@ -14,7 +14,7 @@ func main() {
 	if err := v.ReadInConfig();err != nil {
 		fmt.Printf("err:%+v\n",err)
 	}
-	fmt.Printf("%+T\n",v.Get("KeepaliveInterval"))
+	fmt.Printf("%+T\n",v.Get("amount"))
 
 	go func() {
 		for {

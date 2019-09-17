@@ -6,6 +6,7 @@ SZCIBaseURL = "https://api.wmcloud.com/data/v1/api/market2/getTickRTSnapshotL2.j
 KeepaliveInterval = 300
 PingPongTimeout = 10
 
+[amount]
 One = 156
 Two = 298
 Three = 498

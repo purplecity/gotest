@@ -87,7 +87,7 @@ func main() {
 	req2.Body.Close()
 
 	tt := time.Now()
-	et := time.Date(tt.Year(), tt.Month(), tt.Day(), 11, 30, 0, 0, tt.Location()).Unix()
+	et := time.Date(tt.Year(), tt.Month(), tt.Day(), 15, 0, 0, 0, tt.Location()).Unix()
 	t := tt.Unix()
 	for t < et {
 		z := map[string]interface{}{}

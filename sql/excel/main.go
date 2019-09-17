@@ -50,9 +50,10 @@ func main() {
 
 
 
-	cond := map[string]interface{}{"Handletime__gte":1567995000,"Handletime__lt":1568013000}
+	cond := map[string]interface{}{"Handletime__gte":1568599200,"Handletime__lt":1568617200}
 	rs := []mysql.Realtrade{}
 	mysql.GetAllRecord("Realtrade",cond,&rs)
+	fmt.Println(len(rs))
 
 	for _,v := range rs {
 		frow := sheet.AddRow()
@@ -82,11 +83,13 @@ func main() {
 
 		rscell := frow.AddCell()
 		rscell.Value = strconv.FormatInt(int64(v.Orderresult),10)
+
 	}
 
 	err = file.Save(testfile)
 	if err != nil {
 		fmt.Println("写入失败")
 	}
+
 
 }
