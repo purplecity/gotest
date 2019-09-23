@@ -98,6 +98,7 @@ func main() {
 	redis.HPOddsHMSet(BTCCurOdds,BTCCURMAP)
 	redis.HPOddsHMSet(SHCICurOdds,SHCICURMAP)
 	redis.HPOddsHMSet(SZCICurOdds,SZCICURMAP)
+	redis.SetRedLine("redline","0")
 
 	/*
 	btccurodds := redis.HPOddsHGetAll(BTCCurOdds)

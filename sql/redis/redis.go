@@ -142,6 +142,7 @@ func GetOrderKeys(pattern string) []string {
 
 
 
+
 func GetRedisLockClient() *hpRedisClient {
 	if hplockclient == nil {
 		client := redis.NewClient(&redis.Options{
