@@ -1,12 +1,10 @@
 package main
 
 import (
-	"crypto/rand"
 	"fmt"
 	"github.com/go-redis/redis" // thread-safe. client like database/HPSQL DB, represent a conn pool
+	"gotest/redis/Snowflake"
 	"log"
-	r "math/rand"
-	"strconv"
 	"time"
 )
 
@@ -19,16 +17,101 @@ var (
 	RedisLockDB = 2
 	RedisMaxRetries = 1
 	RedisLockExpireTime = 2
+	RedisLockSleepTime = 40
+	RedLine = "redline"
 )
+
 
 type hpRedisClient struct {
 	redisClient    *redis.Client
 }
+
+var hpclient *hpRedisClient
 var hporderclient *hpRedisClient
+var hplockclient *hpRedisClient
+
+//for 验证码
+func GetRedisClient() (*hpRedisClient,error) {
+	if hpclient == nil {
+		client := redis.NewClient(&redis.Options{
+			Addr:       RedisAddr,
+			Password:   RedisPassword,
+			DB:         RedisDB,
+			MaxRetries: RedisMaxRetries,
+		})
+		_, err := client.Ping().Result()
+		if err != nil {
+			log.Printf("ERROR----connect Cache failed----err:%v\n",err)
+			return nil,err
+		}
+		hpclient = &hpRedisClient{redisClient:client}
+	}
+	return hpclient,nil
+}
+
+func GetRedisValidcode(ph string) (string,error) {
+	client,err := GetRedisClient()
+	if err != nil {
+		return "",err
+	}
+	vc, err  := client.redisClient.Get("ValidCode:"+ph).Result()
+	if err != nil {
+		log.Printf("ERROR----Not have this phonenumber validcode----err:%+v\n",err)
+		return "",err
+	}
+	return vc,nil
+}
+
+func SetRedisValidcode(key,value string,ext time.Duration) error {
+	client,err := GetRedisClient()
+	if err != nil {
+		return err
+	}
+	client.redisClient.Set(key,value,ext)
+	return nil
+}
+
+func ExistSMSLimit(key string) (int64,error) {
+	client,err := GetRedisClient()
+	if err != nil {
+		return 0,err
+	}
+	vc, err := client.redisClient.Exists(key).Result()
+	if err != nil {
+		log.Printf("ERROR----ExistLimit failed----err:%+v\n",err)
+		return 0,err
+	}
+	return vc,err
+}
+
+func GetRedisLimit(key string) (map[string]string,error) {
+	client,err := GetRedisClient()
+	if err != nil {
+		return nil,err
+	}
+	vc, err  := client.redisClient.HGetAll(key).Result()
+	if err != nil {
+		log.Printf("ERROR----GetRedisLimit failed----err:%+v\n",err)
+		return nil,err
+	}
+	return vc,nil
+}
+
+
+func HsetSMSTime(key string) error {
+	client,err := GetRedisClient()
+	if err != nil {
+		return err
+	}
+	client.redisClient.HSet(key,fmt.Sprintf("%+v",time.Now().UnixNano()),"0")
+	return nil
+}
 
 
 
-func GetRedisOrderClient() *hpRedisClient {
+
+//for 存单子为了赔率检测 和 亏损检测
+func GetRedisOrderClient() (*hpRedisClient,error) {
 	if hporderclient == nil {
 		client := redis.NewClient(&redis.Options{
 			Addr:       RedisAddr,
@@ -38,45 +121,89 @@ func GetRedisOrderClient() *hpRedisClient {
 		})
 		_, err := client.Ping().Result()
 		if err != nil {
-			log.Panicf("ERROR----connect Cache failed----err:%v\n",err)
+			log.Printf("ERROR----connect Cache failed----err:%v\n", err)
+			return nil,err
 		}
-		hporderclient = &hpRedisClient{redisClient:client}
+		hporderclient = &hpRedisClient{redisClient: client}
 	}
-	return hporderclient
+	return hporderclient,nil
 }
 
-func SetRedisOrder(key string) {
-	client := GetRedisOrderClient()
+
+func HPOddsHMSet(key string, value map[string]interface{}) error {
+	client,err := GetRedisOrderClient()
+	if err != nil {
+		return err
+	}
+	client.redisClient.HMSet(key,value)
+	return nil
+}
+
+func HPOddsHGetAll(key string) (map[string]string,error) {
+	client,err := GetRedisOrderClient()
+	if err != nil {
+		return nil,err
+	}
+	vc, err := client.redisClient.HGetAll(key).Result()
+	if err != nil {
+		log.Printf("ERROR----HPOddsHGetAll failed----err:%+v\n",err)
+		return nil,err
+	}
+	return vc,nil
+}
+
+
+func SetRedisOrder(key string) error {
+	client,err := GetRedisOrderClient()
+	if err != nil {
+		return err
+	}
 	client.redisClient.Set(key,0,time.Minute*1)
+	return nil
 }
 
-func GetOrderKeys(pattern string) []string {
-	client := GetRedisOrderClient()
-	v,_ := client.redisClient.Keys(pattern).Result()
-	return v
-}
-
-
-func genRandomInvitationCode(n int) string {
-	alphabets := []byte(`0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`)
-	var bytes = make([]byte, n)
-	var randBy bool
-	if num, err := rand.Read(bytes); num != n || err != nil {
-		r.Seed(time.Now().UnixNano())
-		randBy = true
+func GetOrderKeys(pattern string) ([]string,error) {
+	client,err := GetRedisOrderClient()
+	if err != nil {
+		return nil,err
 	}
-	for i, b := range bytes {
-		if randBy {
-			bytes[i] = alphabets[r.Intn(len(alphabets))]
-		} else {
-			bytes[i] = alphabets[b%byte(len(alphabets))]
-		}
+	v,err:= client.redisClient.Keys(pattern).Result()
+	if err != nil {
+		log.Printf("ERROR----GetOrderKeys failed----err:%+v\n",err)
+		return nil,err
 	}
-	return string(bytes)
+	return v,nil
 }
 
-func GetRedisLockClient() *hpRedisClient {
-	if hporderclient == nil {
+
+func SetRedLine(symbol,value string) (string,error){
+	client,err := GetRedisOrderClient()
+	if err != nil {
+		return "",err
+	}
+	v,err := client.redisClient.Set(symbol+RedLine,value,0).Result()
+	fmt.Printf("%s,%+v\n",v,err)
+	return v,nil
+}
+
+func GetRedLine(symbol string) (bool,error) {
+	client,err := GetRedisOrderClient()
+	if err != nil {
+		return false,err
+	}
+	s, err  := client.redisClient.Get(symbol+RedLine).Result()
+	if err != nil {
+		log.Printf("ERROR----get redline  failed ----err:%+v\n",err)
+		return false,err
+	}
+	return s == "1",nil
+}
+
+
+
+// for 锁
+func GetRedisLockClient() (*hpRedisClient,error) {
+	if hplockclient == nil {
 		client := redis.NewClient(&redis.Options{
 			Addr:       RedisAddr,
 			Password:   RedisPassword,
@@ -85,102 +212,88 @@ func GetRedisLockClient() *hpRedisClient {
 		})
 		_, err := client.Ping().Result()
 		if err != nil {
-			log.Panicf("ERROR----connect Cache failed----err:%v\n", err)
+			log.Printf("ERROR----connect Cache failed----err:%v\n", err)
+			return nil,err
 		}
-		hporderclient = &hpRedisClient{redisClient: client}
+		hplockclient = &hpRedisClient{redisClient: client}
 	}
-	return hporderclient
+	return hplockclient,nil
 }
 
-func SetRedisLock(key string, value interface{}) (x bool){
-	client := GetRedisOrderClient()
-	x,err := client.redisClient.SetNX(key,value,time.Second*time.Duration(RedisLockExpireTime)).Result()
-	if  err!= nil {
-		log.Printf("ERROR----GetRedisLock failed ----err:%+v\n",err)
+func getRedisLock(key string) (string,error) {
+	client,err := GetRedisLockClient()
+	if err != nil {
+		return "",err
 	}
-	return
-}
-
-func GetRedisLock(key string) int64 {
-	client := GetRedisOrderClient()
 	x,err  := client.redisClient.Get(key).Result()
 	if  err!= nil {
 		log.Printf("ERROR----GetRedisLock failed ----err:%+v\n",err)
+		return "",err
 	}
-	v,_ := strconv.ParseInt(x,10,64)
-	return v
+	return x,nil
+}
+
+func delRedisLock(key string) error {
+	client,err := GetRedisLockClient()
+	if err != nil {
+		return err
+	}
+	client.redisClient.Del(key)
+	return nil
+}
+
+//暂时先不设置强制抢锁
+
+func RedisLock(key string) (string,error) {
+	v := Snowflake.GenID()
+	client,err := GetRedisLockClient()
+	if err != nil {
+		return "",err
+	}
+	for {
+		x,err := client.redisClient.SetNX(key,v,time.Second*time.Duration(RedisLockExpireTime)).Result()
+		if err!= nil {
+			log.Printf("ERROR----SetRedisLock failed ----err:%+v\n",err)
+			return "",err
+		} else if x {
+			break
+		} else {
+			time.Sleep(time.Millisecond*time.Duration(RedisLockSleepTime)) //中间执行打印出来结果大概30s毫秒左右
+		}
+	}
+	return v,nil
+}
+
+func RedisUnlock(key string) error{
+	/*
+		if uuid == Cache.GetRedisLock(uid) {
+			Cache.DelRedisLock(uid)  //
+		}
+	*/
+	// 大概120ms 判断的时间都要几倍于锁住块的执行的时间
+	return delRedisLock(key)
 }
 
 
-func main() {
-
-	/*
-	SetOddsMap("ODDS::BTC", map[string]interface{}{
-		"LevelOneMinDV":0,"LevelOneMaxDV":100000,"LevelOneMinOdds":0.9,"LevelOneMaxOdds":0.9,
-		"LevelTwoMinDV":100000,"LevelTwoMaxDV":200000,"LevelTwoMinOdds":0.6,"LevelTwoMaxOdds":1.2,
-		"LevelThreeMinDV":200000,"LevelThreeMaxDV":500000,"LevelThreeMinOdds":0.1,"LevelThreeMaxOdds":1.7,
-		"LevelFourMinDV":500000,"LevelFourMinOdds":0,"LevelFourMaxOdds":1.8,
-	})
-
-	c := sync.WaitGroup{}
-	c.Add(1200000)
-	for i := 0; i< 600000;i++ {
-		//有问题
-		x := genRandomInvitationCode(6)
-		y := genRandomInvitationCode(6)
-		 go func() {
-			 SetRedisOrder(fmt.Sprintf("BTCUP::%s::12345",x))
-			 c.Done()
-		 }()
-		 go func() {
-			 SetRedisOrder(fmt.Sprintf("BTCDOWN::%s::12345",y))
-			 c.Done()
-		 }()
+func SetSMSLimit(key string) error {
+	client,err := GetRedisClient()
+	if err != nil {
+		return err
 	}
-	c.Wait()
+	luaScript := redis.NewScript(`
+	redis.call("HSET", KEYS[1], ARGV[1], ARGV[2])
+	redis.call("EXPIRE", KEYS[1], ARGV[3])
+	return 1
+	`)
+	_,err = luaScript.Run(client.redisClient,[]string{key},"0","0",10).Result()
+	if err != nil {
+		log.Printf("ERROR----run lua script failed----err:%+v\n",err)
+		return err
+	}
+	return nil
+}
 
 
-	nt := time.Now().UnixNano()
-	l1 := GetOrderKeys("BTCUP::*::12345")
-	l2 := GetOrderKeys("BTCDOWN::*::12345")
-	m1 := float64(0)
-	m2 := float64(0)
-	cnt := sync.WaitGroup{}
-	cnt.Add(2)
-	go func() {
-		for _,v := range l1 {
-			x,_ := strconv.ParseFloat((strings.Split(v,"::"))[2],64)
-			m1 += x
-		}
-		cnt.Done()
-	}()
-
-	go func() {
-		for _,v := range l2 {
-			x,_ :=  strconv.ParseFloat((strings.Split(v,"::"))[2],64)
-			m2 += x
-		}
-		cnt.Done()
-	}()
-	cnt.Wait()
-	et := time.Now().UnixNano()
-	fmt.Printf("%+v,%+v,%+v,%+v\n",len(l1),len(l2),nt,et)
-
-	 */
-	fmt.Println(SetRedisLock("testhehe",1))
-	fmt.Println(time.Now().UnixNano())
-	fmt.Println(SetRedisLock("testhehe",1))
-	fmt.Println(time.Now().UnixNano()) //大概是0.2毫秒
-	time.Sleep(time.Second*2)
-	fmt.Println(SetRedisLock("testhehe",1))
-
-	/*
-	key uid_标的物
-	filed 赔率 value 下单时间
-	filed 第n次赔率变化
-
-
-	*/
-
-
+func main () {
+	SetSMSLimit("test")
 }

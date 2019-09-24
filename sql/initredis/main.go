@@ -1,8 +1,73 @@
 package main
 
 import (
-	"gotest/sql/redis"
+	"github.com/go-redis/redis"
+	"log"
 )
+
+type hpRedisClient struct {
+	redisClient    *redis.Client
+}
+
+var (
+	//RedisAddr = "127.0.0.1:6379"
+	RedisAddr = "47.244.212.51:6379"
+	//RedisPassword = "k"
+	RedisPassword = "7U'G~1LzI+]3_~D"
+	RedisDB = 0 //验证码以及次数
+	RedisOrderDB = 1 //下单
+	RedisLockDB = 2 //锁
+	RedisOddrDB = 3//赔率
+	RedisMaxRetries = 1
+	RedisLockSleepTime = 40
+	RedisLockExpireTime = 2
+	RedLine = "redline"
+)
+
+
+var hporderclient *hpRedisClient
+
+func GetRedisOrderClient() (*hpRedisClient,error) {
+	if hporderclient == nil {
+		client := redis.NewClient(&redis.Options{
+			Addr:       RedisAddr,
+			Password:   RedisPassword,
+			DB:         RedisOrderDB,
+			MaxRetries: RedisMaxRetries,
+		})
+		_, err := client.Ping().Result()
+		if err != nil {
+			log.Printf("ERROR----connect Cache failed----err:%v\n", err)
+			return nil, err
+		}
+		hporderclient = &hpRedisClient{redisClient: client}
+	}
+	return hporderclient,nil
+}
+
+func HPOddsHMSet(key string, value map[string]interface{}) error {
+	client,err := GetRedisOrderClient()
+	if err != nil {
+		return err
+	}
+	_, err = client.redisClient.HMSet(key,value).Result()
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func SetRedLine(symbol,value string) error{
+	client,err := GetRedisOrderClient()
+	if err != nil {
+		return err
+	}
+	_, err = client.redisClient.Set(symbol+RedLine,value,0).Result()
+	if err != nil {
+		return err
+	}
+	return nil
+}
 
 var(
 	BTCOddsInfo = "BTCOddsInfo"
@@ -95,10 +160,10 @@ var(
 
 func main() {
 
-	redis.HPOddsHMSet(BTCCurOdds,BTCCURMAP)
-	redis.HPOddsHMSet(SHCICurOdds,SHCICURMAP)
-	redis.HPOddsHMSet(SZCICurOdds,SZCICURMAP)
-	redis.SetRedLine("redline","0")
+	HPOddsHMSet(BTCCurOdds,BTCCURMAP)
+	HPOddsHMSet(SHCICurOdds,SHCICURMAP)
+	HPOddsHMSet(SZCICurOdds,SZCICURMAP)
+	SetRedLine("BTCredline","0")
 
 	/*
 	btccurodds := redis.HPOddsHGetAll(BTCCurOdds)
