@@ -13,123 +13,28 @@ var (
 	btcsy = "BTC"
 	btctype = "CryptoCurrency"
 	btcisopen = 1
-	btcFirstopenhour = 9
-	btcFirstopenmin = 30
-	btcFirstclosehour = 2
-	btcFirstclosemin = 30
-
-	shcisy = "SHCI"
-	shcitype = "Stock"
-	shciisopen = 1
-	shciFirstopenhour = 9
-	shciFirstopenmin = 30
-	shciFirstclosehour = 11
-	shciFirstclosemin = 30
-	shciSecondopenhour = 13
-	shciSecondopenmin = 0
-	shciSecondclosehour = 15
-	shciSecondclosemin = 0
 
 
-	szcisy = "SZCI"
-	szcitype = "Stock"
-	szciisopen = 1
-	szciFirstopenhour = 9
-	szciFirstopenmin = 30
-	szciFirstclosehour = 11
-	szciFirstclosemin = 30
-	szciSecondopenhour = 13
-	szciSecondopenmin = 0
-	szciSecondclosehour = 15
-	szciSecondclosemin = 0
+	eurusd = "EURUSD"
+	eurusdtype = "Forex"
+	eurusdisopen = 1
 
-	version = "0.4.5"
+	eurjpy = "EURJPY"
+	eurjpytype = "Forex"
+	eurjpyisopen = 1
+
+	usdjpy = "USDJPY"
+	usdjpytype = "Forex"
+	usdjpyisopen = 1
+
+
+	version = "0.6.3"
 	isforce = 1
 
-	btcoddssy = "BTC"
-	btcoddsUpodds = 0.9
-	btcoddsDownodds = 0.9
-
-	shcioddssy = "SHCI"
-	shcioddsUpodds = 0.9
-	shcioddsDownodds = 0.9
-
-	szcioddssy = "SZCI"
-	szcioddsUpodds = 0.9
-	szcioddsDownodds = 0.9
 
 
-	btcioisy = "BTC"
-	btcoiLevelOne = 1
-	btcoiOneMindv = float64(0)
-	btcoiOneMaxdv = float64(50000)
-	btcoiOneGreaterodds = 0.9
-	btcoiOneLessodds = 0.9
 
-	btcoiLevelTwo = 2
-	btcoiTwoMindv = float64(50000)
-	btcoiTwoMaxdv = float64(100000)
-	btcoiTwoGreaterodds = 1.2
-	btcoiTwoLessodds = 0.6
 
-	btcoiLevelThree = 3
-	btcoiThreeMindv = float64(100000)
-	btcoiThreeMaxdv = float64(200000)
-	btcoiThreeGreaterodds = 1.7
-	btcoiThreeLessodds = 0.1
-
-	btcoiLevelFour = 4
-	btcoiFourMindv = float64(200000)
-	btcoiFourGreaterodds = 1.8
-	btcoiFourLessodds = float64(0)
-
-	shcioisy = "SHCI"
-	shcioiLevelOne = 1
-	shcioiOneMindv = float64(0)
-	shcioiOneMaxdv = float64(50000)
-	shcioiOneGreaterodds = 0.9
-	shcioiOneLessodds = 0.9
-
-	shcioiLevelTwo = 2
-	shcioiTwoMindv = float64(50000)
-	shcioiTwoMaxdv = float64(100000)
-	shcioiTwoGreaterodds = 1.2
-	shcioiTwoLessodds = 0.6
-
-	shcioiLevelThree = 3
-	shcioiThreeMindv = float64(100000)
-	shcioiThreeMaxdv = float64(200000)
-	shcioiThreeGreaterodds = 1.7
-	shcioiThreeLessodds = 0.1
-
-	shcioiLevelFour = 4
-	shcioiFourMindv = float64(200000)
-	shcioiFourGreaterodds = 1.8
-	shcioiFourLessodds = float64(0)
-
-	szcioisy = "SZCI"
-	szcioiLevelOne = 1
-	szcioiOneMindv = float64(0)
-	szcioiOneMaxdv = float64(50000)
-	szcioiOneGreaterodds = 0.9
-	szcioiOneLessodds = 0.9
-
-	szcioiLevelTwo = 2
-	szcioiTwoMindv = float64(50000)
-	szcioiTwoMaxdv = float64(100000)
-	szcioiTwoGreaterodds = 1.2
-	szcioiTwoLessodds = 0.6
-
-	szcioiLevelThree = 3
-	szcioiThreeMindv = float64(100000)
-	szcioiThreeMaxdv = float64(200000)
-	szcioiThreeGreaterodds = 1.7
-	szcioiThreeLessodds = 0.1
-
-	szcioiLevelFour = 4
-	szcioiFourMindv = float64(200000)
-	szcioiFourGreaterodds = 1.8
-	szcioiFourLessodds = float64(0)
 )
 
 
@@ -138,8 +43,11 @@ func main() {
 
 
 	mysql.AddOneRecord(&mysql.Subject{Symbol:btcsy,Type:btctype,Isopen:btcisopen})
-	mysql.AddOneRecord(&mysql.Subject{Symbol:shcisy,Type:shcitype,Isopen:shciisopen})
-	mysql.AddOneRecord(&mysql.Subject{Symbol:szcisy,Type:szcitype,Isopen:szciisopen})
+	mysql.AddOneRecord(&mysql.Subject{Symbol:eurusd,Type:eurusdtype,Isopen:eurusdisopen})
+	mysql.AddOneRecord(&mysql.Subject{Symbol:eurjpy,Type:eurjpytype,Isopen:eurjpyisopen})
+	mysql.AddOneRecord(&mysql.Subject{Symbol:usdjpy,Type:usdjpytype,Isopen:usdjpyisopen})
+	//mysql.AddOneRecord(&mysql.Subject{Symbol:shcisy,Type:shcitype,Isopen:shciisopen})
+	//mysql.AddOneRecord(&mysql.Subject{Symbol:szcisy,Type:szcitype,Isopen:szciisopen})
 
 	mysql.AddOneRecord(&mysql.Clientversion{Version:version,Isforce:isforce,Createtime:time.Now().Unix()})
 

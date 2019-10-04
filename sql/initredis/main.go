@@ -156,6 +156,14 @@ var(
 	BTCCURMAP = map[string]interface{}{"UpOdds":0.9,"DownOdds":0.9,"Count":0}
 	SHCICURMAP = map[string]interface{}{"UpOdds":0.9,"DownOdds":0.9,"Count":0}
 	SZCICURMAP = map[string]interface{}{"UpOdds":0.9,"DownOdds":0.9,"Count":0}
+
+	EURUSDOdds = "EURUSDOdds"
+	EURJPYOdds = "EURJPYOdds"
+	USDJPYOdds = "USDJPYOdds"
+
+	EURUSDMAP = map[string]interface{}{"UpOdds":0.9,"DownOdds":0.9,"Count":0}
+	EURJPYMAP = map[string]interface{}{"UpOdds":0.9,"DownOdds":0.9,"Count":0}
+	USDJPYMAP = map[string]interface{}{"UpOdds":0.9,"DownOdds":0.9,"Count":0}
 )
 
 func main() {
@@ -164,6 +172,10 @@ func main() {
 	HPOddsHMSet(SHCICurOdds,SHCICURMAP)
 	HPOddsHMSet(SZCICurOdds,SZCICURMAP)
 	SetRedLine("BTCredline","0")
+	SetRedLine("EURUSDredline","0")
+	SetRedLine("EURJPYredline","0")
+	SetRedLine("USDJPYredline","0")
+
 
 	/*
 	btccurodds := redis.HPOddsHGetAll(BTCCurOdds)
