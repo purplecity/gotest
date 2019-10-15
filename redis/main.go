@@ -13,7 +13,7 @@ var (
 	RedisPassword = "k"
 	//RedisPassword = "HP@123"
 	RedisDB = 0
-	RedisOrderDB = 2
+	RedisOrderDB = 1
 	RedisLockDB = 2
 	RedisMaxRetries = 1
 	RedisLockExpireTime = 2
@@ -48,6 +48,51 @@ func GetRedisClient() (*hpRedisClient,error) {
 	}
 	return hpclient,nil
 }
+
+
+func RedisRPUSH(key string, value float64) (int64,error) {
+	client,err := GetRedisClient()
+	if err != nil {
+		return 0,err
+	}
+	vc, err  := client.redisClient.RPush(key,value).Result()
+	if err != nil {
+		log.Printf("ERROR----Not have this phonenumber validcode----err:%+v\n",err)
+		return 0,err
+	}
+	fmt.Printf("rpush %+v\n",vc)
+	return vc,nil
+}
+
+
+func RedisLPop(key string) error {
+	client,err := GetRedisClient()
+	if err != nil {
+		return err
+	}
+	_, err  = client.redisClient.LPop(key).Result()
+	if err != nil {
+		log.Printf("ERROR----Not have this phonenumber validcode----err:%+v\n",err)
+		return err
+	}
+	return nil
+}
+
+func RedisLRange(key string,start,stop int64) ([]string,error) {
+	client,err := GetRedisClient()
+	if err != nil {
+		return nil,err
+	}
+	vc, err  := client.redisClient.LRange(key,start,stop).Result()
+	if err != nil {
+		log.Printf("ERROR----Not have this list----err:%+v\n",err)
+		return nil,err
+	}
+	fmt.Printf("%+v\n",vc)
+	return vc,nil
+}
+
+
 
 func GetRedisValidcode(ph string) (string,error) {
 	client,err := GetRedisClient()
@@ -295,5 +340,10 @@ func SetSMSLimit(key string) error {
 
 
 func main () {
-	SetSMSLimit("test")
+	RedisRPUSH("testlist",5.77)
+	RedisLPop("testlist")
+	s,_ := RedisLRange("testlist",0,-1)
+	for _, x := range s {
+		fmt.Printf("%+v,%T\n",x,x)
+	}
 }
