@@ -107,7 +107,13 @@ func HPSumMul(first float64,then ...float64) float64 {
 	return total
 }
 
-func HPdiv(x float64,y float64) float64 {
+func HPDiv(x float64,y float64) float64 {
 	ret,_ := decimal.NewFromFloat(x).Div(decimal.NewFromFloat(y)).Float64()
+	return ret
+}
+
+
+func HPDivInt(x float64, y int64) float64 {
+	ret,_ := decimal.NewFromFloat(x).Div(decimal.New(y,0)).Float64()
 	return ret
 }
