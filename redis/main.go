@@ -5,6 +5,7 @@ import (
 	"github.com/go-redis/redis" // thread-safe. client like database/HPSQL DB, represent a conn pool
 	"gotest/redis/Snowflake"
 	"log"
+	"math/rand"
 	"time"
 )
 
@@ -50,7 +51,7 @@ func GetRedisClient() (*hpRedisClient,error) {
 }
 
 
-func RedisRPUSH(key string, value float64) (int64,error) {
+func RedisRPUSH(key string, value interface{}) (int64,error) {
 	client,err := GetRedisClient()
 	if err != nil {
 		return 0,err
@@ -340,10 +341,17 @@ func SetSMSLimit(key string) error {
 
 
 func main () {
-	RedisRPUSH("testlist",5.77)
-	RedisLPop("testlist")
-	s,_ := RedisLRange("testlist",0,-1)
-	for _, x := range s {
-		fmt.Printf("%+v,%T\n",x,x)
+	for {
+		rand.Seed(time.Now().UnixNano())
+		a := rand.Intn(300)
+		RedisRPUSH("testlist",fmt.Sprintf("1.0%v",a))
+		RedisLPop("testlist")
+		s,_ := RedisLRange("testlist",0,-1)
+		for _, x := range s {
+			fmt.Printf("%+v,%T\n",x,x)
+		}
+		time.Sleep(time.Second*1)
+
 	}
+
 }
