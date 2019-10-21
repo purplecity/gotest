@@ -1,4 +1,4 @@
-package  mysql
+package mysql
 
 import (
 	"fmt"
@@ -8,12 +8,12 @@ import (
 	"time"
 )
 
-const (
+
+var(
 	MysqlUserName = "root"
 	//MysqlPassWord = "k"
 	MysqlPassWord = "7U'G~1LzI+]3_~D"
-	MysqlIP = "47.244.217.66"
-	//MysqlIP = "47.244.212.51"
+	MysqlIP = "127.0.0.1"
 	//MysqlIP = "127.0.0.1"
 	MysqlPort = 3306
 	//MysqlDefaultDatabase = "test2"
@@ -30,15 +30,15 @@ func init() {
 		new(Asset),new(Parter),new(Director),new(Player),new(Score),
 		new(Scorerecord),new(Depositrecord),new(Withdrawrecord),
 		new(BankInfo),new(Subject),new(Clientversion),
-		new(AdminRoleUsers),new(Lastconnect),new(Depositbank),new(Odds),new(OddsInfo),
+		new(AdminRoleUsers),new(Lastconnect),new(Depositbank),
 		new(Takescorerecord),new(Reconciliation),new(Depositway),new(Remarks),
-		new(Sounds),new(Payamount),new(Alipayensure))
-	//自动创建表 参数二为是否drop然后创建表   参数三是否打印创建表过程
+		new(Userdata),new(Payamount),new(Alipayensure),new(Subjecttrade))
+	//orm.SetMaxIdleConns("default",50)
+	//orm.SetMaxOpenConns("default",3000)
 	db,_ := orm.GetDB("default")
 	db.SetConnMaxLifetime(time.Second*5)
-	//orm.Debug = true
 	//自动创建表 参数二为是否drop然后创建表   参数三是否打印创建表过程
-	orm.RunSyncdb("default",true,true)
+	orm.RunSyncdb("default",false,true)
 }
 
 var hpOrm orm.Ormer
@@ -50,15 +50,17 @@ func getOrm() orm.Ormer {
 	return hpOrm
 }
 
-func AddOneRecord(record interface{}) {
+func AddOneRecord(record interface{}) error{
 	o := orm.NewOrm()
 	err := o.Begin()
 	if _,err = o.Insert(record); err != nil {
 		o.Rollback()
 		log.Printf("ERROR----AddOneRecord failed:%+v\n",err)
+		return err
 	} else {
 		o.Commit()
 	}
+	return nil
 }
 
 func AddMultiRecord(num int, record interface{}){
@@ -66,7 +68,7 @@ func AddMultiRecord(num int, record interface{}){
 	err := o.Begin()
 	if _,err = o.InsertMulti(num,record); err != nil {
 		o.Rollback()
-		log.Printf("ERROR----AddOneRecord failed:%+v\n",err)
+		log.Printf("ERROR----AddMultiRecord failed:%+v\n",err)
 	} else {
 		o.Commit()
 	}
@@ -87,7 +89,7 @@ func MultiExist(table string, cond map[string]interface{}) bool {
 	return qs.Exist()
 }
 
-func UpdateByCond(table string,cond,updateMap map[string]interface{}) {
+func UpdateByCond(table string,cond,updateMap map[string]interface{}) error {
 	o := orm.NewOrm()
 	qs := o.QueryTable(table)
 	for key,value := range cond {
@@ -96,10 +98,12 @@ func UpdateByCond(table string,cond,updateMap map[string]interface{}) {
 	err := o.Begin()
 	if _, err = qs.Update(orm.Params(updateMap));err != nil {
 		o.Rollback()
-		log.Printf("ERROR----AddOneRecord failed:%+v\n",err)
+		log.Printf("ERROR----UpdateByCond failed:%+v\n",err)
+		return err
 	} else {
 		o.Commit()
 	}
+	return nil
 }
 
 func GetOneRecord(table string,cond map[string]interface{},resultStruct interface{}) {

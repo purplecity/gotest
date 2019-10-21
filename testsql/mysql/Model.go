@@ -14,8 +14,8 @@ type Realtrade struct {
 	Settletime 		int64		`orm:"default(0)" description:"下单结算时间"`
 	Inputamount 	float64		`orm:"digits(12);decimals(2)" description:"下单金额"`
 	Outputamount	float64		`orm:"digits(12);decimals(2)" description:"结算金额"`
-	Ordervalue		float64		`orm:"digits(12);decimals(2)" description:"下单指数"`
-	Settlevalue		float64		`orm:"digits(12);decimals(2)" description:"结算指数"`
+	Ordervalue		float64		`orm:"digits(16);decimals(6)" description:"下单指数"`
+	Settlevalue		float64		`orm:"digits(16);decimals(6)" description:"结算指数"`
 	Side   			int32		`description:"看涨看跌"`
 	Interval		int32		`description:"下单周期时间"`
 	Symbol			string		`orm:"index" description:"标的物"`
@@ -33,8 +33,8 @@ type Vitualtrade struct {
 	Settletime 		int64		`orm:"default(0)" description:"下单结算时间"`
 	Inputamount 	float64		`orm:"digits(12);decimals(2)" description:"下单金额"`
 	Outputamount	float64		`orm:"digits(12);decimals(2)" description:"结算金额"`
-	Ordervalue		float64		`orm:"digits(12);decimals(2)" description:"下单指数"`
-	Settlevalue		float64		`orm:"digits(12);decimals(2)" description:"结算指数"`
+	Ordervalue		float64		`orm:"digits(16);decimals(6)" description:"下单指数"`
+	Settlevalue		float64		`orm:"digits(16);decimals(6)" description:"结算指数"`
 	Side   			int32		`description:"看涨看跌"`
 	Interval		int32		`description:"下单周期时间"`
 	Symbol			string		`orm:"index" description:"标的物"`
@@ -56,6 +56,8 @@ type AdminUsers struct {
 	Lastlogintime		int64		`description:"最后登录时间"`
 	Valid    			int			`description:"是否有效"` //0 无效 1有效
 	RememberToken				string		`description:"代理token"`
+	UserToken 			string  	`description:"登录session"`
+	SettlementStatus 	int			`description:"代理模式"`
 }
 
 //资金表 包括总监 玩家
@@ -101,6 +103,7 @@ type Scorerecord struct {
 	Amount			float64  	`orm:"digits(12);decimals(2)" description:"下单金额"`
 	Contributorid	string   	`orm:"index" description:"贡献玩家的id"`
 	Tid   			string   	`description:"订单号"`
+	Type 			string   	`description:"订单类型"`
 }
 
 //每天24点05分计算 所以24点-1点不可提取积分 否则会出现 total != hadwithdraw + remain
@@ -182,15 +185,16 @@ type Subject struct {
 	Id 				int			`orm:"pk;auto"`
 	Symbol 			string      `orm:"index" description:"标的物名称"`
 	Type   			string 		`orm:"index" description:"标的物所属种类"`
-	Isopen			int 		`orm:"index" description:"是否开启该标的物竞猜服务"` //0 关闭 1开启
-	Firstopenhour 	int   	`description:"每天第一次开启小时"`
-	Firstopenmin 	int   	`description:"每天第一次开启分钟"`
-	Firstclosehour	int   	`description:"每天第一次关闭小时"`
-	Firstclosemin 	int   	`description:"每天第一次开启分钟"`
-	Secondopenhour 	int   	`description:"每天第二次开启小时"`
-	Secondopenmin 	int   	`description:"每天第二次开启分钟"`
-	Secondclosehour int   	`description:"每天第二次关闭小时"`
-	Secondclosemin  int   	`description:"每天第二次关闭分钟"`
+	Isopen			int 		`orm:"index" description:"后台是否开启该标的物竞猜服务"` //0 关闭 1开启
+	Pisopen			int			`orm:"index" description:"程序是否开启该标的物竞猜服务"` //0 关闭 1开启
+}
+
+type Subjecttrade struct {
+	Id 				int			`orm:"pk;auto"`
+	Symbol 			string      `orm:"index" description:"标的物名称"`
+	Type   			string 		`orm:"index" description:"标的物所属种类"`
+	Udisopen  		int			`orm:"index" description:"是否能下涨跌"`
+	Sdpisopen 		int			`orm:"index" description:"是否能下单双对"`
 }
 
 type Clientversion struct {
@@ -222,28 +226,10 @@ type Depositbank struct {
 	Bankbranch 	string			`orm:"index" description:"开户支行"`
 }
 
-//默认等级为1 赔率也要写
-type Odds struct {
-	Id          int         	`orm:"pk;auto"`
-	Symbol 		string      `orm:"index" description:"标的物名称"`
-	Upodds 			float64		`orm:"digits(12);decimals(2)" description:"看涨赔率"`
-	Downodds		float64		`orm:"digits(12);decimals(2)" description:"看跌赔率"`
-}
-
-type OddsInfo struct {
-	Id          int         	`orm:"pk;auto"`
-	Symbol 		string      `orm:"index" description:"标的物名称"`
-	Level 		int      	`orm:"index" description:"风控等级"`
-	Mindv  		float64			`orm:"digits(12);decimals(2)" description:"最小差值"`
-	Maxdv  		float64			`orm:"digits(12);decimals(2)" description:"最大差值"`
-	Greaterodds 		float64			`orm:"digits(12);decimals(2)" description:"大方赔率"`
-	Lessodds	float64			`orm:"digits(12);decimals(2)" description:"小方赔率"`
-}
-
 //每天1点结算
 type Reconciliation struct {
 	Id          int         	`orm:"pk;auto"`
-	Uid         string      	`orm:"unique" description:"用户id"`
+	Uid         string      	`orm:"index" description:"用户id"`
 	Balance 	float64			`orm:"digits(12);decimals(2)" description:"3点余额"`
 	Lastbalance float64		`orm:"digits(12);decimals(2)" description:"昨天3点余额"`
 	Win 		float64			`orm:"digits(12);decimals(2)" description:"当天1点盈利收入"`
@@ -251,7 +237,6 @@ type Reconciliation struct {
 	Deposit 	float64 		`orm:"digits(12);decimals(2)" description:"当天1点累计充值收入"`
 	Withdraw  	float64			`orm:"digits(12);decimals(2)" description:"当天1点累计提现支出"`
 	Score  		float64  		`orm:"digits(12);decimals(2)" description:"当天1点累计提取积分收入"`
-
 	Handletime 		int64		`description:"对账时间"`
 }
 
@@ -264,23 +249,18 @@ type Remarks struct {
 	Csid 			string   	`orm:"index" description:"客服id"`
 }
 
-type Sounds struct {
+type Userdata struct {
 	Id 					int			`orm:"pk;auto"`
 	Uid				string		`orm:"unique" description:"用户id"`
 	Bgm  			int  		`description:"bgm开关"`
 	Buttonsound     int 		`description:"按钮声音"`
+	AmountIndex  	int			`description:"金额下标"`//要么跟声音一个接口 要么不同接口的话不会同时更改同一行
+	Tradehint		int 		`description:"下单提示"`
 }
 
 type Payamount struct {
 	Id 					int			`orm:"pk;auto"`
 	Payway				int		`orm:"unique" description:"充值方式"` //1支付宝 2微信 3银行卡
-	One 				int		`description:"第一个充值数额"`
-	Two 				int		`description:"第二个充值数额"`
-	Three 				int		`description:"第三个充值数额"`
-	Four				int		`description:"第四个充值数额"`
-	Five 				int		`description:"第五个充值数额"`
-	Six					int		`description:"第六个充值数额"`
-
 }
 
 type Alipayensure struct {
@@ -293,3 +273,43 @@ type Alipayensure struct {
 	Createtime      int64			`description:"接收回调时间"`
 	Status   		int  			`description:"状态"`
 }
+
+
+/*
+//用户id 竞标种类 竞猜期数 竞猜次数 竞猜号码(对应次数个)与时间 金标金额 竞猜是否成功 中几等奖 中奖号啥的
+//不管怎样 单期必然最多100行。 也就是说5万期就会达到500万行。假设一天100期。大概就是1万行。所以500天就ok。方便点。
+//
+type QuizOne struct {
+	Id              int             `orm:"pk;auto"`
+	Uid          	string          `orm:"index" description:"用户id"`
+	Uid          	string          `orm:"index" description:"期数"`
+	Uid          	string          `orm:"index" description:"次数"`
+	Uid          	string          `orm:"index" description:"时间"`
+	Uid          	string          `orm:"index" description:"金额"`
+	Uid          	string          `orm:"index" description:"是否中奖"`
+	Uid          	string          `orm:"index" description:"中奖号1"`
+	Uid          	string          `orm:"index" description:"中奖号2"`
+	Uid          	string          `orm:"index" description:"中奖号3"`
+	Uid          	string          `orm:"index" description:"竞猜号码"`
+}
+
+//结局表
+type QuizOneResult struct {
+	Id              int             `orm:"pk;auto"`
+	Uid          	string          `orm:"index" description:"基金类型"` //100 500 1000
+	Uid          	string          `orm:"index" description:"期数"`
+	Uid          	string          `orm:"index" description:"一等奖中奖号"`
+	Uid          	string          `orm:"index" description:"二等奖中奖号"`
+	Uid          	string          `orm:"index" description:"三等奖中奖号"`
+	Uid          	string          `orm:"index" description:"一等奖中奖人"`
+	Uid          	string          `orm:"index" description:"二等奖中奖人"`
+	Uid          	string          `orm:"index" description:"三等奖中奖人"`
+	Uid          	string          `orm:"index" description:"一等奖中奖金额"`
+	Uid          	string          `orm:"index" description:"二等奖中奖金额"`
+	Uid          	string          `orm:"index" description:"三等奖中奖金额"`
+	Uid          	string          `orm:"index" description:"随机码数字"`
+	Uid          	string          `orm:"index" description:"区块hash值"`
+	Uid          	string          `orm:"index" description:"区块hash值获取时间"`
+	Uid          	string          `orm:"index" description:"开奖时间"`
+}
+*/
