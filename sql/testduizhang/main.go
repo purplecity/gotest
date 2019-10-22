@@ -1,9 +1,22 @@
 package main
 
-
+/*
 func main() {
+ handletime := 1571515200
+ rs := []mysql.Reconciliation{}
+ mysql.GetAllRecord("Reconciliation", map[string]interface{}{"Handletime":handletime},&rs)
+ for _, x := range rs {
+	xs := mysql.GetCountByCond("Reconciliation",map[string]interface{}{"Uid":x.Uid})
+	if xs != 3 {
+		fmt.Println(x.Uid,xs)
+	}
+
+ }
 
 }
+
+ */
+
 /*
 func main() {
 	uid := "1185835680218832896"
@@ -70,6 +83,7 @@ mysql.UpdateByCond("Reconciliation", map[string]interface{}{"Uid":uid}, map[stri
 
 
 
+
 /*
 func main() {
 
@@ -122,7 +136,7 @@ func main() {
 		}
 
 		a1 := Operation.HPSub(Operation.HPSum(rwa, da, ta), Operation.HPAdd(rla, wa))
-		mysql.AddOneRecord(&mysql.Reconciliation{
+		mysql.AddOneRecord(&mysql.Hpreconciliation{
 			Uid:         x.Uid,
 			Balance:     a1,
 			Lastbalance: float64(0),
@@ -136,7 +150,7 @@ func main() {
 
 	}
 }
-
+*/
 		/*
 		withdrawInfo2 := []mysql.Withdrawrecord{}
 		mysql.GetAllRecord("Withdrawrecord", map[string]interface{}{"Uid": x.Uid,"Createtime__gte": bt1 * 1000,  "Status__in": []int{0, 1}}, &withdrawInfo2)

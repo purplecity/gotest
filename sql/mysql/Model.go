@@ -96,11 +96,11 @@ type Asset struct {
 	Vitualfreezebalance	float64		`orm:"digits(12);decimals(2)" description:"虚拟账户冻结余额"`
 }
 
-type Reconciliation struct {
+type Hpreconciliation struct {
 	Id          int         	`orm:"pk;auto"`
 	Uid         string      	`orm:"index" description:"用户id"`
 	Balance 	float64			`orm:"digits(12);decimals(2)" description:"3点余额"`
-	Lastbalance float64		`orm:"digits(12);decimals(2)" description:"昨天3点余额"`
+	Lastbalance float64			`orm:"digits(12);decimals(2)" description:"昨天3点余额"`
 	Win 		float64			`orm:"digits(12);decimals(2)" description:"当天1点盈利收入"`
 	Lose 		float64			`orm:"digits(12);decimals(2)" description:"当天1点累计亏损"`
 	Deposit 	float64 		`orm:"digits(12);decimals(2)" description:"当天1点累计充值收入"`
