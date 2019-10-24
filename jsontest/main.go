@@ -14,8 +14,9 @@ func main()  {
 		return
 	}
 
-	var x = map[string]interface{}{}
+	var x = []interface{}{}
 	json.Unmarshal([]byte(data),&x)
-	fmt.Printf("%+v\n",x["compilerOptions"].(map[string]interface{})["tt"].(float64))
-
+	for _,m := range x {
+		fmt.Printf("%+v\n",m.(map[string]interface{})["content"])
+	}
 }

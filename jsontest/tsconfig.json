@@ -1,11 +1,1 @@
-{
-  "compilerOptions": {
-    "module": "commonjs",
-    "target": "es5",
-    "sourceMap": true,
-    "tt": 555
-  },
-  "exclude": [
-    "node_modules"
-  ]
-}
+[{"content":"\u7cfb\u7edf\u516c\u544a\u6d4b\u8bd5","open":1571760000,"close":1571932800,"gg_id":"2019102300471926"},{"content":"\u7cfb\u7edf\u516c\u544a\u6d4b\u8bd5111","open":1571932800,"close":1572019200,"gg_id":"2019102300481615"}]

@@ -1,20 +1,19 @@
 package main
 
 import (
-	"HPOptionServer/Common/CommonConf"
 	"fmt"
 	"math/rand"
-	"strconv"
 	"time"
 )
 
 
 func genNumber() int {
 	rand.Seed(time.Now().UnixNano())
-	return rand.Intn(300)
+	return rand.Intn(20)
 }
 
 func main() {
+	/*
 	s := fmt.Sprintf("1.10%+v",genNumber())
 	price,_ := strconv.ParseFloat(s,64)
 
@@ -41,5 +40,7 @@ func main() {
 		}
 	}
 
-
+	 */
+	//fmt.Println(genNumber())
+	fmt.Println(65/100)
 }
