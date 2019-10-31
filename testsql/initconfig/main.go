@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gotest/sql/mysql"
+	"gotest/testsql/mysql"
 	"time"
 )
 
@@ -29,22 +29,22 @@ var (
 
 
 
-	version = "0.6.8"
+	version = "0.7.0"
 	isforce = 1
 
 )
 
 
 func main() {
+	mysql.AddOneRecord(&mysql.Subject{Symbol:btcsy,Type:btctype,Isopen:btcisopen,Pisopen:btcisopen})
+	mysql.AddOneRecord(&mysql.Subject{Symbol:eurusdsy,Type:eurusdtype,Isopen:eurusdisopen,Pisopen:eurusdisopen})
+	mysql.AddOneRecord(&mysql.Subject{Symbol:eurjpysy,Type:eurjpytype,Isopen:eurjpyisopen,Pisopen:eurjpyisopen})
+	mysql.AddOneRecord(&mysql.Subject{Symbol:usdjpysy,Type:usdjpytype,Isopen:usdjpyisopen,Pisopen:usdjpyisopen})
 
-	mysql.AddOneRecord(&mysql.Subject{Symbol:btcsy,Type:btctype,Isopen:btcisopen})
-	mysql.AddOneRecord(&mysql.Subject{Symbol:eurusdsy,Type:eurusdtype,Isopen:eurusdisopen})
-	mysql.AddOneRecord(&mysql.Subject{Symbol:eurjpysy,Type:eurjpytype,Isopen:eurjpyisopen})
-	mysql.AddOneRecord(&mysql.Subject{Symbol:usdjpysy,Type:usdjpytype,Isopen:usdjpyisopen})
-
-	mysql.AddOneRecord(&mysql.Subjecttrade{Symbol:eurusdsy,Type:eurusdtype,Udisopen:eurusdisopen,Sdpisopen:eurusdisopen})
-	mysql.AddOneRecord(&mysql.Subjecttrade{Symbol:eurjpysy,Type:eurjpytype,Udisopen:eurjpyisopen,Sdpisopen:eurjpyisopen})
-	mysql.AddOneRecord(&mysql.Subjecttrade{Symbol:usdjpysy,Type:usdjpytype,Udisopen:usdjpyisopen,Sdpisopen:usdjpyisopen})
+	mysql.AddOneRecord(&mysql.Subjecttrade{Symbol:btcsy,Type:btctype,Udisopen:btcisopen,Sdpisopen:btcisopen,Symutex:btcisopen})
+	mysql.AddOneRecord(&mysql.Subjecttrade{Symbol:eurusdsy,Type:eurusdtype,Udisopen:eurusdisopen,Sdpisopen:eurusdisopen,Symutex:eurusdisopen})
+	mysql.AddOneRecord(&mysql.Subjecttrade{Symbol:eurjpysy,Type:eurjpytype,Udisopen:eurjpyisopen,Sdpisopen:eurjpyisopen,Symutex:eurjpyisopen})
+	mysql.AddOneRecord(&mysql.Subjecttrade{Symbol:usdjpysy,Type:usdjpytype,Udisopen:usdjpyisopen,Sdpisopen:usdjpyisopen,Symutex:usdjpyisopen})
 
 	mysql.AddOneRecord(&mysql.Clientversion{Version:version,Isforce:isforce,Createtime:time.Now().Unix()})
 

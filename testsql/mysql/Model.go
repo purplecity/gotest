@@ -22,6 +22,9 @@ type Realtrade struct {
 	Orderresult		int32		`orm:"index;default(1)" description:"下单结果"`
 	Settlereason  	string  	`description:"结算原因"`
 	Odds 			float64     `orm:"digits(12);decimals(2)" description:"赔率"`
+	Issue   		int64		`orm:"index" description:"期数"`
+	Trademode 		string 		`orm:"index" description:"下单模式"`
+	Ordertime       int64       `description:"下单指数时间"`
 }
 
 //虚拟账户下单记录表
@@ -41,6 +44,9 @@ type Vitualtrade struct {
 	Orderresult		int32		`orm:"index;default(1)" description:"下单结果"`
 	Settlereason  	string  	`description:"结算原因"`
 	Odds 			float64     `orm:"digits(12);decimals(2)" description:"赔率"`
+	Issue   		int64		`orm:"index" description:"期数"`
+	Trademode 		string 		`orm:"index" description:"下单模式"`
+	Ordertime       int64       `description:"下单指数时间"`
 }
 
 //用户表 包括合伙人 总监 玩家
@@ -185,7 +191,7 @@ type Subject struct {
 	Id 				int			`orm:"pk;auto"`
 	Symbol 			string      `orm:"index" description:"标的物名称"`
 	Type   			string 		`orm:"index" description:"标的物所属种类"`
-	Isopen			int 		`orm:"index" description:"后台是否开启该标的物竞猜服务"` //0 关闭 1开启
+	Isopen			int 		`orm:"index" description:"后台是否开启该标的物竞猜服务"` //0 关闭 1开启 留着备用了 因为用不到
 	Pisopen			int			`orm:"index" description:"程序是否开启该标的物竞猜服务"` //0 关闭 1开启
 }
 
@@ -195,6 +201,7 @@ type Subjecttrade struct {
 	Type   			string 		`orm:"index" description:"标的物所属种类"`
 	Udisopen  		int			`orm:"index" description:"是否能下涨跌"`
 	Sdpisopen 		int			`orm:"index" description:"是否能下单双对"`
+	Symutex         int  		`orm:"index" description:"锁"`
 }
 
 type Clientversion struct {
@@ -227,11 +234,11 @@ type Depositbank struct {
 }
 
 //每天1点结算
-type Reconciliation struct {
+type Hpreconciliation struct {
 	Id          int         	`orm:"pk;auto"`
 	Uid         string      	`orm:"index" description:"用户id"`
 	Balance 	float64			`orm:"digits(12);decimals(2)" description:"3点余额"`
-	Lastbalance float64		`orm:"digits(12);decimals(2)" description:"昨天3点余额"`
+	Lastbalance float64			`orm:"digits(12);decimals(2)" description:"昨天3点余额"`
 	Win 		float64			`orm:"digits(12);decimals(2)" description:"当天1点盈利收入"`
 	Lose 		float64			`orm:"digits(12);decimals(2)" description:"当天1点累计亏损"`
 	Deposit 	float64 		`orm:"digits(12);decimals(2)" description:"当天1点累计充值收入"`
@@ -278,38 +285,121 @@ type Alipayensure struct {
 /*
 //用户id 竞标种类 竞猜期数 竞猜次数 竞猜号码(对应次数个)与时间 金标金额 竞猜是否成功 中几等奖 中奖号啥的
 //不管怎样 单期必然最多100行。 也就是说5万期就会达到500万行。假设一天100期。大概就是1万行。所以500天就ok。方便点。
-//
-type QuizOne struct {
-	Id              int             `orm:"pk;auto"`
-	Uid          	string          `orm:"index" description:"用户id"`
-	Uid          	string          `orm:"index" description:"期数"`
-	Uid          	string          `orm:"index" description:"次数"`
-	Uid          	string          `orm:"index" description:"时间"`
-	Uid          	string          `orm:"index" description:"金额"`
-	Uid          	string          `orm:"index" description:"是否中奖"`
-	Uid          	string          `orm:"index" description:"中奖号1"`
-	Uid          	string          `orm:"index" description:"中奖号2"`
-	Uid          	string          `orm:"index" description:"中奖号3"`
-	Uid          	string          `orm:"index" description:"竞猜号码"`
+
+ //First, second, third, fourth, fifth, sixth
+*/
+
+
+type Firstquiz struct {
+	Id              int          `orm:"pk;auto"`
+	Uid          	string       `orm:"index" description:"用户id"`
+	Issue          	int      	 `orm:"index" description:"期数"`
+	Count          	int          `orm:"index" description:"次数"`
+	Createtime      int64  		 `orm:"index" description:"时间"`
+	Amount          int          `orm:"index" description:"金额"`
+	Is          	int          `orm:"index" description:"是否中奖"`
+	Firstwinnum     int          `orm:"index" description:"一等奖中奖号"`
+	Secondwinnum    int          `orm:"index" description:"二等奖中奖号"`
+	Thirdwinnum     int          `orm:"index" description:"三等奖中奖号"`
+	Quiznum         int          `orm:"index" description:"竞猜号码"`
+}
+
+type Secondquiz struct {
+	Id              int          `orm:"pk;auto"`
+	Uid          	string       `orm:"index" description:"用户id"`
+	Issue          	int      	 `orm:"index" description:"期数"`
+	Count          	int          `orm:"index" description:"次数"`
+	Createtime      int64  		 `orm:"index" description:"时间"`
+	Amount          int          `orm:"index" description:"金额"`
+	Is          	int          `orm:"index" description:"是否中奖"`
+	Firstwinnum     int          `orm:"index" description:"一等奖中奖号"`
+	Secondwinnum    int          `orm:"index" description:"二等奖中奖号"`
+	Thirdwinnum     int          `orm:"index" description:"三等奖中奖号"`
+	Quiznum         int          `orm:"index" description:"竞猜号码"`
+}
+
+type Thirdquiz struct {
+	Id              int          `orm:"pk;auto"`
+	Uid          	string       `orm:"index" description:"用户id"`
+	Issue          	int      	 `orm:"index" description:"期数"`
+	Count          	int          `orm: description:"次数"`
+	Createtime      int64  		 `orm:"index" description:"时间"`
+	Amount          int          `orm:"index" description:"金额"`
+	Is          	int          `orm:"index" description:"是否中奖"`
+	Firstwinnum     int          `orm:"index" description:"一等奖中奖号"`
+	Secondwinnum    int          `orm:"index" description:"二等奖中奖号"`
+	Thirdwinnum     int          `orm:"index" description:"三等奖中奖号"`
+	Quiznum         int          `orm:"index" description:"竞猜号码"`
+}
+
+type Fouthquiz struct {
+	Id              int          `orm:"pk;auto"`
+	Uid          	string       `orm:"index" description:"用户id"`
+	Issue          	int      	 `orm:"index" description:"期数"`
+	Count          	int          `orm:"index" description:"次数"`
+	Createtime      int64  		 `orm:"index" description:"时间"`
+	Amount          int          `orm:"index" description:"金额"`
+	Is          	int          `orm:"index" description:"是否中奖"`
+	Firstwinnum     int          `orm:"index" description:"一等奖中奖号"`
+	Secondwinnum    int          `orm:"index" description:"二等奖中奖号"`
+	Thirdwinnum     int          `orm:"index" description:"三等奖中奖号"`
+	Quiznum         int          `orm:"index" description:"竞猜号码"`
+}
+
+type Fifthquiz struct {
+	Id              int          `orm:"pk;auto"`
+	Uid          	string       `orm:"index" description:"用户id"`
+	Issue          	int      	 `orm:"index" description:"期数"`
+	Count          	int          `orm:"index" description:"次数"`
+	Createtime      int64  		 `orm:"index" description:"时间"`
+	Amount          int          `orm:"index" description:"金额"`
+	Is          	int          `orm:"index" description:"是否中奖"`
+	Firstwinnum     int          `orm:"index" description:"一等奖中奖号"`
+	Secondwinnum    int          `orm:"index" description:"二等奖中奖号"`
+	Thirdwinnum     int          `orm:"index" description:"三等奖中奖号"`
+	Quiznum         int          `orm:"index" description:"竞猜号码"`
+}
+
+type Sixthquiz struct {
+	Id              int          `orm:"pk;auto"`
+	Uid          	string       `orm:"index" description:"用户id"`
+	Issue          	int      	 `orm:"index" description:"期数"`
+	Count          	int          `orm:"index" description:"次数"`
+	Createtime      int64  		 `orm:"index" description:"时间"`
+	Amount          int          `orm:"index" description:"金额"`
+	Is          	int          `orm:"index" description:"是否中奖"`
+	Firstwinnum     int          `orm:"index" description:"一等奖中奖号"`
+	Secondwinnum    int          `orm:"index" description:"二等奖中奖号"`
+	Thirdwinnum     int          `orm:"index" description:"三等奖中奖号"`
+	Quiznum         int          `orm:"index" description:"竞猜号码"`
+}
+
+//初始给予1000001期 1人 每次启动的时候都读取 期数人数于内存
+type QuizHeight struct {
+	Id              int          `orm:"pk;auto"`
+	Fundtype        string       `orm:"index" description:"基金类型"` //100 500 1000
+	Issue          	int          `orm:"index" description:"期数"`
+	Numofper        int          `orm:"index" description:"人数"`
 }
 
 //结局表
-type QuizOneResult struct {
+type QuizResult struct {
 	Id              int             `orm:"pk;auto"`
-	Uid          	string          `orm:"index" description:"基金类型"` //100 500 1000
-	Uid          	string          `orm:"index" description:"期数"`
-	Uid          	string          `orm:"index" description:"一等奖中奖号"`
-	Uid          	string          `orm:"index" description:"二等奖中奖号"`
-	Uid          	string          `orm:"index" description:"三等奖中奖号"`
-	Uid          	string          `orm:"index" description:"一等奖中奖人"`
-	Uid          	string          `orm:"index" description:"二等奖中奖人"`
-	Uid          	string          `orm:"index" description:"三等奖中奖人"`
-	Uid          	string          `orm:"index" description:"一等奖中奖金额"`
-	Uid          	string          `orm:"index" description:"二等奖中奖金额"`
-	Uid          	string          `orm:"index" description:"三等奖中奖金额"`
-	Uid          	string          `orm:"index" description:"随机码数字"`
-	Uid          	string          `orm:"index" description:"区块hash值"`
-	Uid          	string          `orm:"index" description:"区块hash值获取时间"`
-	Uid          	string          `orm:"index" description:"开奖时间"`
+	Fundtype        string       	`orm:"index" description:"基金类型"`
+	Issue          	int          	`orm:"index" description:"期数"`
+	Firstwinnum     int          `orm:"index" description:"一等奖中奖号"`
+	Secondwinnum    int          `orm:"index" description:"二等奖中奖号"`
+	Thirdwinnum     int          `orm:"index" description:"三等奖中奖号"`
+	Firstwinuid     string          `orm:"index" description:"一等奖中奖人"`
+	Secondwinuid    string          `orm:"index" description:"二等奖中奖人"`
+	Thirdwinuid     string          `orm:"index" description:"三等奖中奖人"`
+	Firstwinamount  int          `orm:"index" description:"一等奖中奖金额"`
+	Secondamount    int          `orm:"index" description:"二等奖中奖金额"`
+	Thirdamount     int          `orm:"index" description:"三等奖中奖金额"`
+	Randcode        int          `orm:"index" description:"随机码数字"`
+	Blockhash       string          `orm:"index" description:"区块hash值"`
+	Blockhashtime   int64          `orm:"index" description:"区块hash值获取时间"`
+	Lotterytime     int64          `orm:"index" description:"开奖时间"`
 }
-*/
+
+

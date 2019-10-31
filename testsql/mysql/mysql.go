@@ -13,7 +13,7 @@ var(
 	MysqlUserName = "root"
 	//MysqlPassWord = "k"
 	MysqlPassWord = "7U'G~1LzI+]3_~D"
-	MysqlIP = "127.0.0.1"
+	MysqlIP = "47.244.217.66"
 	//MysqlIP = "127.0.0.1"
 	MysqlPort = 3306
 	//MysqlDefaultDatabase = "test2"
@@ -31,7 +31,7 @@ func init() {
 		new(Scorerecord),new(Depositrecord),new(Withdrawrecord),
 		new(BankInfo),new(Subject),new(Clientversion),
 		new(AdminRoleUsers),new(Lastconnect),new(Depositbank),
-		new(Takescorerecord),new(Reconciliation),new(Depositway),new(Remarks),
+		new(Takescorerecord),new(Hpreconciliation),new(Depositway),new(Remarks),
 		new(Userdata),new(Payamount),new(Alipayensure),new(Subjecttrade))
 	//orm.SetMaxIdleConns("default",50)
 	//orm.SetMaxOpenConns("default",3000)

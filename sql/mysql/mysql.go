@@ -35,7 +35,8 @@ func init() {
 		new(Sounds),new(Payamount),new(Alipayensure))
 
 	 */
-	orm.RegisterModel(new(Realtrade),new(Depositrecord),new(Withdrawrecord),new(Takescorerecord),new(AdminUsers),new(Asset),new(Hpreconciliation))
+	orm.RegisterModel(new(Realtrade),new(Depositrecord),new(Withdrawrecord),new(Takescorerecord),new(AdminUsers),new(Asset),new(Hpreconciliation),
+		new(Scorerecord),new(Score))
 	//自动创建表 参数二为是否drop然后创建表   参数三是否打印创建表过程
 	db,_ := orm.GetDB("default")
 	db.SetConnMaxLifetime(time.Second*5)

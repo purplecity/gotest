@@ -108,3 +108,23 @@ type Hpreconciliation struct {
 	Score  		float64  		`orm:"digits(12);decimals(2)" description:"当天1点累计提取积分收入"`
 	Handletime 		int64		`description:"对账时间"`
 }
+
+type Scorerecord struct {
+	Id 				int			`orm:"pk;auto"`
+	Directorid		string		`orm:"index" description:"总监id"`
+	Playerid		string		`orm:"index" description:"玩家id"`
+	Settletime 		int64  		`description:"下单结算时间"`
+	Amount			float64  	`orm:"digits(12);decimals(2)" description:"下单金额"`
+	Contributorid	string   	`orm:"index" description:"贡献玩家的id"`
+	Tid   			string   	`description:"订单号"`
+	Type 			string   	`description:"订单类型"`
+}
+
+//每天24点05分计算 所以24点-1点不可提取积分 否则会出现 total != hadwithdraw + remain
+type Score struct {
+	Id 				int			`orm:"pk;auto"`
+	Uid			string			`orm:"unique" description:"用户id"`
+	Total 			float64		`orm:"digits(12);decimals(2)" description:"总积分"`
+	Hadwithdraw		float64		`orm:"digits(12);decimals(2)" description:"已经提取积分"`
+	Remain 			float64		`orm:"digits(12);decimals(2)" description:"剩余积分"`
+}

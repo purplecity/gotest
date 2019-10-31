@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "hpgrpc";
+option go_package = "HPGRPC";
 
 //ws当做client clearing当做server 数据处理可能超过1s 尤其是这1s结算的单子比较多 所以采用流 一个单子结算完了就推 而不是所有的单子结束完才推
 service Hpgrpcservice {
@@ -10,6 +10,7 @@ service Hpgrpcservice {
 message QuotationReqData {
     double price = 1;
     int64 timestamp = 2;
+    string symbol = 3;
 }
 
 message SettleResData {
@@ -21,12 +22,16 @@ message SettleResData {
     double outputamount = 6;
     double ordervalue = 7;
     double settlevalue = 8;
-    uint32  side = 9;
-    uint32 interval = 10;
+    int32  side = 9;
+    int32 interval = 10;
     string symbol = 11;
     int32 orderresult = 12;
     double balance = 13;
     double vitualbalance = 14;
+    int32 accounttype = 15;
+    double odds = 16;
+    int64  issue = 17;
+    string trademode = 18;
 }
 
 /*
