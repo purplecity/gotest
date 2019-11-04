@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 )
 
 func main() {
@@ -21,6 +20,7 @@ func main() {
 
 
 	 */
-	a,_ := strconv.ParseFloat("3.89e-06",64)
-	fmt.Printf("%+v\n",a)
+	//a,_ := strconv.ParseFloat("3.89e-06",64)
+	//fmt.Printf("%+v\n",a)
+	fmt.Println(3.66%3)
 }
