@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 func main() {
@@ -22,5 +23,12 @@ func main() {
 	 */
 	//a,_ := strconv.ParseFloat("3.89e-06",64)
 	//fmt.Printf("%+v\n",a)
-	fmt.Println(3.66%3)
+	tm := time.Now()
+	fmt.Println(tm.Month(),tm.Day(),tm.Hour(),tm.Minute(),tm.Second())
+
+	tick := time.Tick(time.Second*1)
+	for range tick {
+		fmt.Println("hehe")
+		time.Sleep(10000*time.Second)
+	}
 }

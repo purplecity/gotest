@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 
 	//"encoding/json"
@@ -31,12 +30,17 @@ func main() {
 	go func() {
 		for message := range messages {
 			log.Printf("Receive message: %d - %s\n", time.Now().UnixNano(), message.Body)
+			//var hehe = map[string]interface{}{}
+			//err = json.Unmarshal(message, &hehe)
+			/*
 			var req = cenOddsReq{}
 			err = json.Unmarshal(message.Body, &req)
 			if err != nil {
 				fmt.Printf("Marshal mq message faild")
 			}
-			fmt.Printf("%+v\n",req)
+
+			 */
+			fmt.Printf("%+v\n",message)
 		}
 	}()
 

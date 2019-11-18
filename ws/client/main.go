@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	endpoint := "ws://app-hpoption-ws-test.azfaster.com:55555/ws/BTCUSDT"
+	endpoint := "ws://app-hpoption-ws-test.azfaster.com:55556/ws/SHCI"
 	hpdial := &websocket.Dialer{}
 	wsConn,_,err := hpdial.Dial(endpoint,nil)
 	if err != nil {
@@ -23,7 +23,7 @@ func main() {
 
 
 func testread(conn *websocket.Conn) {
-	rs := map[string]interface{}{"op":"sub","to":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NjgxMjMwMDMsInVpZCI6IjExNjkxNjI3MjAwMjU1MjIxNzYifQ.4HqD9l_kgp1SOwST45u2eBQLZw0gSqh2RtruJir1AEs"}
+	rs := map[string]interface{}{"op":"sub","to":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzQ0MDg3MzMsInVpZCI6IjExOTAxMDI1MTY1MDk1MjgwNjQifQ.pNaMzcgnPj-PGFcZ37_Cy1VgCuqcmwAoa1-ASAlHymY"}
 	dataByte,_ := json.Marshal(rs)
 	conn.WriteMessage(websocket.TextMessage,dataByte)
 	time.Sleep(5*time.Second)
