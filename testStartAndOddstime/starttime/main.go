@@ -1,4 +1,4 @@
-package main
+package starttime
 
 import (
 	"HPOptionServer/Common/CommonConf"

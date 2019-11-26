@@ -24,7 +24,7 @@ func main() {
 	//a,_ := strconv.ParseFloat("3.89e-06",64)
 	//fmt.Printf("%+v\n",a)
 	tm := time.Now()
-	fmt.Println(tm.Month(),tm.Day(),tm.Hour(),tm.Minute(),tm.Second())
+	fmt.Println(int(tm.Month()),tm.Day(),tm.Hour(),tm.Minute(),tm.Second())
 
 	tick := time.Tick(time.Second*1)
 	for range tick {
