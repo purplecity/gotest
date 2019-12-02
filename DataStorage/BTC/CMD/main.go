@@ -5,13 +5,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/websocket"
+	"gotest/DataStorage/Operation"
 	"log"
 	"os"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
-	"gotest/DataStorage/Operation"
 )
 
 var (

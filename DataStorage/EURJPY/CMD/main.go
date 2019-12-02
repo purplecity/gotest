@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/csv"
 	"fmt"
-	"github.com/gorilla/websocket"
 	"github.com/astaxie/beego/toolbox"
+	"gotest/DataStorage/Operation"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -13,7 +13,6 @@ import (
 	"strings"
 	"sync"
 	"time"
-	"gotest/DataStorage/Operation"
 )
 
 var (

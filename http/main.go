@@ -14,7 +14,7 @@ type baseResponse struct {
 }
 
 func main() {
-	url := "https://app-hpoption-web.azfaster.com:8081/helloworld"
+	url := "https://app-hpoption-webapi.azfaster.com:8081/loginByPassword"
 	req, _ := http.NewRequest("POST", url, nil)
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept-Encoding", "gzip")
