@@ -17,7 +17,7 @@ func main() {
 	url := "https://app-hpoption-webapi.azfaster.com:8081/loginByPassword"
 	req, _ := http.NewRequest("POST", url, nil)
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Accept-Encoding", "gzip")
+	req.Header.Set("hpoption", "1688")
 	trans := http.Transport{
 		DisableKeepAlives:true,
 	}
