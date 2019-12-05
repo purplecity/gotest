@@ -49,12 +49,12 @@ func main() {
 			for {
 				_, message, err := wsConn.ReadMessage() //如果币安维护 将祖斯在这
 				if err != nil {
-					log.Printf("ERROR----read binance message failed----err:%+v\n",err.Error())
+					log.Printf("ERROR----read binance message failed----err:%+v\n", err.Error())
 					return
 				}
 				if message != nil {
-					json.Unmarshal(message,&Event)
-					w.Write([]string{fmt.Sprintf("%+v",time.Now().Unix()),
+					json.Unmarshal(message, &Event)
+					w.Write([]string{fmt.Sprintf("%+v", time.Now().Unix()),
 						Event["bids"].([]interface{})[0].([]interface{})[0].(string),
 						Event["bids"].([]interface{})[1].([]interface{})[0].(string),
 						Event["bids"].([]interface{})[2].([]interface{})[0].(string),
@@ -97,6 +97,8 @@ func main() {
 						Event["asks"].([]interface{})[9].([]interface{})[1].(string),
 					})
 					w.Flush()
+				} else {
+					time.Sleep(time.Second*1)
 				}
 			}
 		}()
