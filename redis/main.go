@@ -5,7 +5,6 @@ import (
 	"github.com/go-redis/redis" // thread-safe. client like database/HPSQL DB, represent a conn pool
 	"gotest/redis/Snowflake"
 	"log"
-	"math/rand"
 	"time"
 )
 
@@ -340,18 +339,88 @@ func SetSMSLimit(key string) error {
 }
 
 
-func main () {
-	for {
-		rand.Seed(time.Now().UnixNano())
-		a := rand.Intn(300)
-		RedisRPUSH("testlist",fmt.Sprintf("1.0%v",a))
-		RedisLPop("testlist")
-		s,_ := RedisLRange("testlist",0,-1)
-		for _, x := range s {
-			fmt.Printf("%+v,%T\n",x,x)
-		}
-		time.Sleep(time.Second*1)
+var hprankclient *hpRedisClient
 
+func GetRedisRankClient() (*hpRedisClient,error) {
+	if hprankclient == nil {
+		client := redis.NewClient(&redis.Options{
+			Addr:       RedisAddr,
+			Password:   RedisPassword,
+			DB:         4,
+			MaxRetries: RedisMaxRetries,
+		})
+		_, err := client.Ping().Result()
+		if err != nil {
+			log.Printf("ERROR----connect Cache failed----err:%v\n", err)
+			return nil,err
+		}
+		hprankclient = &hpRedisClient{redisClient: client}
 	}
+	return hprankclient,nil
+}
+
+
+func RedisZadd(key,uid string,score float64) error{
+	client,err := GetRedisRankClient()
+	if err != nil {
+		return err
+	}
+
+
+	luaScript := redis.NewScript(`
+	local rs = redis.call("EXISTS", KEYS[1])
+	redis.call("ZADD", KEYS[1], ARGV[1],ARGV[2])
+	if (tonumber(rs) == tonumber(0)) then
+		redis.call("EXPIRE", KEYS[1], ARGV[3])
+	end
+	return 1
+	`)
+	hehe ,err := luaScript.Run(client.redisClient,[]string{key},score,uid,20).Result()
+	if err != nil {
+		log.Printf("ERROR----run lua script failed----err:%+v\n",err)
+		return err
+	}
+	log.Printf("shishi %+v\n",hehe)
+	return nil
+}
+
+func RedisReverseRange(key string,start,stop int64) error{
+	client,err := GetRedisRankClient()
+	if err != nil {
+		return err
+	}
+
+	a,b := client.redisClient.ZRevRangeWithScores(key,start,stop).Result()
+	if b != nil {
+		log.Printf("ZRevRangeWithScores ---  +v\n",b)
+		return b
+	}
+	log.Printf("ZRevRangeWithScores ---  %+v,%+T\n",a,a)
+	return nil
+}
+func RedisZReverseRank(key,uid string) error{
+	client,err := GetRedisRankClient()
+	if err != nil {
+		return err
+	}
+
+	a,b := client.redisClient.ZRevRank(key,uid).Result()
+	if b != nil {
+		log.Printf("zadd ---  +v\n",b)
+		return b
+	}
+	log.Printf("zadd ---  %+v,%+T\n",a,a)
+	return nil
+}
+
+func main () {
+	RedisZadd("testzadd8","111",1.1)
+	RedisZadd("testzadd8","222",2.2)
+	RedisZadd("testzadd8","333",2.2)
+	RedisZadd("testzadd8","444",2.2)
+	RedisZadd("testzadd8","555",4.4)
+	//RedisZadd("testzaddadd7","555",5.5)
+	RedisReverseRange("testzadd8",0,-1)
+	RedisZReverseRank("testzadd8","444")
 
 }

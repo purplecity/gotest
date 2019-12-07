@@ -1,9 +1,6 @@
 package main
 
-import (
-	"fmt"
-	"time"
-)
+import "fmt"
 
 func main() {
 	/*
@@ -23,6 +20,7 @@ func main() {
 	 */
 	//a,_ := strconv.ParseFloat("3.89e-06",64)
 	//fmt.Printf("%+v\n",a)
-	tm := time.Now()
-	fmt.Println(tm.Year(),int(tm.Month()),tm.Day(),tm.Hour(),tm.Minute(),tm.Second())
+	//tm := time.Now()
+	//fmt.Println(tm.Year(),int(tm.Month()),tm.Day(),tm.Hour(),tm.Minute(),tm.Second())
+	fmt.Println(1.7e308 > float64(24*3600*1000000000))
 }
