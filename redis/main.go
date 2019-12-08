@@ -360,7 +360,42 @@ func GetRedisRankClient() (*hpRedisClient,error) {
 }
 
 
-func RedisZadd(key,uid string,score float64) error{
+func RedisAddZSet(key string) error{
+	client,err := GetRedisRankClient()
+	if err != nil {
+		return err
+	}
+
+	a,b := client.redisClient.ZAdd(key).Result()
+	if b != nil {
+		log.Printf("ZRevRangeWithScores ---  %+v\n",b)
+		return b
+	}
+	log.Printf("ZRevRangeWithScores ---  %+v,%+T\n",a,a)
+	return nil
+}
+
+func RedisAddZSet2(key,uid string,score float64) error{
+	client,err := GetRedisRankClient()
+	if err != nil {
+		return err
+	}
+
+	luaScript := redis.NewScript(`
+	redis.call("ZADD", KEYS[1],ARGV[1],ARGV[2])
+	redis.call("EXPIRE", KEYS[1], ARGV[3])
+	return 1
+	`)
+	hehe ,err := luaScript.Run(client.redisClient,[]string{key},score,uid,20).Result()
+	if err != nil {
+		log.Printf("ERROR----run lua script failed----err:%+v\n",err)
+		return err
+	}
+	log.Printf("shishi %+v\n",hehe)
+	return nil
+}
+
+func RedisZaddDayWeek(key,uid string,score float64) error{
 	client,err := GetRedisRankClient()
 	if err != nil {
 		return err
@@ -381,6 +416,21 @@ func RedisZadd(key,uid string,score float64) error{
 		return err
 	}
 	log.Printf("shishi %+v\n",hehe)
+	return nil
+}
+
+func RedisZadd(key,uid string,score float64) error{
+	client,err := GetRedisRankClient()
+	if err != nil {
+		return err
+	}
+
+	hpz := redis.Z{Score:score,Member:uid}
+	_,err = client.redisClient.ZAdd(key,hpz).Result()
+	if err != nil {
+		log.Printf("ZRevRangeWithScores ---  %+v\n",err)
+		return err
+	}
 	return nil
 }
 
@@ -414,13 +464,18 @@ func RedisZReverseRank(key,uid string) error{
 }
 
 func main () {
+
+	/*
 	RedisZadd("testzadd8","111",1.1)
 	RedisZadd("testzadd8","222",2.2)
 	RedisZadd("testzadd8","333",2.2)
 	RedisZadd("testzadd8","444",2.2)
 	RedisZadd("testzadd8","555",4.4)
-	//RedisZadd("testzaddadd7","555",5.5)
+	RedisZadd("testzaddadd7","555",5.5)
 	RedisReverseRange("testzadd8",0,-1)
 	RedisZReverseRank("testzadd8","444")
+
+	 */
+	RedisAddZSet2("hehehehe","0",float64(0))
 
 }
