@@ -19,7 +19,10 @@ type tradeResponse struct {
 	Bal     map[string]float64
 	Pe  	float64
 	Ht 		int64
+	Ot   	int64
 	Si 		int32
+	Issue   int64
+	Ts  	[]interface{}
 }
 
 type hpPingPong struct {
@@ -58,6 +61,7 @@ func genValidateCode(width int) string {
 }
 
 func main() {
+	/*
 	ph := "0201" + genValidateCode(10)
 	x := map[string]string{}
 	x["pn"] = ph
@@ -68,12 +72,15 @@ func main() {
 	url := "http://app-hpoption-web.azfaster.com:8081/register"
 	req, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
+
+	 */
 	trans := http.Transport{
 		DisableKeepAlives:true,
 	}
 	client := &http.Client{
 		Transport:&trans,
 	}
+	/*
 	registrs,err := client.Do(req)
 	if err != nil {
 		log.Printf("ERROR----regist failed----err:%+v\n", err)
@@ -85,13 +92,15 @@ func main() {
 	req.Body.Close()
 
 
+	 */
+
 	y := map[string]string{}
-	y["pn"] = ph
-	y["pw"] = ph
-	y["v"] = "0.2.0"
+	y["pn"] = "13760377012"
+	y["pw"] = "a276c21e4cfda3efc0d91dad6a5b63d9"
+	y["v"] = "0.7.4"
 	n, _ := json.Marshal(y)
 	var jsonStr2= []byte(n)
-	url2 := "http://app-hpoption-web.azfaster.com:8081/loginByPassword"
+	url2 := "http://app-hpoption-web-test.azfaster.com:8081/loginByPassword"
 	req2, _ := http.NewRequest("POST", url2, bytes.NewBuffer(jsonStr2))
 	req2.Header.Set("Content-Type", "application/json")
 	resp, err := client.Do(req2)
@@ -144,37 +153,37 @@ func main() {
 
 
 	now := time.Now()
-	st := time.Unix(1566790740,0)
+	st := time.Unix(1575821620,0)
 	time.Sleep(st.Sub(now))
 
-	count := 1
-	for count <= 60 {
-		z := map[string]interface{}{}
-		z["am"] = 10
-		z["si"] = 1
-		z["in"] = 30
-		z["sy"] = "BTC"
-		z["ts"] = time.Now().Unix()-2
-		z["at"] = 1
-		o, _ := json.Marshal(z)
-		var jsonStr3= []byte(o)
-		url3 := "http://app-hpoption-web.azfaster.com:8081/trade"
-		req3, _ := http.NewRequest("POST", url3, bytes.NewBuffer(jsonStr3))
-		req3.Header.Set("Content-Type", "application/json")
-		req3.Header.Set("Authorization",fmt.Sprintf("Bearer %s",token))
-		req3.Header.Set("accept-encoding","gzip")
-		traderesp,err := client.Do(req3)
-		if err != nil {
-			log.Printf("ERROR----trade failed----err:%+v\n", err)
-		}
-		tradedata := tradeResponse{}
-		tradebody, _ := ioutil.ReadAll(traderesp.Body)
-		json.Unmarshal([]byte(tradebody), &tradedata)
-		log.Printf("trade::%+v,%+v\n",ph,tradedata)
-		req3.Body.Close()
-		time.Sleep(time.Second*1)
-		count++
+	z := map[string]interface{}{}
+	z["am"] = 1000
+	z["si"] = 1
+	z["in"] = 60
+	z["sy"] = "BTC"
+	z["ts"] = time.Now().Unix()-2
+	z["ve"] = "0.7.4"
+	z["odds"] = 0.85
+	z["at"] = 1
+	z["m"] = "centralism"
+
+	o, _ := json.Marshal(z)
+	var jsonStr3= []byte(o)
+	url3 := "http://app-hpoption-web-test.azfaster.com:8081/trade"
+	req3, _ := http.NewRequest("POST", url3, bytes.NewBuffer(jsonStr3))
+	req3.Header.Set("Content-Type", "application/json")
+	req3.Header.Set("Authorization",fmt.Sprintf("Bearer %s",token))
+	traderesp,err := client.Do(req3)
+	if err != nil {
+		log.Printf("ERROR----trade failed----err:%+v\n", err)
 	}
+	tradedata := tradeResponse{}
+	tradebody, _ := ioutil.ReadAll(traderesp.Body)
+	json.Unmarshal([]byte(tradebody), &tradedata)
+	log.Printf("trade::%+v\n",tradedata)
+	req3.Body.Close()
+	time.Sleep(time.Second*1)
+
 	<-doneC
 }
 
