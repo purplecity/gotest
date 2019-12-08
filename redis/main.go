@@ -463,19 +463,60 @@ func RedisZReverseRank(key,uid string) error{
 	return nil
 }
 
+
+
+
 func main () {
 
 	/*
-	RedisZadd("testzadd8","111",1.1)
-	RedisZadd("testzadd8","222",2.2)
-	RedisZadd("testzadd8","333",2.2)
-	RedisZadd("testzadd8","444",2.2)
-	RedisZadd("testzadd8","555",4.4)
-	RedisZadd("testzaddadd7","555",5.5)
-	RedisReverseRange("testzadd8",0,-1)
-	RedisZReverseRank("testzadd8","444")
+	RedisZadd("testzadd10","111",1.1)
+	RedisZadd("testzadd10","222",2.2)
+	RedisZadd("testzadd10","333",2.2)
+	RedisZadd("testzadd10","444",2.2)
+	RedisZadd("testzadd10","555",4.4)
+	RedisZadd("testzaddadd10","555",5.5)
+	RedisReverseRange("testzadd10",0,-1)
+	RedisZReverseRank("testzadd10","444")
 
 	 */
-	RedisAddZSet2("hehehehe","0",float64(0))
+
+
+	//RedisAddZSet2("hehehehe","0",float64(0))
+
+
+
+
+	client,err := GetRedisRankClient()
+	if err != nil {
+		return
+	}
+
+	pipe := client.redisClient.Pipeline()
+	/*
+	hehe := []map[string]string{}
+	for _,x := range []string{"oooo","oooo2","ooo3"} {
+		m,_ := pipe.HGetAll(x).Result()
+		log.Printf("---m---%+v\n",m)
+		hehe = append(hehe,m)
+	}
+	a,_ := pipe.Exec()
+	log.Printf("-----a----%+v,%+T\n",a,a)
+	for k,v := range a {
+		log.Printf("-----kvv----%+v,%+v,%+T\n",k,v,v)
+	}
+	log.Printf("---hehe---%+v\n",hehe)
+
+	 */
+
+	for _,x := range []string{"oooo5","oooo6"} {
+		pipe.HGetAll(x)
+	}
+	b,_ := pipe.Exec()
+	for k,v := range b {
+		log.Printf("-----kvv----%+v,%+v,%+v,%+T\n",k,(*(v.(*redis.StringStringMapCmd))).Val(),v.Args(),v)
+		for  m,n := range (*(v.(*redis.StringStringMapCmd))).Val() {
+			fmt.Printf("----adfasdf---%+v,%+v\n",m,n)
+		}
+	}
 
 }
