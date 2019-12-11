@@ -153,18 +153,18 @@ func main() {
 
 
 	now := time.Now()
-	st := time.Unix(1575821620,0)
+	st := time.Unix(1575874270,0)
 	time.Sleep(st.Sub(now))
 
 	z := map[string]interface{}{}
-	z["am"] = 1000
-	z["si"] = 1
+	z["am"] = 500
+	z["si"] = 0
 	z["in"] = 60
 	z["sy"] = "BTC"
 	z["ts"] = time.Now().Unix()-2
 	z["ve"] = "0.7.4"
 	z["odds"] = 0.85
-	z["at"] = 1
+	z["at"] = 0
 	z["m"] = "centralism"
 
 	o, _ := json.Marshal(z)
