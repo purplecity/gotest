@@ -176,7 +176,7 @@ func printLog(token string) {
 func main() {
 
 	//注册
-	ph := "0103" + genValidateCode(10)
+	ph := "0104" + genValidateCode(10)
 	x := map[string]string{}
 	x["pn"] = ph
 	x["pw"] = ph
@@ -252,16 +252,19 @@ func main() {
 			if message != nil {
 				var hpresp map[string]interface{}
 				json.Unmarshal(message, &hpresp)
+				log.Printf("look this whta %+v\n",hpresp)
 				if v, ok := hpresp["op"]; ok && v.(string) == "ping" {
 					log.Printf("INFO----receive ping\n")
 					v, _ := json.Marshal(hpPingPong{Operation: "pong"})
 					wsConn.WriteMessage(websocket.TextMessage, v)
 				} else if v, ok := hpresp["op"]; ok && v.(string) == "BTCCenOddsNotify" {
 					log.Printf("INFO----receive BTCCenOddsNotify\n")
-					btcmutex.Lock()
-					btcupodds = hpresp["cuo"].(float64)
-					btcdownodds = hpresp["cdo"].(float64)
-					btcmutex.Unlock()
+					if hpresp["ct"] == 0 {
+						btcmutex.Lock()
+						btcupodds = hpresp["cuo"].(float64)
+						btcdownodds = hpresp["cdo"].(float64)
+						btcmutex.Unlock()
+					}
 				}
 			}
 		}
@@ -274,7 +277,7 @@ func main() {
 
 	//到固定的时间 不同标的物下不同的单 循环
 	now := time.Now()
-	st := time.Unix(1576135570,0)
+	st := time.Unix(1576136830,0)
 	time.Sleep(st.Sub(now))
 
 
