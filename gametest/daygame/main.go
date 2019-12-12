@@ -1,5 +1,4 @@
-package daygame
-
+package main
 import (
 	"bytes"
 	"encoding/json"
@@ -88,6 +87,7 @@ func reg(token string)  {
 	url2 := "http://app-hpoption-web-test.azfaster.com:8081/dayGame"
 	req, _ := http.NewRequest("POST", url2, nil)
 	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization",fmt.Sprintf("Bearer %s",token))
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Printf("ERROR----dayGame failed----err:%+v\n", err)
@@ -100,11 +100,9 @@ func reg(token string)  {
 }
 
 var (
-	btcupodds,shciupodds,usdjpyupodds = 0.85,0.85,0.85
-	btcdownodds,shcidownodds,usdjpydownodds = 0.85,0.85,0.85
+	btcupodds = 0.85
+	btcdownodds = 0.85
 	btcmutex = sync.Mutex{}
-	shcimutex = sync.Mutex{}
-	usdjpymutex = sync.Mutex{}
 	amountList = []int64{20,30,40,50,60}
 
 	trans = http.Transport{
@@ -159,10 +157,26 @@ func trade( token,symbol string) {
 	trareq.Body.Close()
 }
 
+func printLog(token string) {
+	url2 := "http://app-hpoption-web-test.azfaster.com:8081/gameSingleUnFinRank"
+	prireq, _ := http.NewRequest("POST", url2, nil)
+	prireq.Header.Set("Content-Type", "application/json")
+	prireq.Header.Set("Authorization",fmt.Sprintf("Bearer %s",token))
+	resp, err := client.Do(prireq)
+	if err != nil {
+		log.Printf("ERROR----gameSingleUnFinRank failed----err:%+v\n", err)
+	}
+	data := map[string]interface{}{}
+	body, _ := ioutil.ReadAll(resp.Body)
+	json.Unmarshal([]byte(body), &data) //打印出邀请码 另用于注册账号 打印虚拟金额是否变化
+	log.Printf("gameSingleUnFinRank::%+v\n",data)
+	prireq.Body.Close()
+}
+
 func main() {
 
 	//注册
-	ph := "0101" + genValidateCode(10)
+	ph := "0103" + genValidateCode(10)
 	x := map[string]string{}
 	x["pn"] = ph
 	x["pw"] = ph
@@ -183,6 +197,7 @@ func main() {
 	json.Unmarshal([]byte(registbody), &registdata)
 	log.Printf("regist %+v,%+v\n",ph,registdata)
 	regreq.Body.Close()
+	log.Printf("================RegistFinished===============\n")
 
 
 
@@ -206,10 +221,11 @@ func main() {
 	token := data.Token
 	logreq.Body.Close()
 	doneC := make(chan struct{})
+	log.Printf("================LoginFinished===============\n")
 
 	//ws
 	go func() {
-		endpoint := "ws:// app-hpoption-web.azfaster.com:55555/ws/BTCUSDT"
+		endpoint := "ws://app-hpoption-ws-test.azfaster.com:55555/ws/BTCUSDT"
 		hpdial := &websocket.Dialer{}
 		wsConn, _, err := hpdial.Dial(endpoint, nil)
 		if err != nil {
@@ -246,18 +262,6 @@ func main() {
 					btcupodds = hpresp["cuo"].(float64)
 					btcdownodds = hpresp["cdo"].(float64)
 					btcmutex.Unlock()
-				} else if v, ok := hpresp["op"]; ok && v.(string) == "SHCICenOddsNotify" {
-					log.Printf("INFO----receive SHCICenOddsNotify\n")
-					shcimutex.Lock()
-					shciupodds = hpresp["cuo"].(float64)
-					shcidownodds = hpresp["cdo"].(float64)
-					shcimutex.Unlock()
-				}else if v, ok := hpresp["op"]; ok && v.(string) == "USDJPYCenOddsNotify" {
-					log.Printf("INFO----receive USDJPYCenOddsNotify\n")
-					usdjpymutex.Lock()
-					usdjpyupodds = hpresp["cuo"].(float64)
-					usdjpydownodds = hpresp["cdo"].(float64)
-					usdjpymutex.Unlock()
 				}
 			}
 		}
@@ -266,19 +270,30 @@ func main() {
 
 	//报名
 	reg(token)
+	log.Printf("================GameRegFinished===============\n")
 
 	//到固定的时间 不同标的物下不同的单 循环
 	now := time.Now()
-	st := time.Unix(1575874270,0)
+	st := time.Unix(1576135570,0)
 	time.Sleep(st.Sub(now))
 
 
-	//下单 不同标的物 下不同side 不同amount来制造差异 选定btc shci usdjpy
-	for {
-		trade(token,"BTC")
-		trade(token,"SHCI")
-		trade(token,"USDJPY")
-		time.Sleep(time.Second*90)
-	}
+	//下单 不同标的物 下不同side 不同amount来制造差异 选定btc shci usdjpy 算了不然还要多个ws连接着没必要
+	go func() {
+		for {
+			trade(token,"BTC")
+			//trade(token,"SHCI")
+			//trade(token,"USDJPY")
+			log.Printf("================TradeFinished===============\n")
+			time.Sleep(time.Second*90)
+		}
+	}()
+
+	go func() {
+		for {
+			printLog(token)
+			time.Sleep(time.Second*95)
+		}
+	}()
 	<-doneC
 }
