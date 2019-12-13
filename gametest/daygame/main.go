@@ -282,11 +282,5 @@ func main() {
 		}
 	}()
 
-	go func() {
-		for {
-			printLog(token)
-			time.Sleep(time.Second*95)
-		}
-	}()
 	<-doneC
 }
