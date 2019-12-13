@@ -5,11 +5,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	r "math/rand"
 	"net/http"
 	"strings"
 	"time"
-	r "math/rand"
-
 )
 
 /*

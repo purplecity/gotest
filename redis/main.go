@@ -463,10 +463,44 @@ func RedisZReverseRank(key,uid string) error{
 	return nil
 }
 
+func RedisDWYKey(key,uid string,score float64,exp int64) error{
+	client,err := GetRedisRankClient()
+	if err != nil {
+		return err
+	}
+
+	luaScript := redis.NewScript(`
+	redis.call("ZADD", KEYS[1],ARGV[1],ARGV[2])
+	redis.call("EXPIRE", KEYS[1], ARGV[3])
+	return 1
+	`)
+	_,err = luaScript.Run(client.redisClient,[]string{key},score,uid,exp).Result()
+	if err != nil {
+		log.Printf("ERROR----run lua script failed----err:%+v\n",err)
+		return err
+	}
+	return nil
+}
+
+func RankHSet( key,filed string, value interface{}) error {
+	client,err := GetRedisRankClient()
+	if err != nil {
+		return err
+	}
+	_, err = client.HSet(key,filed,value).Result()
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+
 
 
 
 func main () {
+	RedisDWYKey("testheheheheheh","0",float64(0),30)
+	RedisZadd("testheheheheheh","111",111)
 
 	/*
 	RedisZadd("testzadd10","111",1.1)
@@ -485,14 +519,14 @@ func main () {
 
 
 
-
+	/*
 	client,err := GetRedisRankClient()
 	if err != nil {
 		return
 	}
 
 	pipe := client.redisClient.Pipeline()
-	/*
+
 	hehe := []map[string]string{}
 	for _,x := range []string{"oooo","oooo2","ooo3"} {
 		m,_ := pipe.HGetAll(x).Result()
@@ -508,6 +542,7 @@ func main () {
 
 	 */
 
+	/*
 	for _,x := range []string{"oooo5","oooo6"} {
 		pipe.HGetAll(x)
 	}
@@ -518,5 +553,7 @@ func main () {
 			fmt.Printf("----adfasdf---%+v,%+v\n",m,n)
 		}
 	}
+
+	 */
 
 }
