@@ -231,26 +231,32 @@ func main() {
 			os.Exit(1)
 		}
 
+
 		subdata := SubRequest{Operation: "sub", Token: token}
 		dataByte, _ := json.Marshal(subdata)
+		log.Printf("TESTTEST=============4444=======\n")
 		wsConn.WriteMessage(websocket.TextMessage, dataByte)
 		_, _, _ = wsConn.ReadMessage()
+
+
+		log.Printf("TESTTEST=============3333=======\n")
 
 
 		defer wsConn.Close()
 		defer close(doneC)
 
+		log.Printf("TESTTEST=============11111=======\n")
 		for {
 			_, message, err := wsConn.ReadMessage()
 			if err != nil {
 				fmt.Printf("ERROR----read  message failed----err:%+v\n", err.Error())
-				time.Sleep(time.Second*1)
+				time.Sleep(time.Second * 1)
 				return
 			}
 			if message != nil {
 				var hpresp map[string]interface{}
 				json.Unmarshal(message, &hpresp)
-				log.Printf("look this whta %+v\n",hpresp)
+				log.Printf("look this whta %+v\n", hpresp)
 				if v, ok := hpresp["op"]; ok && v.(string) == "ping" {
 					log.Printf("INFO----receive ping\n")
 					v, _ := json.Marshal(hpPingPong{Operation: "pong"})
@@ -265,6 +271,7 @@ func main() {
 					}
 				}
 			}
+			log.Printf("TESTTEST=============2222=======\n")
 		}
 	}()
 
@@ -275,7 +282,7 @@ func main() {
 
 	//到固定的时间 不同标的物下不同的单 循环
 	now := time.Now()
-	st := time.Unix(1576136830,0)
+	st := time.Unix(1576216440,0)
 	time.Sleep(st.Sub(now))
 
 
