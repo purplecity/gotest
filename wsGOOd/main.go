@@ -6,10 +6,12 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 	r "math/rand"
 	"sync"
+	"github.com/gorilla/websocket"
 
 )
 
@@ -74,9 +76,9 @@ func genValidateCode(width int) string {
 	return sb.String()
 }
 
-func genNumber(n int) int {
+func genNumber() int {
 	r.Seed(time.Now().UnixNano())
-	return r.Intn(n)
+	return r.Intn(5)
 }
 
 func reg(token string)  {
@@ -110,8 +112,8 @@ var (
 )
 
 func trade( token,symbol string) {
-	side := 2+genNumber(3) //0 1 2 3 4对应金额 20 30 40 50 60 意味着2000块钱至少可以下30次 1800秒 半小时
-	amount := amountList[genNumber(5)]
+	side := genNumber() //0 1 2 3 4对应金额 20 30 40 50 60 意味着2000块钱至少可以下30次 1800秒 半小时
+	amount := amountList[side]
 
 	z := map[string]interface{}{}
 	z["am"] = amount
@@ -125,7 +127,20 @@ func trade( token,symbol string) {
 
 	o, _ := json.Marshal(z)
 	var jsonStr3= []byte(o)
-	url3 := "http://app-hpoption-web-test.azfaster.com:8081/tradeSDP"
+	url3 := ""
+	if side > 2 {
+		url3 = "http://app-hpoption-web-test.azfaster.com:8081/tradeSDP"
+	} else {
+		btcmutex.Lock()
+		if side == 0 {
+			z["odds"] = btcdownodds
+		} else {
+			z["odds"] = btcupodds
+		}
+		btcmutex.Unlock()
+		url3 = "http://app-hpoption-web-test.azfaster.com:8081/trade"
+	}
+
 	trareq, _ := http.NewRequest("POST", url3, bytes.NewBuffer(jsonStr3))
 	trareq.Header.Set("Content-Type", "application/json")
 	trareq.Header.Set("Authorization",fmt.Sprintf("Bearer %s",token))
@@ -207,7 +222,6 @@ func main() {
 	log.Printf("================LoginFinished===============\n")
 
 	//ws
-	/*
 	go func() {
 		endpoint := "ws://app-hpoption-ws-test.azfaster.com:55555/ws/BTCUSDT"
 		hpdial := &websocket.Dialer{}
@@ -262,8 +276,6 @@ func main() {
 		}
 	}()
 
-
-	 */
 
 	//报名
 	reg(token)
