@@ -9,7 +9,6 @@ import (
 	"strings"
 	"time"
 	r "math/rand"
-	"sync"
 
 )
 
@@ -96,9 +95,6 @@ func reg(token string)  {
 }
 
 var (
-	btcupodds = 0.85
-	btcdownodds = 0.85
-	btcmutex = sync.Mutex{}
 	amountList = []int64{20,30,40,50,60}
 
 	trans = http.Transport{
@@ -159,7 +155,7 @@ func printLog(token string) {
 func main() {
 
 	//注册
-	ph := "0104" + genValidateCode(10)
+	ph := "0105" + genValidateCode(10)
 	x := map[string]string{}
 	x["pn"] = ph
 	x["pw"] = ph
@@ -280,7 +276,7 @@ func main() {
 		for {
 			trade(token,"BTC")
 			//trade(token,"SHCI")
-			//trade(token,"USDJPY")
+			trade(token,"USDJPY")
 			log.Printf("================TradeFinished===============\n")
 			time.Sleep(time.Second*90)
 		}
