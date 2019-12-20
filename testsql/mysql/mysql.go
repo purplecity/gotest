@@ -8,16 +8,14 @@ import (
 	"time"
 )
 
-
-var(
+var (
+	MysqlIP = "127.0.0.1"
+	MysqlPassWord = "k"
 	MysqlUserName = "root"
-	//MysqlPassWord = "k"
-	MysqlPassWord = "7U'G~1LzI+]3_~D"
-	MysqlIP = "47.244.217.66"
-	//MysqlIP = "127.0.0.1"
 	MysqlPort = 3306
-	//MysqlDefaultDatabase = "test2"
 	MysqlDefaultDatabase = "HPOption"
+
+
 )
 
 func init() {
@@ -27,14 +25,16 @@ func init() {
 			MysqlUserName, MysqlPassWord, MysqlIP, MysqlPort, MysqlDefaultDatabase))
 	//注册模型
 	orm.RegisterModel(new(AdminUsers),new(Realtrade),new(Vitualtrade),
-		new(Asset),new(Parter),new(Director),new(Player),new(Score),
+		new(Asset),new(Vitualasset),new(Parter),new(Director),new(Player),new(Score),
 		new(Scorerecord),new(Depositrecord),new(Withdrawrecord),
 		new(BankInfo),new(Subject),new(Clientversion),
 		new(AdminRoleUsers),new(Lastconnect),new(Depositbank),
 		new(Takescorerecord),new(Hpreconciliation),new(Depositway),new(Remarks),
-		new(Userdata),new(Payamount),new(Alipayensure),new(Subjecttrade))
+		new(Userdata),new(Payamount),new(Alipayensure),new(Subjecttrade),new(Gracefuldown),
+		new(Daygame),new(Weekgame),new(Yeargame),new(Rewardrecord))
 	//orm.SetMaxIdleConns("default",50)
-	//orm.SetMaxOpenConns("default",3000)
+	orm.SetMaxOpenConns("default",5000)
+	orm.Debug = true
 	db,_ := orm.GetDB("default")
 	db.SetConnMaxLifetime(time.Second*5)
 	//自动创建表 参数二为是否drop然后创建表   参数三是否打印创建表过程
@@ -143,6 +143,23 @@ func GetTopByCondStruct(table,orderFiled string, num int,cond map[string]interfa
 	qs.All(resultStruct)
 }
 
+func GetTopByCondStructInt(table,orderFiled string, num int64,cond map[string]interface{},resultStruct interface{}) {
+	o := getOrm()
+	qs := o.QueryTable(table)
+	for key,value := range cond {
+		qs = qs.Filter(key,value).OrderBy("-"+orderFiled).Limit(num)
+	}
+	qs.All(resultStruct)
+}
+
+func GetTopByCondStructIntSeq(table,orderFiled string, num int64,cond map[string]interface{},resultStruct interface{}) {
+	o := getOrm()
+	qs := o.QueryTable(table)
+	for key,value := range cond {
+		qs = qs.Filter(key,value).OrderBy(orderFiled).Limit(num)
+	}
+	qs.All(resultStruct)
+}
 
 func GetRecordMap(table string,cond map[string]interface{},resultMap *[]orm.Params) {
 	o := getOrm()

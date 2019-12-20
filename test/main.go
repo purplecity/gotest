@@ -17,19 +17,14 @@ func getIssue(tt int64) {
 	sunNum :=  int(a / 7)
 	fmt.Printf("---- %+v,%+v\n",a,sunNum)
 
-	if sunNum != 0 {
-		w = 20001 + sunNum - 1
-
-	}
-
+	w = 20001 + sunNum - 1
 	d = 10001 + sunNum*5-1
 
-
-	if int(t.Weekday()) >= 1 && int(t.Weekday()) <=5 {
+	if int(t.Weekday()) == 6 {
+		d = d + 5
+	} else if int(t.Weekday()) >= 1 && int(t.Weekday()) <=5 {
 		d = d + int(t.Weekday()) - 1
-	}
-
-	if int(t.Weekday()) == 0 {
+	} else if int(t.Weekday()) == 0 {
 		w = w + 1
 		d = d + 5
 	}
@@ -58,5 +53,5 @@ func main() {
 	//tm := time.Now()
 	//fmt.Println(tm.Year(),int(tm.Month()),tm.Day(),tm.Hour(),tm.Minute(),tm.Second())
 	//fmt.Println(1.7e308 > float64(24*3600*1000000000))
-	getIssue(1578585601)
+	getIssue(1578164400)
 }

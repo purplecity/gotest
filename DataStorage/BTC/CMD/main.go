@@ -15,13 +15,13 @@ import (
 )
 
 var (
-	BTCBaseURL 		= "wss://stream.binance.com:9443/ws"
+	BTCBaseURL = "wss://stream.binance.com:9443/ws"
 	starttime = int64(1111)
 	price = float64(0)
 	Mu sync.Mutex
 	Event WsTradeEvent
-	AssignData map[string]interface{} = map[string]interface{}{"ts":int64(0),"price":float64(0)}
-	LastEvent map[string]interface{} = map[string]interface{}{"ts":int64(0),"price":float64(0)}
+	AssignData = map[string]interface{}{"ts":int64(0),"price":float64(0)}
+	LastEvent = map[string]interface{}{"ts":int64(0),"price":float64(0)}
 	datamap = make(map[int64]float64)
 	Firstclosehour = 2
 	Firstclosemin = 30
