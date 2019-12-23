@@ -128,7 +128,6 @@ var pullData = func() {
 					} else {
 						Mu.Lock()
 						LastPrice = respmap["data"].([]interface{})[0].(map[string]interface{})["lastPrice"].(float64)
-						fmt.Printf("%+v,%+v\n",time.Now(),LastPrice)
 						Mu.Unlock()
 						resp.Body.Close()
 						break

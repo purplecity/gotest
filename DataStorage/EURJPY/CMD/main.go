@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/csv"
 	"fmt"
-	"github.com/astaxie/beego/toolbox"
 	"gotest/DataStorage/Operation"
 	"io/ioutil"
 	"log"
@@ -37,6 +36,7 @@ func ExcuteTask() {
 
 	//取消延后一miao是因为select的偶然性怕 中断消息优先被执行而遗漏了最后1s的行情
 	//执行task提前2s是想开盘的第一秒数据是有的 因为pull task会停1s再执行
+	//提前了30s
 	taskExcuteFirst := toolbox.NewTask("ExcuteFirst", getString(Firstopenmin,Firstopenhour), startHandle)
 	taskFirstCancel := toolbox.NewTask("FirstCancel", fmt.Sprintf("1 %d %d * * 2,3,4,5,6",Firstclosemin,Firstclosehour),cancelHandle)
 	toolbox.AddTask("ExcuteFirst", taskExcuteFirst)
@@ -114,7 +114,6 @@ var pullData = func() {
 						pips,_ := strconv.ParseFloat(dataSlice[4]+dataSlice[5],64)
 						Mu.Lock()
 						LastPrice = Operation.HPMul(Operation.HPAdd(big,pips),float64(0.5))
-						fmt.Printf("%+v,%+v\n",time.Now(),LastPrice)
 						Mu.Unlock()
 						resp.Body.Close()
 						break

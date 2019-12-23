@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/csv"
 	"fmt"
-	"github.com/gorilla/websocket"
 	"github.com/astaxie/beego/toolbox"
 	"io/ioutil"
 	"log"
@@ -115,7 +114,6 @@ var pullData = func() {
 						pips,_ := strconv.ParseFloat(dataSlice[4]+dataSlice[5],64)
 						Mu.Lock()
 						LastPrice = Operation.HPMul(Operation.HPAdd(big,pips),float64(0.5))
-						fmt.Printf("%+v,%+v\n",time.Now(),LastPrice)
 						Mu.Unlock()
 						resp.Body.Close()
 						break
