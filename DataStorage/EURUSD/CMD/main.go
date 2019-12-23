@@ -271,6 +271,7 @@ func main() {
 			} else if Operation.HPEqual(price,ov) {
 				ud = 2
 			}
+			log.Printf("issue:%+v,ov:%+v,price:%+v,ud:%+v,sdp:%+v\n",issue,ov,price,ud,sdp)
 			tradew.Write([]string{fmt.Sprint("%+v",issue),fmt.Sprintf("%+v",ov),fmt.Sprintf("%+v",price),fmt.Sprintf("%+v",ud),fmt.Sprintf("%+v",sdp)})
 			tradew.Flush()
 		}
