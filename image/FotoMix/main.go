@@ -17,7 +17,7 @@ import (
 
 var (
 	dpi      = flag.Float64("dpi", 72, "screen resolution in Dots Per Inch")
-	size     = flag.Float64("size", 50, "font size in points")
+	size     = flag.Float64("size", 36, "font size in points")
 )
 
 
@@ -48,12 +48,12 @@ func main() {
 
 
 	//画布
-	jpg := image.NewRGBA(image.Rect(0, 0, 864, 1536))  //获取画布大小 应该跟背景图尺寸一致
+	jpg := image.NewRGBA(image.Rect(0, 0, 750, 1334))  //获取画布大小 应该跟背景图尺寸一致
 	fmt.Printf("bf bounds:%+v,%+v,%+v,%+v   qf bounds :%+v,%+v,%+v,%+v\n",bImage.Bounds().Min.X,bImage.Bounds().Min.Y,bImage.Bounds().Max.X,bImage.Bounds().Max.Y,
 		qImage.Bounds().Min.X,qImage.Bounds().Min.Y,qImage.Bounds().Max.X,qImage.Bounds().Max.Y)
 
 	draw.Draw(jpg, jpg.Bounds(), bImage, bImage.Bounds().Min, draw.Over)
-	draw.Draw(jpg, jpg.Bounds(), qImage, qImage.Bounds().Min.Sub(image.Pt(220, 740)), draw.Over)  //中间为偏移量  显然应该是画布x1- qf的wight 再除以2 来居中 高偏移的话随意了
+	draw.Draw(jpg, jpg.Bounds(), qImage, qImage.Bounds().Min.Sub(image.Pt(235, 551)), draw.Over)  //中间为偏移量  显然应该是画布x1- qf的wight 再除以2 来居中 高偏移的话随意了
 
 	bg := image.White
 
@@ -74,7 +74,7 @@ func main() {
 	c.SetClip(jpg.Bounds())
 	c.SetDst(jpg)
 	c.SetSrc(bg)
-	pt := freetype.Pt(430, 738)
+	pt := freetype.Pt(298, 520)
 	text := "HIJKLM"
 	_,err = c.DrawString(text,pt)
 	if err != nil {
