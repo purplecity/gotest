@@ -9,8 +9,8 @@ import (
 )
 
 var (
-	MysqlIP = "127.0.0.1"
-	MysqlPassWord = "k"
+	MysqlIP = "47.244.217.66"
+	MysqlPassWord = "7U'G~1LzI+]3_~D"
 	MysqlUserName = "root"
 	MysqlPort = 3306
 	MysqlDefaultDatabase = "HPOption"
