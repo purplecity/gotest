@@ -58,11 +58,12 @@ type loginResponse struct {
 
 func main() {
 	//注册
-	prefixlist := []string{"131hp","132hp","133hp","134hp","135hp","136hp","137hp","138hp","139hp"}
-	//"151hp","152hp","153hp","154hp","155hp","156hp","157hp","158hp","159hp","181hp","182hp"
+	prefixlist := []string{"131hp","132hp","133hp","134hp","135hp","136hp","137hp","138hp","139hp",
+	"151hp","152hp","153hp","154hp","155hp","156hp","157hp","158hp","159hp","181hp","182hp"}
+	phlist := []string{}
 	for _,x := range prefixlist {
-		for i:=1;i<=50;i++ {
-			ivcode := "g4QUpE" //我们自己的邀请码
+		for i:=1;i<=5;i++ {
+			ivcode := "7nvHW3" //我们自己的邀请码
 			ph := x + genValidateCode(6)
 			regmap := map[string]string{}
 			regmap["pn"] = ph
@@ -70,7 +71,7 @@ func main() {
 			regmap["ic"] = ivcode
 			regbina, _ := json.Marshal(regmap)
 			var jsonStr= []byte(regbina)
-			url := "https://app-hpoption-web.azfaster.com:8081/register"
+			url := "http://app-hpoption-web-test.azfaster.com:8081/register"
 			regreq, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
 			regreq.Header.Set("Content-Type", "application/json")
 
@@ -85,18 +86,22 @@ func main() {
 			log.Printf("regist %+v,%+v\n",ph,registdata)
 			regreq.Body.Close()
 			log.Printf("================RegistFinished===============\n")
+			phlist = append(phlist,fmt.Sprintf("\"%+v\"",ph))
 			time.Sleep(time.Millisecond*500)
 		}
 	}
 
-
+	fmt.Printf("%+v\n",phlist)
 
 	//已经注册查询
 	//登录
 	//报名
 	//每天玩一下
-
 }
+
+/*
+["131hp109129" "131hp812713" "131hp858503" "131hp273928" "131hp461275" "132hp084686" "132hp481077" "132hp839996" "132hp082105" "132hp664886" "133hp567607" "133hp512998" "133hp517997" "133hp763788" "133hp357678" "134hp179002" "134hp003749" "134hp665195" "134hp590498" "134hp800339" "135hp308503" "135hp604499" "135hp136519" "135hp825924" "135hp740706" "136hp650721" "136hp640962" "136hp229471" "136hp572097" "136hp687956" "137hp915871" "137hp395729" "137hp580089" "137hp589130" "137hp727018" "138hp754660" "138hp712811" "138hp935371" "138hp908154" "138hp358278" "139hp998789" "139hp224581" "139hp340287" "139hp891518" "139hp145515" "151hp815810" "151hp033290" "151hp180955" "151hp461551" "151hp994346" "152hp885874" "152hp876406" "152hp401093" "152hp964674" "152hp975522" "153hp770807" "153hp712162" "153hp862930" "153hp265629" "153hp004381" "154hp335936" "154hp822785" "154hp024429" "154hp297032" "154hp499050" "155hp580724" "155hp506537" "155hp565016" "155hp818594" "155hp672168" "156hp524615" "156hp503365" "156hp602317" "156hp458618" "156hp257574" "157hp679148" "157hp128119" "157hp805353" "157hp524117" "157hp015194" "158hp255859" "158hp110111" "158hp133611" "158hp304696" "158hp195730" "159hp957293" "159hp817809" "159hp283192" "159hp591958" "159hp813940" "181hp964502" "181hp060121" "181hp918588" "181hp314646" "181hp915317" "182hp551132" "182hp060482" "182hp327878" "182hp367022" "182hp110205"]
+*/
 
 // 0 必须下单 否则用户发奖排名不一致
 //1  不能跟已有账号重合 必然不重合 反正没关系
