@@ -97,12 +97,17 @@ func main() {
 	fmt.Printf("%v,\n",int64(nt1.Sub(et1).Seconds()))
 	fmt.Println(nt-et)
 
-	 */
+
 	tick := time.Tick(time.Second)
 	for x := range tick {
 		fmt.Printf("%+v,%+v\n",x,time.Now() )
 		time.Sleep(2*time.Second)
 
 
+
 	}
+	 */
+
+	utcLoc,_ := time.LoadLocation("")
+	fmt.Println(time.Now().In(utcLoc).Format("2006-01-02T15:04:05Z"))
 }
