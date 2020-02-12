@@ -84,12 +84,14 @@ func YSBLoginValidate(w http.ResponseWriter, req *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "text/xml")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Write(output)
+	headerBytes := []byte(xml.Header)
+	headerBytes = append(headerBytes,output...)
+	w.Write(headerBytes)
 }
 
 func main() {
 	http.HandleFunc("/", YSBLoginValidate) //设置访问的路由
-	err := http.ListenAndServe(":8888", nil) //设置监听的端口
+	err := http.ListenAndServe(":8889", nil) //设置监听的端口
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
