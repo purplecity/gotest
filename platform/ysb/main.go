@@ -39,16 +39,14 @@ type reqpp struct {
 }
 
 
-type respYSB struct  {
-	Name xml.Name `xml:"response"`
+type response struct  {
 	Action string `xml:"action,attr"`
-	Ele respYSBELE
+	Ele respYSBELE `xml:"element"`
 }
 
 type respYSBELE struct {
-	Name xml.Name `xml:"element"`
 	Id string `xml:"id,attr"` // 读取flag属性
-	Pro []respYSBpp
+	Pro []respYSBpp `xml:"properties"`
 }
 
 type respYSBpp struct {
@@ -68,7 +66,7 @@ func YSBLoginValidate(w http.ResponseWriter, req *http.Request) {
 	log.Printf("%+v\n",test1)
 	//暂时不做校验 直接成功 返回
 
-	hresp := respYSB{Action:"clogin"}
+	hresp := response{Action:"clogin"}
 	ppList := []respYSBpp{}
 	ppList = append(ppList,respYSBpp{Name:"UN",Proterties:"55555"})
 	ppList = append(ppList,respYSBpp{Name:"UID",Proterties:"55555"})
