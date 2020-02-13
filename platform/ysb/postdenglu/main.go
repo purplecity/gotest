@@ -6,9 +6,10 @@ import (
 	"strings"
 )
 
+var baseUrl = "http://wlrevamp.a1go.org/login.aspx?username=XY_55555&langcode=zh-cn&sign=55555&v=XY&cr=RMB"
+
 /*
 func main() {
-	var baseUrl = "http://wlrevamp.a1go.org/login.aspx?username=555555&langcode=zh-cn&sign=55555&v=XY&cr=RMB"
 	resp, err := http.Get(baseUrl)
 	if err != nil {
 		fmt.Printf("%+v\n",err)
@@ -17,9 +18,8 @@ func main() {
 	defer resp.Body.Close()
 }
 
-
  */
-var baseUrl = "http://wlrevamp.a1go.org/login.aspx?username=55555&langcode=zh-cn&sign=55555&v=XY&cr=RMB"
+
 
 func main() {
 

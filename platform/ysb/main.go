@@ -66,13 +66,20 @@ func YSBLoginValidate(w http.ResponseWriter, req *http.Request) {
 	log.Printf("%+v\n",test1)
 	//暂时不做校验 直接成功 返回
 
+	resp1map := map[string]interface{}{}
+	for _,v := range test1.Element.Pro {
+		resp1map[v.Name] = v.Proterties
+	}
+	log.Printf("resp1map :%+v\n",resp1map)
+
+
 	hresp := response{Action:"clogin"}
 	ppList := []respYSBpp{}
-	ppList = append(ppList,respYSBpp{Name:"UN",Proterties:"XY_555555"})
-	ppList = append(ppList,respYSBpp{Name:"UID",Proterties:"55555"})
+	ppList = append(ppList,respYSBpp{Name:"UN",Proterties:resp1map["UN"]})
+	ppList = append(ppList,respYSBpp{Name:"UID",Proterties:resp1map["SG"]})
 	ppList = append(ppList,respYSBpp{Name:"S",Proterties:0})
 	ppList = append(ppList,respYSBpp{Name:"CC",Proterties:0})
-	ppList = append(ppList,respYSBpp{Name:"ED",Proterties:"-"})
+	ppList = append(ppList,respYSBpp{Name:"ED",Proterties:""})
 
 	hele := respYSBELE{Id:"id001",Pro:ppList}
 	hresp.Ele = hele
