@@ -68,21 +68,22 @@ type resppp struct {
 
 
 var baseurl = "http://testsportapi.a1sport88.com/XMLExchange.aspx?TrancType=2&ThirdPartyID=XY&CURID=RMB"
+var baseurl2 = "http://testsportapi.a1sport88.com/XMLExchange.aspx?TrancType=3&ThirdPartyID=XY&CURID=RMB"
 func main () {
 
 	hreq := request{Action:"EBdeposit"}
 	ppList := []reqYSBpp{}
-	ppList = append(ppList,reqYSBpp{Name:"UN",Proterties:"55555"})
-	ppList = append(ppList,reqYSBpp{Name:"UID",Proterties:"55555"})
-	ppList = append(ppList,reqYSBpp{Name:"SN",Proterties:55555})
+	ppList = append(ppList,reqYSBpp{Name:"UN",Proterties:"XY_666666"})
+	ppList = append(ppList,reqYSBpp{Name:"UID",Proterties:"666666"})
+	ppList = append(ppList,reqYSBpp{Name:"SN",Proterties:6666663})
 	ppList = append(ppList,reqYSBpp{Name:"VID",Proterties:"XY"})
 	ppList = append(ppList,reqYSBpp{Name:"CI",Proterties:"RMB"})
 	ppList = append(ppList,reqYSBpp{Name:"LI",Proterties:1})
 	ppList = append(ppList,reqYSBpp{Name:"AMT",Proterties:500})
-	ppList = append(ppList,reqYSBpp{Name:"RN",Proterties:"55555"})
-	ppList = append(ppList,reqYSBpp{Name:"OPRID",Proterties:0})  //要问清的
+	ppList = append(ppList,reqYSBpp{Name:"RN",Proterties:"6666663"})
+	ppList = append(ppList,reqYSBpp{Name:"OPRID",Proterties:""})  //要问清的
 
-	hele := reqYSBELE{Id:"100440318",Pro:ppList}
+	hele := reqYSBELE{Id:"100440323",Pro:ppList}
 	hreq.Ele = hele
 
 	jsonStr,err:=xml.Marshal(hreq)
@@ -119,26 +120,27 @@ func main () {
 
 	hreq2 := request{Action:"EBdepositConfirm"}
 	ppList2 := []reqYSBpp{}
-	ppList2 = append(ppList,reqYSBpp{Name:"UN",Proterties:"55555"})
-	ppList2 = append(ppList,reqYSBpp{Name:"ST",Proterties:0})
-	ppList2 = append(ppList,reqYSBpp{Name:"SN",Proterties:55555})
-	ppList2 = append(ppList,reqYSBpp{Name:"PI",Proterties:resp1map["PI"]})
-	ppList2 = append(ppList,reqYSBpp{Name:"ED",Proterties:"-"}) //下划线还是中线
+	ppList2 = append(ppList2,reqYSBpp{Name:"UN",Proterties:"XY_666666"})
+	ppList2 = append(ppList2,reqYSBpp{Name:"ST",Proterties:0})
+	ppList2 = append(ppList2,reqYSBpp{Name:"SN",Proterties:6666663})
+	ppList2 = append(ppList2,reqYSBpp{Name:"PI",Proterties:resp1map["PI"]})
+	ppList2 = append(ppList2,reqYSBpp{Name:"ED",Proterties:""}) //下划线还是中线
 
-	hele2 := reqYSBELE{Id:"100440318",Pro:ppList2}
+	hele2 := reqYSBELE{Id:"100440323",Pro:ppList2}
 	hreq2.Ele = hele2
 
 	jsonStr2,err :=xml.Marshal(hreq2)
-	rn2, _ := http.NewRequest("POST", baseurl, bytes.NewBuffer(jsonStr2))
+	rn2, _ := http.NewRequest("POST", baseurl2, bytes.NewBuffer(jsonStr2))
 	rn2.Header.Set("Content-Type", "text/xml")
 
-	resp2,err := client.Do(rn)
+	resp2,err := client.Do(rn2)
 	if err != nil {
 		log.Printf("ERROR----chongzhi 2 req----err:%+v\n", err)
 	}
 
 
 	con2, _ := ioutil.ReadAll(resp2.Body)
+	log.Printf("letsee %+v\n",string(con2))
 	test2 := respproperties{}
 	err = xml.Unmarshal(con2,&test2)
 	if err != nil {
