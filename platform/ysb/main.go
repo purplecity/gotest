@@ -68,7 +68,7 @@ func YSBLoginValidate(w http.ResponseWriter, req *http.Request) {
 
 	hresp := response{Action:"clogin"}
 	ppList := []respYSBpp{}
-	ppList = append(ppList,respYSBpp{Name:"UN",Proterties:"55555"})
+	ppList = append(ppList,respYSBpp{Name:"UN",Proterties:"XY_555555"})
 	ppList = append(ppList,respYSBpp{Name:"UID",Proterties:"55555"})
 	ppList = append(ppList,respYSBpp{Name:"S",Proterties:0})
 	ppList = append(ppList,respYSBpp{Name:"CC",Proterties:0})
