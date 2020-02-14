@@ -39,21 +39,15 @@ type resppp struct {
 	Proterties string `xml:",chardata"`
 }
 
-var baseurl = "http://testsportapi.a1sport88.com/XMLExchange.aspx?TrancType=4&ThirdPartyID=XY&CURID=RMB"
+var baseurl = "http://testsportapi.a1sport88.com/XMLExchange.aspx?TrancType=1&ThirdPartyID=XY&CURID=RMB"
 
 func main() {
-	hreq := request{Action:"EBwithdrawal"}
+	hreq := request{Action:"EBaccountbalance"}
 	ppList := []reqYSBpp{}
 	ppList = append(ppList,reqYSBpp{Name:"UN",Proterties:"XY_666666"})
-	ppList = append(ppList,reqYSBpp{Name:"UID",Proterties:"666666"})
-	ppList = append(ppList,reqYSBpp{Name:"SN",Proterties:6666667})
-	ppList = append(ppList,reqYSBpp{Name:"VID",Proterties:"XY"})
-	ppList = append(ppList,reqYSBpp{Name:"CI",Proterties:"RMB"})
-	ppList = append(ppList,reqYSBpp{Name:"LI",Proterties:1})
-	ppList = append(ppList,reqYSBpp{Name:"AMT",Proterties:50})
-	ppList = append(ppList,reqYSBpp{Name:"RN",Proterties:"6666667"})
+	ppList = append(ppList,reqYSBpp{Name:"SN",Proterties:6666668})
 
-	hele := reqYSBELE{Id:"100440327",Pro:ppList}
+	hele := reqYSBELE{Id:"100440328",Pro:ppList}
 	hreq.Ele = hele
 
 	jsonStr,err:=xml.Marshal(hreq)
@@ -67,7 +61,7 @@ func main() {
 	}
 	resp1,err := client.Do(rn)
 	if err != nil {
-		log.Printf("ERROR----tixian 1 req----err:%+v\n", err)
+		log.Printf("ERROR----yue 1 req----err:%+v\n", err)
 	}
 
 	defer rn.Body.Close()
@@ -77,7 +71,7 @@ func main() {
 	test1 := respproperties{}
 	err = xml.Unmarshal(con,&test1)
 	if err != nil {
-		log.Printf("ERROR---tixian 1 resp----err:%+v\n", err)
+		log.Printf("ERROR---yue 1 resp----err:%+v\n", err)
 	}
 
 	resp1map := map[string]interface{}{}
