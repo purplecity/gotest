@@ -3,8 +3,14 @@ package main
 import (
 	"bytes"
 	"crypto/des"
+	"crypto/md5"
 	"encoding/base64"
+	"fmt"
+	"io/ioutil"
 	"log"
+	"net/http"
+	"net/url"
+	"strings"
 )
 
 func EntryptDesECB(data, key []byte) string {
@@ -82,9 +88,9 @@ var (
 	baseurl = "https://gi.spark222.com/doBusiness.do"
 	cagent = "GI5_AGIN"
 	md5key = "DHE3L5rf46YW"
-	//deskey = "SchB2nnA"
-	deskey = "12341234"
-	fenge = "/\\\\/"
+	deskey = "SchB2nnA"
+	//deskey = "12341234"
+	fenge = "/\\\\\\\\/"
 )
 
 //Key MD5(params +” MD5_Encrypt_key”);
@@ -100,17 +106,20 @@ func main() {
 
 	//检查创建账户
 
-	//data := "cagent=XXXXXXXXX/\\\\/loginname=XXXXXX/\\\\/method=lg/\\\\/actype=0/\\\\/password=XXXXXXXX/\\\\/oddtype=XXX/\\\\/cur=XXX"
-	//data := "cagent="+cagent+fenge + "loginname=" + "agtest1"+fenge + "method=lg" + fenge + "actype=0" + fenge + "password=" + "123456" + fenge + "oddtype=A" + fenge+ "cur=CNY"
-	data := "cagent=81288128/\\\\/method=tc"
+	data := "cagent="+cagent+fenge + "loginname=" + "agtest3"+fenge + "method=lg" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "oddtype=A" + fenge+ "cur=CNY"
+	//data :=  "cagent="+cagent+fenge + "loginname=" + "agtest3"+fenge + "method=gb" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "cur=CNY"
+	//data :=  "cagent="+cagent+fenge  +"method=tc" + fenge + "loginname=" + "agtest3"+ fenge +  "billno="+cagent+"12345612345612" +fenge + "type=IN" + fenge + "credit=500.00" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "cur=CNY"
+	//data :=  "cagent="+cagent+fenge  + "method=tc" + fenge + "loginname=" + "agtest3"+fenge + "billno="+cagent+"12345612345613" +fenge + "type=OUT" + fenge + "credit=50.00" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "cur=CNY"
+	//data :=  "cagent="+cagent+fenge   + "loginname=" + "agtest3"+fenge + "method=tcc" + fenge+ "billno="+cagent+"12345612345613" +fenge + "type=IN" + fenge + "credit=500.00" + fenge + "actype=1" + fenge + "flag=1" +fenge  + "password=" + "123456" + fenge + "cur=CNY"
 
+	log.Println(data)
 	srcBytes := []byte(data)
 	keyBytes := []byte(deskey)
 	param := EntryptDesECB(srcBytes,keyBytes)
-	log.Println(param=="IGcOAYEQN88F1NFLtBOK29IcQSW2a8b/G8UgSaeEyaA=")
 	log.Printf("param is %+v\n",param)
 
-	/*
+
+
 	md5data := param+md5key
 	key := fmt.Sprintf("%+x",md5.Sum([]byte(md5data)))
 	log.Printf("key is %+v\n",key)
@@ -144,5 +153,9 @@ func main() {
 	fmt.Printf("test ag return: %+v\n",string(readBytes))
 	defer resp.Body.Close()
 
-	 */
+
+
+
+
+
 }
