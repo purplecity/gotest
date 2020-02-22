@@ -2,8 +2,15 @@ package main
 
 import (
 	"fmt"
+	"github.com/shopspring/decimal"
 	"time"
 )
+
+
+func HPTrunc(x float64,y int32) float64 {
+	ret,_ := decimal.NewFromFloat(x).Truncate(y).Float64()
+	return ret
+}
 
 
 func getIssue(tt int64) {
@@ -53,5 +60,7 @@ func main() {
 	//tm := time.Now()
 	//fmt.Println(tm.Year(),int(tm.Month()),tm.Day(),tm.Hour(),tm.Minute(),tm.Second())
 	//fmt.Println(1.7e308 > float64(24*3600*1000000000))
-	getIssue(1578164400)
+	//getIssue(1578164400)
+	a := 0.178
+	fmt.Println(HPTrunc(a,2))
 }
