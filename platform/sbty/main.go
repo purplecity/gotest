@@ -1,10 +1,13 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
+	"net/url"
+	"strings"
+	"time"
 )
 
 var  (
@@ -60,11 +63,11 @@ func main() {
 
 
 
-	/*
+
 	//登录
 	data := url.Values{}
 	data.Set("vendor_id",vendor_id)
-	data.Set("Vendor_Member_ID","555555")
+	data.Set("Vendor_Member_ID","HPYFdZ6")
 
 
 
@@ -88,10 +91,15 @@ func main() {
 
 	readBytes, _ := ioutil.ReadAll(resp.Body)
 
-	fmt.Printf("login sbty return: %+v\n",string(readBytes))
+	url222 := "http://sbtest.a0214.sport-test.azfaster.com/deposit_processlogin.aspx?lang=zhcn&webskintype=2&token="
+
+	d := map[string]interface{}{}
+	json.Unmarshal(readBytes,&d)
+	fmt.Printf("login sbty return:%+v, %+v,%+v\n",time.Now(),string(readBytes),url222+d["Data"].(string))
+
 	defer resp.Body.Close()
 
-	 */
+
 
 
 
@@ -182,14 +190,4 @@ func main() {
 
 
 
-	dn, err := http.Get( "http://smartsbtest.a0214.sport-test.azfaster.com/deposit_processlogin.aspx?lang=cs&token=PTJSGeJP6kurAZEYIpzW8Q")
-	if err != nil {
-		log.Printf("ERROR----get balance failed----err:%+v\n", err)
-	}
-
-	readBytes, _ := ioutil.ReadAll(dn.Body)
-
-	fmt.Printf("get balance  return: %+v\n",string(readBytes))
-
-	defer dn.Body.Close()
 }
