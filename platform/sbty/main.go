@@ -3,9 +3,8 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
-	"net/url"
-	"strings"
 )
 
 var  (
@@ -60,6 +59,7 @@ func main() {
 	 */
 
 
+
 	/*
 	//登录
 	data := url.Values{}
@@ -91,9 +91,11 @@ func main() {
 	fmt.Printf("login sbty return: %+v\n",string(readBytes))
 	defer resp.Body.Close()
 
-
-
 	 */
+
+
+
+
 
 
 	/*充值
@@ -138,6 +140,7 @@ func main() {
 
 
 
+	/*
 	data := url.Values{}
 	data.Set("vendor_id",vendor_id)
 	data.Set("Vendor_Member_ID","555555")
@@ -175,4 +178,18 @@ func main() {
 	defer resp.Body.Close()
 
 
+	 */
+
+
+
+	dn, err := http.Get( "http://smartsbtest.a0214.sport-test.azfaster.com/deposit_processlogin.aspx?lang=cs&token=PTJSGeJP6kurAZEYIpzW8Q")
+	if err != nil {
+		log.Printf("ERROR----get balance failed----err:%+v\n", err)
+	}
+
+	readBytes, _ := ioutil.ReadAll(dn.Body)
+
+	fmt.Printf("get balance  return: %+v\n",string(readBytes))
+
+	defer dn.Body.Close()
 }
