@@ -1,21 +1,11 @@
 package main
 
-import (
-	"bytes"
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
-	"log"
-	"net/http"
-	"time"
-)
-
 var (
 	clientID = "SKG"
 	client_secret = "9c2dF9QsBAe2Q4DSQNQLjujMF1F909tWyemkOMSqTGi2"
 	baseurl = "https://staging.tgpaccess.com/"
 	zhuanzhangurl = "https://staging.tgpasia.com/"
-	access_token="cNEBxZsP83aZeSRuGpd5T7Rcbnk0FKg9182F6pyW08jmwAiA6pKEoNNIE2umEKeDFi" //9.45
+	access_token="RU4VSWG8hL3EnHfBZiWeUUB6v5JTnYU8SEQqQoU4VU17CgM7Z0we0xnn36KVKFhUi" //9.45
 
 	ipaddress = "47.244.217.66"
 	authtoken = "PnXuypcLETFXGDxuVDhH26EXPnvMjtfpw4cLIveDL5mRrMmjVEupfoRCscOWvOGcrwlcEOsBru6RRY5Alov80prb7H41eU76JEa2jifxb56XAmdHNZFpCnFUwheLT9EIr1"
@@ -26,6 +16,7 @@ func  main() {
 
 	//提现
 
+	/*
 	x := map[string]interface{}{}
 	x["userid"] = "111111"
 	x["amt"] = 50
@@ -61,15 +52,17 @@ func  main() {
 
 	defer dn.Body.Close()
 
+	 */
+
 	//加钱
 
 
 	/*
 	x := map[string]interface{}{}
-	x["userid"] = "111111"
-	x["amt"] = 500
+	x["userid"] = "111112"
+	x["amt"] = 1000
 	x["cur"] = "RMB"
-	x["txid"] = "222222"
+	x["txid"] = "222223"
 	//utcLoc,_ := time.LoadLocation("")
 	//timeString := time.Now().In(utcLoc).Format("2006-01-02T15:04:05Z")+"+00:00"
 	timeString := time.Now().Format("2006-01-02T15:04:05Z")
@@ -101,6 +94,8 @@ func  main() {
 	defer dn.Body.Close()
 
 	 */
+
+
 
 
 
@@ -163,22 +158,23 @@ func  main() {
 
 	//获取authtoken
 
+
 	/*
 	x := map[string]interface{}{}
 	x["ipaddress"] = ipaddress
-	x["username"] = "Sparktestskg1"
-	x["userid"] = "111111"
+	x["username"] = "Sparktestskg2"
+	x["userid"] = "111112"
 	x["lang"] = "zh-CN"
 	x["cur"] = "RMB"
 	x["betlimitid"] = 1
 	x["istestplayer"] = true
-	x["platformtype"] = 0
+	x["platformtype"] = 1
 
 	m, _ := json.Marshal(x)
 	var jsonStr= []byte(m)
 	dn, _ := http.NewRequest("POST", baseurl+"api/player/authorize", bytes.NewBuffer(jsonStr))
 	dn.Header.Set("Content-Type", "application/json")
-	dn.Header.Set("Authorization","Bearer "+access_token)
+	dn.Header.Set("Authorization","Bearer "+access_token+"1")
 	trans := http.Transport{
 		DisableKeepAlives:true,
 	}
@@ -201,12 +197,17 @@ func  main() {
 	 */
 
 
+	//{"authtoken":"0KMR453pdOLnepF8BbTFcTjL6yOKegE9JzgCiVNSsjqSwUjzSlIsZsSkvN3wmXW6FO8lYQhNQa5Yewj6ZkIIkmUAIVVIyZoJGg49IvCS2ZILtjHjnUiBqLN3DzCdNVhWG","isnew":false}
+	//{"err":12,"errdesc":"Cannot decrypt brand token; INNER 1: Length of the data to decrypt is invalid."}
+
+
 
 
 	//获取access token
 
 
 	/*
+
 	data := url.Values{}
 	data.Set("client_id",clientID)
 	data.Set("client_secret",client_secret)
@@ -240,8 +241,12 @@ func  main() {
 	fmt.Printf("get access token  return: %+v\n",string(readBytes))
 	defer resp.Body.Close()
 
-
 	 */
+
+
+
+	// {"access_token":"RU4VSWG8hL3EnHfBZiWeUUB6v5JTnYU8SEQqQoU4VU17CgM7Z0we0xnn36KVKFhUi","token_type":"Bearer","expires_in":3600,"scope":"playerapi"}
+
 
 
 

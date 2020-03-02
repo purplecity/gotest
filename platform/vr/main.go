@@ -1,7 +1,6 @@
 package main
 
 import (
-	"HPOptionServer/Common/CommonConf"
 	"bytes"
 	"crypto/aes"
 	"encoding/base64"
@@ -12,6 +11,14 @@ import (
 	"net/url"
 	"strings"
 	"time"
+)
+
+var (
+	TPlatVersion="1.0"
+	TPlatAPPID = "SPARK"
+	TPlatKey = "44D0RJXFTJXRR0464248H4B624T80RZH"
+
+
 )
 
 
@@ -75,12 +82,12 @@ func testBasic() {
 func regPlat(name string) error {
 	platurl := "https://fe.vrbetdemo.com/Account/CreateUser"
 	data := url.Values{}
-	data.Set("version",CommonConf.TPlatVersion)
-	data.Set("id",CommonConf.TPlatAPPID)
+	data.Set("version",TPlatVersion)
+	data.Set("id",TPlatAPPID)
 
 	jsMap := map[string]string{"playerName":name}
 	srcBytes,_ := json.Marshal(jsMap)
-	keyBytes := []byte(CommonConf.TPlatKey)
+	keyBytes := []byte(TPlatKey)
 	dst := EcbEncrypt(srcBytes,keyBytes)
 	fdst := base64.StdEncoding.EncodeToString(dst)
 	data.Set("data",fdst)
@@ -115,7 +122,7 @@ func regPlat(name string) error {
 	json.Unmarshal([]byte(str),&resmap)
 	fmt.Println(resmap)
 	v,ok := resmap["errorCode"]
-	if !ok || v.(int) != 0 {
+	if !ok || v.(float64) != 0 {
 		return nil
 	}
 	return nil
@@ -124,13 +131,13 @@ func regPlat(name string) error {
 func loginPlat(name string) {
 	platurl := "https://fe.vrbetdemo.com/Account/LoginValidate"
 	data := url.Values{}
-	data.Set("version",CommonConf.TPlatVersion)
-	data.Set("id",CommonConf.TPlatAPPID)
+	data.Set("version",TPlatVersion)
+	data.Set("id",TPlatAPPID)
 
 	utcLoc,_ := time.LoadLocation("")
 	srcString := "playerName="+name+"&loginTime="+time.Now().In(utcLoc).Format("2006-01-02T15:04:05Z")
 	srcBytes := []byte(srcString)
-	keyBytes := []byte(CommonConf.TPlatKey)
+	keyBytes := []byte(TPlatKey)
 	dst := EcbEncrypt(srcBytes,keyBytes)
 	fdst := base64.StdEncoding.EncodeToString(dst)
 	fmt.Println(fdst)
@@ -140,7 +147,8 @@ func loginPlat(name string) {
 	data.Set("data",fdst)
 
 	fmt.Printf("%+v,%+v,%+v\n",srcString,data,fdst)
-	fmt.Println("%+v\n",platurl+"?version="+CommonConf.TPlatVersion+"&id="+CommonConf.TPlatAPPID+"&data="+fdst)
+	fmt.Println("%+v\n",platurl+"?version="+TPlatVersion+"&id="+TPlatAPPID+"&data="+fdst)
+	/*
 	r, _ := http.NewRequest("POST", platurl, strings.NewReader(data.Encode())) // URL-encoded payload
 	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
@@ -165,21 +173,23 @@ func loginPlat(name string) {
 	//fmt.Printf("login plag return: %+v\n",mmp)
 	fmt.Printf("login plag return: %+v\n",string(readBytes))
 	defer resp.Body.Close()
+
+	 */
 }
 
 
 func depwit(name,uid string,ty int,am float64) error {
 	platurl := "https://fe.vrbetdemo.com/UserWallet/Transaction"
 	data := url.Values{}
-	data.Set("version",CommonConf.TPlatVersion)
-	data.Set("id",CommonConf.TPlatAPPID)
+	data.Set("version",TPlatVersion)
+	data.Set("id",TPlatAPPID)
 
 	utcLoc,_ := time.LoadLocation("")
-	timeString := time.Now().In(utcLoc).Format("2006-01-02T15:04:05Z")+"+00:00"
+	timeString := time.Now().In(utcLoc).Format("2006-01-02T15:04:05Z")
 
 	jsMap := map[string]interface{}{"playerName":name,"serialNumber":uid,"type":ty,"amount":am,"createTime":timeString}
 	srcBytes,_ := json.Marshal(jsMap)
-	keyBytes := []byte(CommonConf.TPlatKey)
+	keyBytes := []byte(TPlatKey)
 	dst := EcbEncrypt(srcBytes,keyBytes)
 	fdst := base64.StdEncoding.EncodeToString(dst)
 	data.Set("data",fdst)
@@ -217,19 +227,28 @@ func depwit(name,uid string,ty int,am float64) error {
 }
 
 func main () {
+
 	/*
-		err := regPlat("hehetest2")
+		err := regPlat("hehetest14")
 		if err != nil {
 			return
 		} else {
 			time.Sleep(time.Second*5)
-			loginPlat("hehetest2")
+			loginPlat("hehetest14")
 		}
 
-	*/
-	//loginPlat("hehetest12")
+
+	 */
+
+	loginPlat("hehetest14")
 	//testAesECBEnc("hehetest11")
 	//testBasic()
-	//depwit("hehetest12","1111",0,111.111)
-	depwit("hehetest12","1112",1,109.111)
+	depwit("hehetest14","1115",0,50000.111)
+	//depwit("hehetest12","1112",1,109.111)
+	/*
+	x1 := url.QueryEscape("2+XaOq4XB+hqDMCHBAr4Z1pCXnaLHcyZapdQiDM168dzL/+ZcbMNteN1sMhHYKiOynobPY4X4rTYo3X29EMuDVDNspeh2XKHVUVXR8qPNdM=")
+	x2 := "2%2BXaOq4XB%2BhqDMCHBAr4Z1pCXnaLHcyZapdQiDM168dzL%2F%2BZcbMNteN1sMhHYKiOynobPY4X4rTYo3X29EMuDVDNspeh2XKHVUVXR8qPNdM%3D"
+	fmt.Println(x1==x2)
+
+	 */
 }

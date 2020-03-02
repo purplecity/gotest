@@ -5,6 +5,7 @@ import (
 	"crypto/des"
 	"crypto/md5"
 	"encoding/base64"
+	"encoding/xml"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -12,6 +13,13 @@ import (
 	"net/url"
 	"strings"
 )
+
+
+type agreqproperties struct {
+	Info string `xml:"info,attr"` // 读取flag属性
+	Msg string `xml:"msg,attr"`
+}
+
 
 func EntryptDesECB(data, key []byte) string {
 	if len(key) > 8 {
@@ -106,7 +114,7 @@ func main() {
 
 	//检查创建账户
 
-	data := "cagent="+cagent+fenge + "loginname=" + "agtest3"+fenge + "method=lg" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "oddtype=A" + fenge+ "cur=CNY"
+	data := "cagent="+cagent+fenge + "loginname=" + "agtest5"+fenge + "method=lg" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "oddtype=A" + fenge+ "cur=CNY"
 	//data :=  "cagent="+cagent+fenge + "loginname=" + "agtest3"+fenge + "method=gb" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "cur=CNY"
 	//data :=  "cagent="+cagent+fenge  +"method=tc" + fenge + "loginname=" + "agtest3"+ fenge +  "billno="+cagent+"12345612345612" +fenge + "type=IN" + fenge + "credit=500.00" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "cur=CNY"
 	//data :=  "cagent="+cagent+fenge  + "method=tc" + fenge + "loginname=" + "agtest3"+fenge + "billno="+cagent+"12345612345613" +fenge + "type=OUT" + fenge + "credit=50.00" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "cur=CNY"
@@ -149,10 +157,12 @@ func main() {
 
 
 	readBytes, _ := ioutil.ReadAll(resp.Body)
-
-	fmt.Printf("test ag return: %+v\n",string(readBytes))
+	teststruct := agreqproperties{}
+	xml.Unmarshal(readBytes,&teststruct)
+	fmt.Printf("test ag return: %+v,%+v\n",string(readBytes),teststruct)
 	defer resp.Body.Close()
 
+//<?xml version="1.0" encoding="utf-8"?><result info="0" msg=""/>
 
 
 

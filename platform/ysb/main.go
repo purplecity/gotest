@@ -96,6 +96,12 @@ func YSBLoginValidate(w http.ResponseWriter, req *http.Request) {
 	w.Write(headerBytes)
 }
 
+/*
+<?xml version='1.0' encoding='utf-8'?><request action='clogin'><element id='id001'><properties name='UN'>XY_666666</properties><properties name='VID'>XY</properties><properties name='SG'>666666</properties><properties name='SN'>1d5efb00-f43d-4a4d-83b5-1e33b1922306</properties><properties name='OPRID'></properties></element></request>
+2020/03/02 18:09:03 {Action:clogin Element:{Id:id001 Pro:[{Name:UN Proterties:XY_666666} {Name:VID Proterties:XY} {Name:SG Proterties:666666} {Name:SN Proterties:1d5efb00-f43d-4a4d-83b5-1e33b1922306} {Name:OPRID Proterties:}]}}
+2020/03/02 18:09:03 resp1map :map[OPRID: SG:666666 SN:1d5efb00-f43d-4a4d-83b5-1e33b1922306 UN:XY_666666 VID:XY]
+*/
+
 func main() {
 	http.HandleFunc("/", YSBLoginValidate) //设置访问的路由
 	err := http.ListenAndServe(":8889", nil) //设置监听的端口

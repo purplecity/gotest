@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-var baseUrl = "http://wlrevamp.a1go.org/login.aspx?username=XY_55555&langcode=zh-cn&sign=55555&v=XY&cr=RMB"
+var baseUrl = "http://mwlrevamp.a1go.org/login.aspx?username?username=XY_55555&langcode=zh-cn&sign=55555&v=XY&cr=RMB"
 
 /*
 func main() {
