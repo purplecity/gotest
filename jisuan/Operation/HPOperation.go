@@ -117,3 +117,10 @@ func HPDivInt(x float64, y int64) float64 {
 	ret,_ := decimal.NewFromFloat(x).Div(decimal.New(y,0)).Float64()
 	return ret
 }
+
+func HPTrunc(x float64,y int32) float64 {
+	ret,_ := decimal.NewFromFloat(x).Truncate(y).Float64()
+	return ret
+}
+
+

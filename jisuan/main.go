@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"gotest/jisuan/Operation"
-	"math"
 	"strconv"
 )
 
@@ -28,6 +27,8 @@ func getSDP(p float64) int {
 		}
 	}
 }
+
+/*
 func main() {
 	//a := []float64{1.012,1.011,1.024,1.024,1.025,1.026,1.012,1.011,1.024,1.024,1.025,1.026}
 
@@ -56,4 +57,16 @@ func main() {
 	fmt.Println("div ",rs3)
 
 	fmt.Println(math.Sqrt(rs3))
+}
+
+
+ */
+
+func main() {
+	//fmt.Println(Operation.HPAdd(1.6,Operation.HPTrunc(2.757,2)))
+	//scoreMap[v.Contributorid] = Operation.HPAdd(scoreMap[v.Contributorid], Operation.HPMul(Operation.HPAbs(Operation.HPSub(v.Outputamount,v.Amount)),CommonConf.ScoreMap[v.Type]))
+	a := 2
+	b := a
+	a = 3
+	println(a,b)
 }

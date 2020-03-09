@@ -61,6 +61,8 @@ func main() {
 	//fmt.Println(tm.Year(),int(tm.Month()),tm.Day(),tm.Hour(),tm.Minute(),tm.Second())
 	//fmt.Println(1.7e308 > float64(24*3600*1000000000))
 	//getIssue(1578164400)
-	a := 0.178
-	fmt.Println(HPTrunc(a,2))
+	//fmt.Println(time.Now().Format("2006-01-02 15:04:05"))
+	//fmt.Println(fmt.Sprintf("%.0f",float64(1.69158209e+08)))
+	utcLoc,_ := time.LoadLocation("")
+	fmt.Println(time.Now().In(utcLoc).Format("2006-01-02T15:04"))
 }

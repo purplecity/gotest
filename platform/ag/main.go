@@ -114,8 +114,8 @@ func main() {
 
 	//检查创建账户
 
-	data := "cagent="+cagent+fenge + "loginname=" + "agtest5"+fenge + "method=lg" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "oddtype=A" + fenge+ "cur=CNY"
-	//data :=  "cagent="+cagent+fenge + "loginname=" + "agtest3"+fenge + "method=gb" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "cur=CNY"
+	//data := "cagent="+cagent+fenge + "loginname=" + "agtest5"+fenge + "method=lg" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "oddtype=A" + fenge+ "cur=CNY"
+	data :=  "cagent="+cagent+fenge + "loginname=" + "agtest3"+fenge + "method=gb" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "cur=CNY"
 	//data :=  "cagent="+cagent+fenge  +"method=tc" + fenge + "loginname=" + "agtest3"+ fenge +  "billno="+cagent+"12345612345612" +fenge + "type=IN" + fenge + "credit=500.00" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "cur=CNY"
 	//data :=  "cagent="+cagent+fenge  + "method=tc" + fenge + "loginname=" + "agtest3"+fenge + "billno="+cagent+"12345612345613" +fenge + "type=OUT" + fenge + "credit=50.00" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "cur=CNY"
 	//data :=  "cagent="+cagent+fenge   + "loginname=" + "agtest3"+fenge + "method=tcc" + fenge+ "billno="+cagent+"12345612345613" +fenge + "type=IN" + fenge + "credit=500.00" + fenge + "actype=1" + fenge + "flag=1" +fenge  + "password=" + "123456" + fenge + "cur=CNY"
@@ -163,6 +163,7 @@ func main() {
 	defer resp.Body.Close()
 
 //<?xml version="1.0" encoding="utf-8"?><result info="0" msg=""/>
+//test ag return: <?xml version="1.0" encoding="utf-8"?><result info="error" msg="error:60001,Account not exist with this currency value or account hierarchical error!"/>,{Info:error Msg:error:60001,Account not exist with this currency value or account hierarchical error!}
 
 
 

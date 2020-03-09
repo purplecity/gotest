@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -25,6 +24,7 @@ func main() {
 
 
 
+	
 
 	r, _ := http.NewRequest("POST", baseurl+"api/user/register", strings.NewReader(data.Encode())) // URL-encoded payload
 	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
@@ -60,6 +60,7 @@ func main() {
 	//登录
 
 
+	/*
 	data := url.Values{}
 	data.Set("UserName","spark01")
 
@@ -93,6 +94,8 @@ func main() {
 	fmt.Printf("login fy return: %+v,%+v\n",string(readBytes),y)
 	defer resp.Body.Close()
 
+
+	 */
 
 
 
@@ -136,12 +139,13 @@ func main() {
 
 
 	//转账
+
 	/*
 	data := url.Values{}
 	data.Set("UserName","spark01")
 	data.Set("Money","50")
 	data.Set("Type","OUT")
-	data.Set("ID","111112")
+	data.Set("ID","111113")
 
 
 
@@ -171,5 +175,37 @@ func main() {
 	defer resp.Body.Close()
 
 	 */
+
+	//查询转账结果
+	data := url.Values{}
+	data.Set("ID","111113")
+
+
+
+
+	r, _ := http.NewRequest("POST", baseurl+"api/user/transferinfo", strings.NewReader(data.Encode())) // URL-encoded payload
+	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Set("Authorization",apikey)
+
+	trans := http.Transport{
+		DisableKeepAlives:true,
+	}
+
+	client := &http.Client{
+		Transport: &trans,
+	}
+
+	resp, err := client.Do(r)
+	if err != nil {
+		fmt.Printf("transferinfo fy failed %+v\n",err)
+		return
+	}
+
+
+	readBytes, _ := ioutil.ReadAll(resp.Body)
+
+	fmt.Printf("transferinfo fy return: %+v\n",string(readBytes))
+	defer resp.Body.Close()
+
 
 }

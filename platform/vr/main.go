@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -226,6 +227,48 @@ func depwit(name,uid string,ty int,am float64) error {
 	return nil
 }
 
+func getBal(name string) {
+	platurl := "https://fe.vrbetdemo.com/UserWallet/Balance"
+	data := url.Values{}
+	data.Set("version",TPlatVersion)
+	data.Set("id",TPlatAPPID)
+
+	jsMap := map[string]string{"playerName":name}
+	srcBytes,_ := json.Marshal(jsMap)
+	keyBytes := []byte(TPlatKey)
+	dst := EcbEncrypt(srcBytes,keyBytes)
+	fdst := base64.StdEncoding.EncodeToString(dst)
+	data.Set("data",fdst)
+
+	trans := http.Transport{
+		DisableKeepAlives:true,
+	}
+	client := &http.Client{
+		Transport:&trans,
+	}
+
+
+	r, _ := http.NewRequest("POST", platurl, strings.NewReader(data.Encode())) // URL-encoded payload
+	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+
+	resp, err := client.Do(r)
+	defer resp.Body.Close()
+	if err != nil {
+		log.Printf("reg plag failed %+v\n",err)
+	}
+
+	readBytes, _ := ioutil.ReadAll(resp.Body)
+	dres,_ :=  base64.StdEncoding.DecodeString(string(readBytes))
+	str := EcbDecrypt(dres,keyBytes)
+	resmap := map[string]interface{}{}
+	json.Unmarshal([]byte(str),&resmap)
+	log.Println(resmap)
+	// map[balance:18414.477 games:[] playerName:hehetest14]
+	//map[balance:-1 games:[] playerName:hehetest27]
+}
+
+
+
 func main () {
 
 	/*
@@ -240,10 +283,11 @@ func main () {
 
 	 */
 
-	loginPlat("hehetest14")
+	//regPlat("hehetest15")
+	//loginPlat("hehetest14")
 	//testAesECBEnc("hehetest11")
 	//testBasic()
-	depwit("hehetest14","1115",0,50000.111)
+	//depwit("hehetest14","1115",0,50000.111)
 	//depwit("hehetest12","1112",1,109.111)
 	/*
 	x1 := url.QueryEscape("2+XaOq4XB+hqDMCHBAr4Z1pCXnaLHcyZapdQiDM168dzL/+ZcbMNteN1sMhHYKiOynobPY4X4rTYo3X29EMuDVDNspeh2XKHVUVXR8qPNdM=")
@@ -251,4 +295,5 @@ func main () {
 	fmt.Println(x1==x2)
 
 	 */
+	//getBal("hehetest14")
 }

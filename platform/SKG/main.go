@@ -1,14 +1,22 @@
 package main
 
+import (
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+	"strings"
+)
+
 var (
 	clientID = "SKG"
 	client_secret = "9c2dF9QsBAe2Q4DSQNQLjujMF1F909tWyemkOMSqTGi2"
 	baseurl = "https://staging.tgpaccess.com/"
 	zhuanzhangurl = "https://staging.tgpasia.com/"
-	access_token="RU4VSWG8hL3EnHfBZiWeUUB6v5JTnYU8SEQqQoU4VU17CgM7Z0we0xnn36KVKFhUi" //9.45
+	access_token="2HEBKy1FgkD7I0xzeSAfPuCM8KIYxgdB7vzpqRC8RMM49yPvv1asyaky8J22P8gTo" //9.45
 
 	ipaddress = "47.244.217.66"
-	authtoken = "PnXuypcLETFXGDxuVDhH26EXPnvMjtfpw4cLIveDL5mRrMmjVEupfoRCscOWvOGcrwlcEOsBru6RRY5Alov80prb7H41eU76JEa2jifxb56XAmdHNZFpCnFUwheLT9EIr1"
+	authtoken = "Z8SYrTxeg7z4u4KxYg3vi78D7FVTHaxHFEoeiU0rwuYLLqeHjgqKFs3EEIRnMxzkK"
 
 )
 
@@ -103,10 +111,10 @@ func  main() {
 
 	//获取余额
 
+
+
 	/*
-
-
-	nurl := baseurl+"/api/player/balance?userid=111111&cur=RMB"
+	nurl := baseurl+"/api/player/balance?userid=111120&cur=RMB"
 	fmt.Println(nurl)
 	dn, _ := http.NewRequest("GET", nurl, nil)
 	dn.Header.Set("Content-Type", "application/json")
@@ -130,6 +138,8 @@ func  main() {
 
 
 	 */
+
+
 
 
 
@@ -206,7 +216,7 @@ func  main() {
 	//获取access token
 
 
-	/*
+
 
 	data := url.Values{}
 	data.Set("client_id",clientID)
@@ -241,7 +251,9 @@ func  main() {
 	fmt.Printf("get access token  return: %+v\n",string(readBytes))
 	defer resp.Body.Close()
 
-	 */
+
+
+
 
 
 

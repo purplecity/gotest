@@ -236,7 +236,7 @@ func main() {
 	//查询用户状态
 
 
-	/*
+
 		x := map[string]interface{}{}
 		x["random"] = "111114"
 
@@ -247,7 +247,7 @@ func main() {
 
 		x["digest"] = md5str
 		x["sn"] = sn
-		x["loginId"] = "testspark2"
+		x["loginId"] = "testspark"
 		y := map[string]interface{}{}
 		y["id"] = "5555"
 		y["method"] = "open.user.get"
@@ -279,7 +279,7 @@ func main() {
 		defer dn.Body.Close()
 
 
-	 */
+
 
 
 	/*
@@ -371,6 +371,7 @@ func main() {
 	*/
 
 	//查询余额
+
 	/*
 		x := map[string]interface{}{}
 		x["random"] = "111115"
@@ -382,7 +383,7 @@ func main() {
 
 		x["digest"] = md5str
 		x["sn"] = sn
-		x["loginId"] = "testspark"
+		x["loginId"] = "testspark05"
 		y := map[string]interface{}{}
 		y["id"] = "5555"
 		y["method"] = "open.balance.get"
@@ -412,12 +413,15 @@ func main() {
 
 		defer dn.Body.Close()
 
-	*/
+		//get user balance  return: {"id":"5555","result":6.4,"error":null,"jsonrpc":"2.0"}
+
+	 */
 
 
 	//获取视讯地址
 
 
+	/*
 
 	x := map[string]interface{}{}
 	x["random"] = "111118"
@@ -461,6 +465,10 @@ func main() {
 
 	defer dn.Body.Close()
 
+	 */
+
+
+
 
 
 
@@ -473,7 +481,7 @@ func main() {
 		x := map[string]interface{}{}
 		x["random"] = "111120"
 
-		data := []byte("111120"+sn+"testspark"+fmt.Sprintf("%+v",200)+secretCode)
+		data := []byte("111121"+sn+"testspark"+fmt.Sprintf("%+v",200)+secretCode)
 		has := md5.Sum(data)
 		md5str := fmt.Sprintf("%x", has)
 
@@ -511,7 +519,9 @@ func main() {
 
 		defer dn.Body.Close()
 
+
 	 */
+
 
 
 

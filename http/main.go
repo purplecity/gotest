@@ -1,9 +1,7 @@
 package  main
 
 import (
-	"compress/gzip"
-	"encoding/base64"
-	"io/ioutil"
+	"fmt"
 	"log"
 	"net/http"
 )
@@ -13,6 +11,7 @@ type baseResponse struct {
 	Msg 	string  // success  errorMsg
 }
 
+/*
 func main() {
 	url := "https://app-hpoption-webapi.azfaster.com:8081/loginByPassword"
 	req, _ := http.NewRequest("POST", url, nil)
@@ -34,4 +33,32 @@ func main() {
 	your_string := string(your_to_byte)
 	log.Printf("string %+v\n",your_string)
 	req.Body.Close()
+}
+
+ */
+
+func main() {
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("httpserver v1"))
+	})
+	http.HandleFunc("/bye", sayBye)
+	log.Println("Starting v1 server ...")
+	log.Fatal(http.ListenAndServe(":1210", nil))
+}
+
+func sayBye(w http.ResponseWriter, r *http.Request) {
+	/*
+	x := map[string]interface{}{}
+	readbytes, _ := ioutil.ReadAll(r.Body)
+	json.Unmarshal(readbytes,&x)
+
+	 */
+
+	err := r.ParseForm()
+	if err != nil {
+		fmt.Printf("%+v\n",err)
+	}
+	fmt.Printf("hehe %+v\n",r.FormValue("secret_key"))
+
+	w.Write([]byte("bye bye ,this is v1 httpServer"))
 }
