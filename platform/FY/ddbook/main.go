@@ -49,5 +49,8 @@ func main() {
 	readBytes, _ := ioutil.ReadAll(resp.Body)
 	y := map[string]interface{}{}
 	json.Unmarshal(readBytes,&y)
+	for k,v := range y["info"].(map[string]interface{})["list"].([]interface{})[0].(map[string]interface{}) {
+		log.Printf("%+v,%T",k,v)
+	}
 	log.Printf("get  fy  order data return: %+v\n",string(readBytes))
 }
