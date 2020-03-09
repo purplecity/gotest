@@ -1,7 +1,7 @@
 package main
 
 import (
-
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -13,7 +13,7 @@ import (
 var (
 
 	baseurl = "https://staging.tgpaccess.com/"
-	access_token="Z8SYrTxeg7z4u4KxYg3vi78D7FVTHaxHFEoeiU0rwuYLLqeHjgqKFs3EEIRnMxzkK" //9.45
+	access_token="Lu14gKJRXiTcqZhdzRAunNo9QRtwRR8nSAuEXdEw99qad6M43cSIFagPxUxBCPwBZ" //9.45
 
 
 )
@@ -45,7 +45,45 @@ func main() {
 
 	readBytes, _ := ioutil.ReadAll(resp.Body)
 
+	y := []interface{}{}
+	json.Unmarshal(readBytes,&y)
+	for k,v := range y[0].(map[string]interface{}) {
+		log.Printf("%+v,%T",k,v)
+	}
+
 	fmt.Printf("get data  return: %+v\n",string(readBytes))
+
+	/*
+	2020/03/09 23:35:54 beton,string
+	2020/03/09 23:35:54 turnover,float64
+	2020/03/09 23:35:54 validbet,float64
+	2020/03/09 23:35:54 winamt,float64
+	2020/03/09 23:35:54 bettype,string
+	2020/03/09 23:35:54 txid,string
+	2020/03/09 23:35:54 timestamp,string
+	2020/03/09 23:35:54 betupdatedon,string
+	2020/03/09 23:35:54 gameprovidercode,string
+	2020/03/09 23:35:54 gamename,string
+	2020/03/09 23:35:54 ugsbetid,string
+	2020/03/09 23:35:54 betid,string
+	2020/03/09 23:35:54 username,string
+	2020/03/09 23:35:54 gameprovider,string
+	2020/03/09 23:35:54 riskamt,float64
+	2020/03/09 23:35:54 cur,string
+	2020/03/09 23:35:54 platformtype,string
+	2020/03/09 23:35:54 ipaddress,string
+	2020/03/09 23:35:54 playtype,string
+	2020/03/09 23:35:54 playertype,float64
+	2020/03/09 23:35:54 betclosedon,string
+	2020/03/09 23:35:54 roundstatus,string
+	2020/03/09 23:35:54 postbal,float64
+	2020/03/09 23:35:54 gameid,string
+	2020/03/09 23:35:54 roundid,string
+	2020/03/09 23:35:54 userid,string
+	2020/03/09 23:35:54 winloss,float64
+	2020/03/09 23:35:54 beforebal,float64
+	*/
+
 
 
 

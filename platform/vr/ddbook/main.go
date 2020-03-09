@@ -31,7 +31,6 @@ func PKCS7Padding(ciphertext []byte, blockSize int) []byte {
 
 func PKCS7UnPadding(origData []byte) []byte {
 	length := len(origData)
-	log.Println(length)
 	unpadding := int(origData[length-1])
 	return origData[:(length - unpadding)]
 }
@@ -64,6 +63,7 @@ func EcbEncrypt(data, key []byte) []byte {
 
 
 func main() {
+	/*
 	platurl := "https://fe.vrbetdemo.com/MerchantQuery/GameBet"
 	data := url.Values{}
 	data.Set("version",TPlatVersion)
@@ -100,15 +100,41 @@ func main() {
 	}
 
 	readBytes, _ := ioutil.ReadAll(resp.Body)
-	log.Println(len(readBytes))
 	dres,_ :=  base64.StdEncoding.DecodeString(string(readBytes))
 	str := EcbDecrypt(dres,keyBytes)
 	resmap := map[string]interface{}{}
 	json.Unmarshal([]byte(str),&resmap)
+	for k,v := range resmap {
+		log.Printf("%+v,%T",k,v)
+	}
+	for k,v := range resmap["betRecords"].([]interface{})[0].(map[string]interface{}) {
+		log.Printf("%+v,%T",k,v)
+	}
+
 	log.Println(string(str))
 	log.Println(resmap)
-	//8
+
+	 */
+
 	/*
+		020/03/09 22:14:38 betRecords,[]interface {}
+		2020/03/09 22:14:38 recordCountPerPage,float64
+		2020/03/09 22:14:38 recordPage,float64
+		2020/03/09 22:14:38 totalRecords,float64
+		2020/03/09 22:14:38 merchantCode,string
+		2020/03/09 22:14:38 prize,float64
+		2020/03/09 22:14:38 updateTime,string
+		2020/03/09 22:14:38 createTime,string
+		2020/03/09 22:14:38 channelName,string
+		2020/03/09 22:14:38 serialNumber,string
+		2020/03/09 22:14:38 playerName,string
+		2020/03/09 22:14:38 cost,float64
+		2020/03/09 22:14:38 channelId,float64
+	*/
+
+
+	//8
+
 	platurl := "https://fe.vrbetdemo.com/MerchantQuery/Bet"
 	data := url.Values{}
 	data.Set("version",TPlatVersion)
@@ -149,8 +175,46 @@ func main() {
 	str := EcbDecrypt(dres,keyBytes)
 	resmap := map[string]interface{}{}
 	json.Unmarshal([]byte(str),&resmap)
+	for k,v := range resmap {
+		log.Printf("%+v,%T",k,v)
+	}
+	for k,v := range resmap["betRecords"].([]interface{})[0].(map[string]interface{}) {
+		log.Printf("%+v,%T",k,v)
+	}
 	log.Println(string(str))
 	log.Println(resmap)
 
-	 */
+	/*
+	2020/03/09 22:16:51 recordCountPerPage,float64
+	2020/03/09 22:16:51 recordPage,float64
+	2020/03/09 22:16:51 totalRecords,float64
+	2020/03/09 22:16:51 betRecords,[]interface {}
+	2020/03/09 22:16:51 subState,float64
+	2020/03/09 22:16:51 prizeDetail,[]interface {}
+	2020/03/09 22:16:51 updateTime,string
+	2020/03/09 22:16:51 serialNumber,string
+	2020/03/09 22:16:51 cost,float64
+	2020/03/09 22:16:51 state,float64
+	2020/03/09 22:16:51 count,float64
+	2020/03/09 22:16:51 createTime,string
+	2020/03/09 22:16:51 note,<nil>
+	2020/03/09 22:16:51 betTypeName,string
+	2020/03/09 22:16:51 channelName,string
+	2020/03/09 22:16:51 odds,string
+	2020/03/09 22:16:51 playerPrize,float64
+	2020/03/09 22:16:51 merchantPrize,float64
+	2020/03/09 22:16:51 multiple,float64
+	2020/03/09 22:16:51 position,string
+	2020/03/09 22:16:51 unit,float64
+	2020/03/09 22:16:51 channelId,float64
+	2020/03/09 22:16:51 channelCode,string
+	2020/03/09 22:16:51 issueNumber,string
+	2020/03/09 22:16:51 number,string
+	2020/03/09 22:16:51 playerName,string
+	2020/03/09 22:16:51 merchantCode,string
+	2020/03/09 22:16:51 lossPrize,float64
+	2020/03/09 22:16:51 playerOdds,float64
+	2020/03/09 22:16:51 winningNumber,string
+	*/
+
 }
