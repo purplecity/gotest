@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/shopspring/decimal"
+	"log"
 	"time"
 )
 
@@ -39,6 +40,12 @@ func getIssue(tt int64) {
 	fmt.Printf("%+v,%+v\n",w,d)
 
 }
+
+type testhehe struct {
+	A string
+	B string
+	C string
+}
 func main() {
 	/*
 	a := []float64{108.66,119.836,1.10188,119.836,108.66,1.10239,119.836,108.661,1.10228,108.661 ,119.836 ,1.10257}
@@ -63,6 +70,12 @@ func main() {
 	//getIssue(1578164400)
 	//fmt.Println(time.Now().Format("2006-01-02 15:04:05"))
 	//fmt.Println(fmt.Sprintf("%.0f",float64(1.69158209e+08)))
-	utcLoc,_ := time.LoadLocation("")
+	/*
+	utcLoc,_ := time.LoadLocation("America/New_York")
 	fmt.Println(time.Now().In(utcLoc).Format("2006-01-02T15:04"))
+
+	 */
+
+	a := testhehe{A:"hehe",B:"mm",C:"nn"}
+	log.Println(a)
 }

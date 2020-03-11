@@ -94,11 +94,12 @@ func main() {
 	x["digest"] = md5str
 	x["sn"] = sn
 	x["agentLoginId"] = agencyloginID
-	ts := time.Now()
-	t := time.Date(2020,3,1,0,0,0,0,ts.Location())
-	t2 := time.Date(2020,3,2,0,0,0,0,ts.Location())
-	x["startTime"] = t.Format("2006-01-02 15:04:05")
-	x["endTime"] = t2.Format("2006-01-02 15:04:05")
+	//ts := time.Now()
+	//t := time.Date(2020,3,10,0,0,0,0,ts.Location())
+	//t2 := time.Date(2020,3,11,0,0,0,0,ts.Location())
+	amlocal,_ := time.LoadLocation("America/New_York")
+	x["startTime"] = time.Unix(1583827560,0).In(amlocal).Format("2006-01-02 15:04:05")
+	x["endTime"] = time.Unix(1583827680,0).In(amlocal).Format("2006-01-02 15:04:05")
 	y := map[string]interface{}{}
 	y["id"] = "5555"
 	y["method"] = "open.order.agent.query"
@@ -125,10 +126,41 @@ func main() {
 	readBytes, _ := ioutil.ReadAll(resp.Body)
 	z := map[string]interface{}{}
 	json.Unmarshal(readBytes,&z)
+
 	fmt.Printf("return: %+v\n",string(readBytes))
 	fmt.Printf(" return: %+v\n",z)
 
+
 	defer dn.Body.Close()
+
+	/*
+	orderTime,string
+	gameName,string
+	moduleId,float64
+	playName,string
+	validBet,float64
+	betContent,string
+	gameNameEn,string
+	fromIp,string
+	orderId,float64
+	moduleName,string
+	orderStatus,float64
+	payment,float64
+	sn,string
+	playNameEn,string
+	playId,string
+	uid,float64
+	noComm,float64
+	issueId,string
+	orderFrom,float64
+	lastUpdateTime,string
+	tranId,<nil>
+	aAmount,float64
+	loginId,string
+	bAmount,float64
+	gameId,float64
+	userId,float64
+	*/
 
 
 }

@@ -35,8 +35,8 @@ func main() {
 		VendorId string
 		HashPassword string
 	}
-	bgst := int64(1583719200) //030910
-	bget := int64(1583737200)  //030915
+	bgst := int64(1583757650) //030910
+	bget := int64(1583844590)  //030915
 	data := map[string]interface{}{}
 	param := ysbparam{}
 	utcLoc,_ := time.LoadLocation("")
