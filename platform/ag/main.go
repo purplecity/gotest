@@ -5,13 +5,8 @@ import (
 	"crypto/des"
 	"crypto/md5"
 	"encoding/base64"
-	"encoding/xml"
 	"fmt"
-	"io/ioutil"
 	"log"
-	"net/http"
-	"net/url"
-	"strings"
 )
 
 
@@ -93,6 +88,8 @@ func PKCS5UnPadding(origData []byte) []byte {
 
 
 var (
+	DM =  "http://azfaster.com"
+	loginurl = "https://gci.spark222.com/forwardGame.do?"
 	baseurl = "https://gi.spark222.com/doBusiness.do"
 	cagent = "GI5_AGIN"
 	md5key = "DHE3L5rf46YW"
@@ -100,6 +97,26 @@ var (
 	//deskey = "12341234"
 	fenge = "/\\\\\\\\/"
 )
+
+func  getLoginURL() {
+	loginid := "555556666677714"
+	Platusername := "HPpehdF"
+	PLTPassword := "123456"
+
+	data := "cagent="+cagent+fenge + "loginname=" + Platusername+fenge+ "actype=1" + fenge+ "password=" + PLTPassword + fenge+"dm="+DM+fenge  + "sid="+cagent+loginid+ fenge+ "lang=1"+fenge+"gameType=18"+fenge+"oddtype=A" + fenge+ "cur=CNY"
+
+	srcBytes := []byte(data)
+	keyBytes := []byte(deskey)
+	param := EntryptDesECB(srcBytes,keyBytes)
+
+
+
+
+	md5data := param+md5key
+	key := fmt.Sprintf("%+x",md5.Sum([]byte(md5data)))
+
+	fmt.Println(loginurl+"params="+param+"&key="+key)
+}
 
 //Key MD5(params +” MD5_Encrypt_key”);
 
@@ -114,6 +131,7 @@ func main() {
 
 	//检查创建账户
 
+	/*
 	//data := "cagent="+cagent+fenge + "loginname=" + "agtest5"+fenge + "method=lg" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "oddtype=A" + fenge+ "cur=CNY"
 	data :=  "cagent="+cagent+fenge + "loginname=" + "agtest3"+fenge + "method=gb" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "cur=CNY"
 	//data :=  "cagent="+cagent+fenge  +"method=tc" + fenge + "loginname=" + "agtest3"+ fenge +  "billno="+cagent+"12345612345612" +fenge + "type=IN" + fenge + "credit=500.00" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "cur=CNY"
@@ -166,7 +184,9 @@ func main() {
 //test ag return: <?xml version="1.0" encoding="utf-8"?><result info="error" msg="error:60001,Account not exist with this currency value or account hierarchical error!"/>,{Info:error Msg:error:60001,Account not exist with this currency value or account hierarchical error!}
 
 
+	 */
 
 
 
+	getLoginURL()
 }
