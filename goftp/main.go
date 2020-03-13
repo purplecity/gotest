@@ -1,10 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/jlaffaye/ftp"
 	"io/ioutil"
 	"log"
+	"sort"
 	"time"
 )
 
@@ -14,6 +16,12 @@ var (
 	ftppwd = "9S1gmjk65P"
 )
 func main() {
+
+	tick := time.Tick(time.Minute*10)
+	for range tick {
+		//下载
+
+	}
 	//连接
 	c, err := ftp.Dial(ftpurl+":21", ftp.DialWithTimeout(5*time.Second))
 	if err != nil {
@@ -39,7 +47,12 @@ func main() {
 	}
 
 	buf, err := ioutil.ReadAll(r)
+	dirnamelist := []string{}
+	json.Unmarshal(buf,&dirnamelist)
+
 	println(string(buf))
+	sort.Sort(dirnamelist)
+
 
 	if err := c.Quit(); err != nil {
 		log.Fatal(err)
