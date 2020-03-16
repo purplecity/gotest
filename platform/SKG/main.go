@@ -3,9 +3,8 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
-	"net/url"
-	"strings"
 )
 
 var (
@@ -13,7 +12,7 @@ var (
 	client_secret = "9c2dF9QsBAe2Q4DSQNQLjujMF1F909tWyemkOMSqTGi2"
 	baseurl = "https://staging.tgpaccess.com/"
 	zhuanzhangurl = "https://staging.tgpasia.com/"
-	access_token="2HEBKy1FgkD7I0xzeSAfPuCM8KIYxgdB7vzpqRC8RMM49yPvv1asyaky8J22P8gTo" //9.45
+	access_token="q1zVEby06gjrp6Nh1Za1Z9z64BFSvXoPJmLb5kexR2FU4yymMI2OQCDcm0I2vhyVo" //9.45
 
 	ipaddress = "47.244.217.66"
 	authtoken = "Z8SYrTxeg7z4u4KxYg3vi78D7FVTHaxHFEoeiU0rwuYLLqeHjgqKFs3EEIRnMxzkK"
@@ -113,11 +112,12 @@ func  main() {
 
 
 
-	/*
-	nurl := baseurl+"/api/player/balance?userid=111120&cur=RMB"
+
+	//nurl := baseurl+"/api/player/balance?userid=111120&cur=RMB"
+	nurl := baseurl+"/api/players/balance/list?cur=RMB&includezero=true"
 	fmt.Println(nurl)
 	dn, _ := http.NewRequest("GET", nurl, nil)
-	dn.Header.Set("Content-Type", "application/json")
+	dn.Header.Set("X-Tgp-Accept", "csv")
 	dn.Header.Set("Authorization","Bearer "+access_token)
 	trans := http.Transport{
 		DisableKeepAlives:true,
@@ -137,7 +137,7 @@ func  main() {
 	fmt.Printf("get balance  return: %+v\n",string(readBytes))
 
 
-	 */
+
 
 
 
@@ -218,6 +218,7 @@ func  main() {
 
 
 
+	/*
 	data := url.Values{}
 	data.Set("client_id",clientID)
 	data.Set("client_secret",client_secret)
@@ -250,6 +251,8 @@ func  main() {
 
 	fmt.Printf("get access token  return: %+v\n",string(readBytes))
 	defer resp.Body.Close()
+
+	 */
 
 
 

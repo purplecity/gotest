@@ -13,9 +13,9 @@ import (
 var (
 	agencyloginID = "sparkagency"
 	agencypassword = "sparkagency"
-	sn = "am00"
-	secretkey = "8153503006031672EF300005E5EF6AEF"
-	baseurl = "http://am.bgvip55.com/open-cloud/api/"
+	sn = "of06"
+	secretkey = "252C03BBD1E34DEFBA851E77375D065A"
+	baseurl = "http://n1api.linirn.com/open-cloud/api/"
 	agencyID = "166527433"
 	secretCode = "m4FnACywgs3Ed1W7MTBYgJLIQoI="
 
@@ -31,7 +31,7 @@ var (
 func main() {
 	//创建代理账号
 
-	/*
+
 		x := map[string]interface{}{}
 		x["random"] = "111111"
 
@@ -74,7 +74,7 @@ func main() {
 
 		defer dn.Body.Close()
 
-	*/
+
 
 
 
@@ -235,7 +235,7 @@ func main() {
 
 	//查询用户状态
 
-
+	/*
 
 		x := map[string]interface{}{}
 		x["random"] = "111114"
@@ -277,6 +277,8 @@ func main() {
 		fmt.Printf("get user  return: %+v\n",string(readBytes))
 
 		defer dn.Body.Close()
+
+	 */
 
 
 

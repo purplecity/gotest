@@ -2,16 +2,18 @@ package main
 
 import (
 	"fmt"
-	"github.com/shopspring/decimal"
-	"log"
+	//"github.com/shopspring/decimal"
 	"time"
 )
 
 
+/*
 func HPTrunc(x float64,y int32) float64 {
 	ret,_ := decimal.NewFromFloat(x).Truncate(y).Float64()
 	return ret
 }
+
+ */
 
 
 func getIssue(tt int64) {
@@ -76,6 +78,23 @@ func main() {
 
 	 */
 
-	a := testhehe{A:"hehe",B:"mm",C:"nn"}
-	log.Println(a)
+	srctime := "202003120805"
+
+
+	layout :="200601021504"
+
+	//重要：获取时区 
+
+	loc,_ := time.LoadLocation("Local")
+
+	//使用模板在对应时区转化为time.time类型
+
+	dsttime, err :=time.ParseInLocation(layout,srctime,loc)
+	if err != nil {
+		fmt.Printf("%+v\n",err)
+	}
+	//转化为时间戳 类型是int64  
+	fmt.Printf("%+v\n",dsttime)
+
+
 }
