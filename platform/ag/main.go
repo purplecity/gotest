@@ -99,11 +99,11 @@ var (
 )
 
 func  getLoginURL() {
-	loginid := "555556666677714"
-	Platusername := "HPpehdF"
+	loginid := "1240134971134324736"
+	Platusername := "HPtPVMriEx"
 	PLTPassword := "123456"
 
-	data := "cagent="+cagent+fenge + "loginname=" + Platusername+fenge+ "actype=1" + fenge+ "password=" + PLTPassword + fenge+"dm="+DM+fenge  + "sid="+cagent+loginid+ fenge+ "lang=1"+fenge+"gameType=18"+fenge+"oddtype=A" + fenge+ "cur=CNY"
+	data := "cagent="+cagent+fenge + "loginname=" + Platusername+fenge+ "actype=1" + fenge+ "password=" + PLTPassword + fenge+"dm="+DM+fenge  + "sid="+cagent+loginid+ fenge+ "lang=1"+fenge+"gameType=6"+fenge+"oddtype=A" + fenge+ "cur=CNY"
 
 	srcBytes := []byte(data)
 	keyBytes := []byte(deskey)
@@ -116,6 +116,7 @@ func  getLoginURL() {
 	key := fmt.Sprintf("%+x",md5.Sum([]byte(md5data)))
 
 	fmt.Println(loginurl+"params="+param+"&key="+key)
+
 }
 
 //Key MD5(params +” MD5_Encrypt_key”);
