@@ -52,7 +52,7 @@ func main() {
 		rnsp, err := client.Do(rn)
 		readbytes,_ := ioutil.ReadAll(rnsp.Body)
 		y := map[string]interface{}{}
-		json.Unmarshal([]byte(readbytes),y)
+		json.Unmarshal([]byte(readbytes),&y)
 
 		if rnsp != nil &&rnsp.Body != nil {
 			defer rnsp.Body.Close()
