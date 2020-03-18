@@ -39,7 +39,7 @@ func main() {
 	resp,err := client.Do(dn)
 
 	if err != nil {
-		log.Printf("ERROR----get shenbo data failed----err:%+v\n", err)
+		log.Printf("ERROR----get shenbo xmlfileread failed----err:%+v\n", err)
 	}
 
 
@@ -51,7 +51,7 @@ func main() {
 		log.Printf("%+v,%T",k,v)
 	}
 
-	fmt.Printf("get data  return: %+v\n",string(readBytes))
+	fmt.Printf("get xmlfileread  return: %+v\n",string(readBytes))
 
 	/*
 	2020/03/09 23:35:54 beton,string

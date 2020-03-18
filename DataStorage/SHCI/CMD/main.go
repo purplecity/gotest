@@ -16,7 +16,7 @@ import (
 )
 
 var (
-	SHCIBaseURL 		= "https://api.wmcloud.com/data/v1/api/market2/getTickRTSnapshotL2.json?securityID=000001.XSHG&field="
+	SHCIBaseURL 		= "https://api.wmcloud.com/xmlfileread/v1/api/market2/getTickRTSnapshotL2.json?securityID=000001.XSHG&field="
 	SHCIToken 			= "Bearer b6275e695f9442f2b08f2f7604e42607e1f9d24157e52d21e0abc9f9947b0bdc"
 	starttime = int64(1111)
 	price = float64(0)
@@ -127,7 +127,7 @@ var pullData = func() {
 						continue
 					} else {
 						Mu.Lock()
-						LastPrice = respmap["data"].([]interface{})[0].(map[string]interface{})["lastPrice"].(float64)
+						LastPrice = respmap["xmlfileread"].([]interface{})[0].(map[string]interface{})["lastPrice"].(float64)
 						Mu.Unlock()
 						resp.Body.Close()
 						break

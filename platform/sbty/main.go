@@ -24,18 +24,18 @@ var  (
 func main() {
 
 	/* 注册
-	data := url.Values{}a
-	data.Set("vendor_id",vendor_id)
-	data.Set("Vendor_Member_ID","555555")
-	data.Set("OperatorId",OperatorId)
-	data.Set("UserName","555555")
-	data.Set("OddsType",OddsType)
-	data.Set("Currency",Currency)
-	data.Set("MaxTransfer",MaxTransfer)
-	data.Set("MinTransfer",MinTransfer)
+	xmlfileread := url.Values{}a
+	xmlfileread.Set("vendor_id",vendor_id)
+	xmlfileread.Set("Vendor_Member_ID","555555")
+	xmlfileread.Set("OperatorId",OperatorId)
+	xmlfileread.Set("UserName","555555")
+	xmlfileread.Set("OddsType",OddsType)
+	xmlfileread.Set("Currency",Currency)
+	xmlfileread.Set("MaxTransfer",MaxTransfer)
+	xmlfileread.Set("MinTransfer",MinTransfer)
 
 
-	r, _ := http.NewRequest("POST", baseurl+"CreateMember", strings.NewReader(data.Encode())) // URL-encoded payload
+	r, _ := http.NewRequest("POST", baseurl+"CreateMember", strings.NewReader(xmlfileread.Encode())) // URL-encoded payload
 	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 	trans := http.Transport{
@@ -66,13 +66,13 @@ func main() {
 	//登录
 
 	/*
-	data := url.Values{}
-	data.Set("vendor_id",vendor_id)
-	data.Set("Vendor_Member_ID","HPYFdZ6")
+	xmlfileread := url.Values{}
+	xmlfileread.Set("vendor_id",vendor_id)
+	xmlfileread.Set("Vendor_Member_ID","HPYFdZ6")
 
 
 
-	r, _ := http.NewRequest("POST", baseurl+"Login", strings.NewReader(data.Encode())) // URL-encoded payload
+	r, _ := http.NewRequest("POST", baseurl+"Login", strings.NewReader(xmlfileread.Encode())) // URL-encoded payload
 	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 	trans := http.Transport{
@@ -112,20 +112,20 @@ func main() {
 
 
 	/*充值
-	data := url.Values{}
-	data.Set("vendor_id",vendor_id)
-	data.Set("Vendor_Member_ID","555555")
-	data.Set("vendor_trans_id","5555551")
-	data.Set("amount","500")
-	data.Set("currency",Currency)
-	data.Set("direction","1")
-	data.Set("wallet_id","1")
+	xmlfileread := url.Values{}
+	xmlfileread.Set("vendor_id",vendor_id)
+	xmlfileread.Set("Vendor_Member_ID","555555")
+	xmlfileread.Set("vendor_trans_id","5555551")
+	xmlfileread.Set("amount","500")
+	xmlfileread.Set("currency",Currency)
+	xmlfileread.Set("direction","1")
+	xmlfileread.Set("wallet_id","1")
 
 
 
 
 
-	r, _ := http.NewRequest("POST", baseurl+"FundTransfer", strings.NewReader(data.Encode())) // URL-encoded payload
+	r, _ := http.NewRequest("POST", baseurl+"FundTransfer", strings.NewReader(xmlfileread.Encode())) // URL-encoded payload
 	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 	trans := http.Transport{
@@ -154,20 +154,20 @@ func main() {
 
 
 	/*
-	data := url.Values{}
-	data.Set("vendor_id",vendor_id)
-	data.Set("Vendor_Member_ID","555555")
-	data.Set("vendor_trans_id","5555552")
-	data.Set("amount","50")
-	data.Set("currency",Currency)
-	data.Set("direction","0")
-	data.Set("wallet_id","1")
+	xmlfileread := url.Values{}
+	xmlfileread.Set("vendor_id",vendor_id)
+	xmlfileread.Set("Vendor_Member_ID","555555")
+	xmlfileread.Set("vendor_trans_id","5555552")
+	xmlfileread.Set("amount","50")
+	xmlfileread.Set("currency",Currency)
+	xmlfileread.Set("direction","0")
+	xmlfileread.Set("wallet_id","1")
 
 
 
 
 
-	r, _ := http.NewRequest("POST", baseurl+"FundTransfer", strings.NewReader(data.Encode())) // URL-encoded payload
+	r, _ := http.NewRequest("POST", baseurl+"FundTransfer", strings.NewReader(xmlfileread.Encode())) // URL-encoded payload
 	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 	trans := http.Transport{
@@ -200,14 +200,14 @@ func main() {
 
 
 	/*
-	data := url.Values{}
-	data.Set("vendor_id",vendor_id)
-	data.Set("version_key","1111")
+	xmlfileread := url.Values{}
+	xmlfileread.Set("vendor_id",vendor_id)
+	xmlfileread.Set("version_key","1111")
 
 
 
 
-	r, _ := http.NewRequest("POST", baseurl+"GetBetDetail", strings.NewReader(data.Encode())) // URL-encoded payload
+	r, _ := http.NewRequest("POST", baseurl+"GetBetDetail", strings.NewReader(xmlfileread.Encode())) // URL-encoded payload
 	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 	trans := http.Transport{
@@ -359,15 +359,15 @@ func main() {
 
 	tick := time.Tick(time.Second*120)
 	for range tick {
-		data := url.Values{}
-		data.Set("vendor_id",vendor_id)
+		xmlfileread := url.Values{}
+		xmlfileread.Set("vendor_id",vendor_id)
 		fmt.Println(time.Now(),version_key)
-		data.Set("version_key",version_key)
+		xmlfileread.Set("version_key",version_key)
 
 
 
 
-		r, _ := http.NewRequest("POST", baseurl+"GetBetDetail", strings.NewReader(data.Encode())) // URL-encoded payload
+		r, _ := http.NewRequest("POST", baseurl+"GetBetDetail", strings.NewReader(xmlfileread.Encode())) // URL-encoded payload
 		r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 

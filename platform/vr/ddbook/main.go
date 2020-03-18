@@ -65,9 +65,9 @@ func EcbEncrypt(data, key []byte) []byte {
 func main() {
 	/*
 	platurl := "https://fe.vrbetdemo.com/MerchantQuery/GameBet"
-	data := url.Values{}
-	data.Set("version",TPlatVersion)
-	data.Set("id",TPlatAPPID)
+	xmlfileread := url.Values{}
+	xmlfileread.Set("version",TPlatVersion)
+	xmlfileread.Set("id",TPlatAPPID)
 
 	bgst := int64(1583719200) //030910
 	bget := int64(1583737200)  //030915
@@ -80,7 +80,7 @@ func main() {
 	keyBytes := []byte(TPlatKey)
 	dst := EcbEncrypt(srcBytes,keyBytes)
 	fdst := base64.StdEncoding.EncodeToString(dst)
-	data.Set("data",fdst)
+	xmlfileread.Set("xmlfileread",fdst)
 
 	trans := http.Transport{
 		DisableKeepAlives:true,
@@ -90,7 +90,7 @@ func main() {
 	}
 
 
-	r, _ := http.NewRequest("POST", platurl, strings.NewReader(data.Encode())) // URL-encoded payload
+	r, _ := http.NewRequest("POST", platurl, strings.NewReader(xmlfileread.Encode())) // URL-encoded payload
 	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 	resp, err := client.Do(r)
@@ -151,7 +151,7 @@ func main() {
 	keyBytes := []byte(TPlatKey)
 	dst := EcbEncrypt(srcBytes,keyBytes)
 	fdst := base64.StdEncoding.EncodeToString(dst)
-	data.Set("data",fdst)
+	data.Set("xmlfileread",fdst)
 
 	trans := http.Transport{
 		DisableKeepAlives:true,

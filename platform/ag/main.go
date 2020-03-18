@@ -122,8 +122,8 @@ func  getLoginURL() {
 
 /*
 
-	data := []byte(pw)
-	has := md5.Sum(data)
+	xmlfileread := []byte(pw)
+	has := md5.Sum(xmlfileread)
 	md5str := fmt.Sprintf("%x", has)
 */
 
@@ -132,14 +132,14 @@ func main() {
 	//检查创建账户
 
 	/*
-	//data := "cagent="+cagent+fenge + "loginname=" + "agtest5"+fenge + "method=lg" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "oddtype=A" + fenge+ "cur=CNY"
-	data :=  "cagent="+cagent+fenge + "loginname=" + "agtest3"+fenge + "method=gb" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "cur=CNY"
-	//data :=  "cagent="+cagent+fenge  +"method=tc" + fenge + "loginname=" + "agtest3"+ fenge +  "billno="+cagent+"12345612345612" +fenge + "type=IN" + fenge + "credit=500.00" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "cur=CNY"
-	//data :=  "cagent="+cagent+fenge  + "method=tc" + fenge + "loginname=" + "agtest3"+fenge + "billno="+cagent+"12345612345613" +fenge + "type=OUT" + fenge + "credit=50.00" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "cur=CNY"
-	//data :=  "cagent="+cagent+fenge   + "loginname=" + "agtest3"+fenge + "method=tcc" + fenge+ "billno="+cagent+"12345612345613" +fenge + "type=IN" + fenge + "credit=500.00" + fenge + "actype=1" + fenge + "flag=1" +fenge  + "password=" + "123456" + fenge + "cur=CNY"
+	//xmlfileread := "cagent="+cagent+fenge + "loginname=" + "agtest5"+fenge + "method=lg" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "oddtype=A" + fenge+ "cur=CNY"
+	xmlfileread :=  "cagent="+cagent+fenge + "loginname=" + "agtest3"+fenge + "method=gb" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "cur=CNY"
+	//xmlfileread :=  "cagent="+cagent+fenge  +"method=tc" + fenge + "loginname=" + "agtest3"+ fenge +  "billno="+cagent+"12345612345612" +fenge + "type=IN" + fenge + "credit=500.00" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "cur=CNY"
+	//xmlfileread :=  "cagent="+cagent+fenge  + "method=tc" + fenge + "loginname=" + "agtest3"+fenge + "billno="+cagent+"12345612345613" +fenge + "type=OUT" + fenge + "credit=50.00" + fenge + "actype=1" + fenge + "password=" + "123456" + fenge + "cur=CNY"
+	//xmlfileread :=  "cagent="+cagent+fenge   + "loginname=" + "agtest3"+fenge + "method=tcc" + fenge+ "billno="+cagent+"12345612345613" +fenge + "type=IN" + fenge + "credit=500.00" + fenge + "actype=1" + fenge + "flag=1" +fenge  + "password=" + "123456" + fenge + "cur=CNY"
 
-	log.Println(data)
-	srcBytes := []byte(data)
+	log.Println(xmlfileread)
+	srcBytes := []byte(xmlfileread)
 	keyBytes := []byte(deskey)
 	param := EntryptDesECB(srcBytes,keyBytes)
 	log.Printf("param is %+v\n",param)

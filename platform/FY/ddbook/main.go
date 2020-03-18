@@ -41,7 +41,7 @@ func main() {
 	resp, err := client.Do(r)
 	defer resp.Body.Close()
 	if err != nil {
-		log.Printf("get  fy  order data failed %+v\n",err)
+		log.Printf("get  fy  order xmlfileread failed %+v\n",err)
 		return
 	}
 
@@ -52,7 +52,7 @@ func main() {
 	for k,v := range y["info"].(map[string]interface{})["list"].([]interface{})[0].(map[string]interface{}) {
 		log.Printf("%+v,%T",k,v)
 	}
-	log.Printf("get  fy  order data return: %+v\n",string(readBytes))
+	log.Printf("get  fy  order xmlfileread return: %+v\n",string(readBytes))
 	/*
 	2020/03/10 15:24:51 Money,string
 	2020/03/10 15:24:51 StartAt,string

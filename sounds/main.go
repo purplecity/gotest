@@ -35,9 +35,9 @@ func main() {
 
 	/*
 		SoundNotifyURL := "http://127.0.0.1:9000/api/setNotices"
-		data := url.Values{}
-		data.Set("type", string(2))
-		dn, _ := http.PostForm(SoundNotifyURL, data)
+		xmlfileread := url.Values{}
+		xmlfileread.Set("type", string(2))
+		dn, _ := http.PostForm(SoundNotifyURL, xmlfileread)
 		responseMap := map[string]interface{}{}
 		dataBytes, _ := ioutil.ReadAll(dn.Body)
 		json.Unmarshal([]byte(dataBytes), &responseMap)

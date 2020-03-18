@@ -85,8 +85,8 @@ func main() {
 		x := map[string]interface{}{}
 		x["random"] = "111112"
 
-		data := []byte("111112"+sn+secretCode)
-		has := md5.Sum(data)
+		xmlfileread := []byte("111112"+sn+secretCode)
+		has := md5.Sum(xmlfileread)
 		md5str := fmt.Sprintf("%x", has)
 
 
@@ -192,8 +192,8 @@ func main() {
 		x := map[string]interface{}{}
 		x["random"] = "111113"
 
-		data := []byte("111113"+sn+"testspark"+secretCode)
-		has := md5.Sum(data)
+		xmlfileread := []byte("111113"+sn+"testspark"+secretCode)
+		has := md5.Sum(xmlfileread)
 		md5str := fmt.Sprintf("%x", has)
 
 
@@ -240,8 +240,8 @@ func main() {
 		x := map[string]interface{}{}
 		x["random"] = "111114"
 
-		data := []byte("111114"+sn+"testspark"+secretCode)
-		has := md5.Sum(data)
+		xmlfileread := []byte("111114"+sn+"testspark"+secretCode)
+		has := md5.Sum(xmlfileread)
 		md5str := fmt.Sprintf("%x", has)
 
 
@@ -378,8 +378,8 @@ func main() {
 		x := map[string]interface{}{}
 		x["random"] = "111115"
 
-		data := []byte("111115"+sn+"testspark"+secretCode)
-		has := md5.Sum(data)
+		xmlfileread := []byte("111115"+sn+"testspark"+secretCode)
+		has := md5.Sum(xmlfileread)
 		md5str := fmt.Sprintf("%x", has)
 
 
@@ -428,8 +428,8 @@ func main() {
 	x := map[string]interface{}{}
 	x["random"] = "111118"
 
-	data := []byte("111118"+sn+"testspark"+secretCode)
-	has := md5.Sum(data)
+	xmlfileread := []byte("111118"+sn+"testspark"+secretCode)
+	has := md5.Sum(xmlfileread)
 	md5str := fmt.Sprintf("%x", has)
 
 
@@ -483,8 +483,8 @@ func main() {
 		x := map[string]interface{}{}
 		x["random"] = "111120"
 
-		data := []byte("111121"+sn+"testspark"+fmt.Sprintf("%+v",200)+secretCode)
-		has := md5.Sum(data)
+		xmlfileread := []byte("111121"+sn+"testspark"+fmt.Sprintf("%+v",200)+secretCode)
+		has := md5.Sum(xmlfileread)
 		md5str := fmt.Sprintf("%x", has)
 
 
@@ -532,8 +532,8 @@ func main() {
 		x := map[string]interface{}{}
 		x["random"] = "111119"
 
-		data := []byte("111119"+sn+"testspark"+fmt.Sprintf("%+v",200)+secretkey)
-		has := md5.Sum(data)
+		xmlfileread := []byte("111119"+sn+"testspark"+fmt.Sprintf("%+v",200)+secretkey)
+		has := md5.Sum(xmlfileread)
 		md5str := fmt.Sprintf("%x", has)
 
 

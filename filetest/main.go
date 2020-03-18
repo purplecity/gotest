@@ -240,8 +240,8 @@ func main() {
 	//ReadHistoryFile(1,2)
 	/*
 		var hd = historyData{P:1.333,T:12222}
-		data,_ := json.Marshal(hd)
-		fmt.Println(unsafe.Sizeof(data))
+		xmlfileread,_ := json.Marshal(hd)
+		fmt.Println(unsafe.Sizeof(xmlfileread))
 	*/
 
 	/*

@@ -61,7 +61,7 @@ func main() {
 	resp, err := client.Do(r)
 	defer resp.Body.Close()
 	if err != nil {
-		log.Printf("get ysb  order data failed %+v\n",err)
+		log.Printf("get ysb  order xmlfileread failed %+v\n",err)
 		return
 	}
 
@@ -72,7 +72,7 @@ func main() {
 	for k,v := range y["Data"].([]interface{})[0].(map[string]interface{}) {
 		log.Printf("%+v,%T",k,v)
 	}
-	log.Printf("get  ysb  order data return: %+v\n",string(readBytes))
+	log.Printf("get  ysb  order xmlfileread return: %+v\n",string(readBytes))
 
 	/*
 	2020/03/09 21:10:38 LoginID,string

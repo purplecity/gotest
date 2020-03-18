@@ -208,7 +208,7 @@ func  main() {
 
 
 	//{"authtoken":"0KMR453pdOLnepF8BbTFcTjL6yOKegE9JzgCiVNSsjqSwUjzSlIsZsSkvN3wmXW6FO8lYQhNQa5Yewj6ZkIIkmUAIVVIyZoJGg49IvCS2ZILtjHjnUiBqLN3DzCdNVhWG","isnew":false}
-	//{"err":12,"errdesc":"Cannot decrypt brand token; INNER 1: Length of the data to decrypt is invalid."}
+	//{"err":12,"errdesc":"Cannot decrypt brand token; INNER 1: Length of the xmlfileread to decrypt is invalid."}
 
 
 
@@ -219,17 +219,17 @@ func  main() {
 
 
 	/*
-	data := url.Values{}
-	data.Set("client_id",clientID)
-	data.Set("client_secret",client_secret)
-	data.Set("grant_type","client_credentials")
-	data.Set("scope","playerapi")
+	xmlfileread := url.Values{}
+	xmlfileread.Set("client_id",clientID)
+	xmlfileread.Set("client_secret",client_secret)
+	xmlfileread.Set("grant_type","client_credentials")
+	xmlfileread.Set("scope","playerapi")
 
 
 
 
 
-	r, _ := http.NewRequest("POST", baseurl+"api/oauth/token", strings.NewReader(data.Encode())) // URL-encoded payload
+	r, _ := http.NewRequest("POST", baseurl+"api/oauth/token", strings.NewReader(xmlfileread.Encode())) // URL-encoded payload
 	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 	trans := http.Transport{

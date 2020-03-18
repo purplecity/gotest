@@ -49,13 +49,13 @@ func EcbEncrypt(data, key []byte) []byte {
 
 func main() {
 	/*
-	data := url.Values{}
-	data.Set("version","1.0")
-	data.Set("id","ABC")
+	xmlfileread := url.Values{}
+	xmlfileread.Set("version","1.0")
+	xmlfileread.Set("id","ABC")
 
 	en := "2+XaOq4XB+hqDMCHBAr4Z1pCXnaLHcyZapdQiDM168dzL/+ZcbMNteN1sMhHYKiOynobPY4X4rTYo3X29EMuDVDNspeh2XKHVUVXR8qPNdM="
-	data.Set("data",url.QueryEscape(en))
-	log.Println(data)
+	xmlfileread.Set("xmlfileread",url.QueryEscape(en))
+	log.Println(xmlfileread)
 
 	 */
 

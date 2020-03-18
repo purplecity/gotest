@@ -36,8 +36,8 @@ func main() {
 	x := map[string]interface{}{}
 	x["random"] = "111112"
 
-	data := []byte("111112"+sn+secretkey)
-	has := md5.Sum(data)
+	xmlfileread := []byte("111112"+sn+secretkey)
+	has := md5.Sum(xmlfileread)
 	md5str := fmt.Sprintf("%x", has)
 
 

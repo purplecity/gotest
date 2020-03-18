@@ -43,7 +43,7 @@ func (*server) QuotationSettleData(stream hpgrpc.Hpgrpcservice_QuotationSettleDa
 
 
 
-		log.Printf("PCTEST----server data:%v\n",data)
+		log.Printf("PCTEST----server xmlfileread:%v\n",data)
 		 if err := stream.Send(&testdata); err != nil {
 			 log.Printf("PCTEST----server send err:%v\n",err)
 		 }

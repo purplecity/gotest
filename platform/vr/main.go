@@ -91,7 +91,7 @@ func regPlat(name string) error {
 	keyBytes := []byte(TPlatKey)
 	dst := EcbEncrypt(srcBytes,keyBytes)
 	fdst := base64.StdEncoding.EncodeToString(dst)
-	data.Set("data",fdst)
+	data.Set("xmlfileread",fdst)
 
 	trans := http.Transport{
 		DisableKeepAlives:true,
@@ -144,13 +144,13 @@ func loginPlat(name string) {
 	fmt.Println(fdst)
 	fdst = url.QueryEscape(fdst)
 	//fdst := url.QueryEscape(base64.StdEncoding.EncodeToString(dst))
-	//data.Set("data",fdst)
-	data.Set("data",fdst)
+	//xmlfileread.Set("xmlfileread",fdst)
+	data.Set("xmlfileread",fdst)
 
 	fmt.Printf("%+v,%+v,%+v\n",srcString,data,fdst)
-	fmt.Println("%+v\n",platurl+"?version="+TPlatVersion+"&id="+TPlatAPPID+"&data="+fdst)
+	fmt.Println("%+v\n",platurl+"?version="+TPlatVersion+"&id="+TPlatAPPID+"&xmlfileread="+fdst)
 	/*
-	r, _ := http.NewRequest("POST", platurl, strings.NewReader(data.Encode())) // URL-encoded payload
+	r, _ := http.NewRequest("POST", platurl, strings.NewReader(xmlfileread.Encode())) // URL-encoded payload
 	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 
 	trans := http.Transport{
@@ -193,7 +193,7 @@ func depwit(name,uid string,ty int,am float64) error {
 	keyBytes := []byte(TPlatKey)
 	dst := EcbEncrypt(srcBytes,keyBytes)
 	fdst := base64.StdEncoding.EncodeToString(dst)
-	data.Set("data",fdst)
+	data.Set("xmlfileread",fdst)
 
 	trans := http.Transport{
 		DisableKeepAlives:true,
@@ -238,7 +238,7 @@ func getBal(name string) {
 	keyBytes := []byte(TPlatKey)
 	dst := EcbEncrypt(srcBytes,keyBytes)
 	fdst := base64.StdEncoding.EncodeToString(dst)
-	data.Set("data",fdst)
+	data.Set("xmlfileread",fdst)
 
 	trans := http.Transport{
 		DisableKeepAlives:true,

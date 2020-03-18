@@ -32,7 +32,7 @@ func main() {
 			if err != nil {
 				log.Fatalf("Failed to receive a note : %v", err)
 			}
-			log.Printf("PCTEST----%T,data:%v\n",data,data)
+			log.Printf("PCTEST----%T,xmlfileread:%v\n",data,data)
 		}
 	}()
 

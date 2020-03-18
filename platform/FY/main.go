@@ -18,15 +18,15 @@ func main() {
 	// 注册
 
 	/*
-	data := url.Values{}
-	data.Set("UserName","spark01")
-	data.Set("password","testspark")
+	xmlfileread := url.Values{}
+	xmlfileread.Set("UserName","spark01")
+	xmlfileread.Set("password","testspark")
 
 
 
 	
 
-	r, _ := http.NewRequest("POST", baseurl+"api/user/register", strings.NewReader(data.Encode())) // URL-encoded payload
+	r, _ := http.NewRequest("POST", baseurl+"api/user/register", strings.NewReader(xmlfileread.Encode())) // URL-encoded payload
 	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	r.Header.Set("Authorization",apikey)
 
@@ -61,13 +61,13 @@ func main() {
 
 
 	/*
-	data := url.Values{}
-	data.Set("UserName","spark01")
+	xmlfileread := url.Values{}
+	xmlfileread.Set("UserName","spark01")
 
 
 
 
-	r, _ := http.NewRequest("POST", baseurl+"api/user/login", strings.NewReader(data.Encode())) // URL-encoded payload
+	r, _ := http.NewRequest("POST", baseurl+"api/user/login", strings.NewReader(xmlfileread.Encode())) // URL-encoded payload
 	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	r.Header.Set("Authorization",apikey)
 
@@ -104,13 +104,13 @@ func main() {
 
 	/*
 
-	data := url.Values{}
-	data.Set("UserName","spark01")
+	xmlfileread := url.Values{}
+	xmlfileread.Set("UserName","spark01")
 
 
 
 
-	r, _ := http.NewRequest("POST", baseurl+"api/user/balance", strings.NewReader(data.Encode())) // URL-encoded payload
+	r, _ := http.NewRequest("POST", baseurl+"api/user/balance", strings.NewReader(xmlfileread.Encode())) // URL-encoded payload
 	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	r.Header.Set("Authorization",apikey)
 
@@ -141,16 +141,16 @@ func main() {
 	//转账
 
 	/*
-	data := url.Values{}
-	data.Set("UserName","spark01")
-	data.Set("Money","50")
-	data.Set("Type","OUT")
-	data.Set("ID","111113")
+	xmlfileread := url.Values{}
+	xmlfileread.Set("UserName","spark01")
+	xmlfileread.Set("Money","50")
+	xmlfileread.Set("Type","OUT")
+	xmlfileread.Set("ID","111113")
 
 
 
 
-	r, _ := http.NewRequest("POST", baseurl+"api/user/transfer", strings.NewReader(data.Encode())) // URL-encoded payload
+	r, _ := http.NewRequest("POST", baseurl+"api/user/transfer", strings.NewReader(xmlfileread.Encode())) // URL-encoded payload
 	r.Header.Add("Content-Type", "application/x-www-form-urlencoded")
 	r.Header.Set("Authorization",apikey)
 
