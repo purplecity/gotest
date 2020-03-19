@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"strings"
+
 	//"github.com/shopspring/decimal"
 	"time"
 )
@@ -78,6 +80,7 @@ func main() {
 
 	 */
 
+	/*
 	srctime := "202003120805"
 
 
@@ -95,6 +98,13 @@ func main() {
 	}
 	//转化为时间戳 类型是int64  
 	fmt.Printf("%+v\n",dsttime)
+
+	 */
+
+	str := "2019-12-10T06:58:21.193"
+	str2 := "2019-12-10T06:58:21"
+	fmt.Printf("%+v\n,%+v\n",strings.Split(str,"."),strings.Split(str2,"."))
+
 
 
 }
