@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strings"
-
 	//"github.com/shopspring/decimal"
 	"time"
 )
@@ -101,10 +99,15 @@ func main() {
 
 	 */
 
+	/*
 	str := "2019-12-10T06:58:21.193"
 	str2 := "2019-12-10T06:58:21"
 	fmt.Printf("%+v\n,%+v\n",strings.Split(str,"."),strings.Split(str2,"."))
 
-
+	 */
+	layout := "2006-01-02T15:04:05+08:00"
+	srctime := "2020-03-18T15:32:01+08:00"
+	dsttime, _ :=time.ParseInLocation(layout,srctime,time.Local)
+	fmt.Print(dsttime.Unix())
 
 }
