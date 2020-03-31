@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"log"
+
 	//"github.com/shopspring/decimal"
 	"time"
 )
@@ -15,6 +17,81 @@ func HPTrunc(x float64,y int32) float64 {
 
  */
 
+const(
+	InnerError	uint = 1001 + iota
+	PhonenumberExisted
+	PhonenumberNotExist
+	PasswordNotMatchPhonenumber
+	NoToken
+	TokenInvalid
+	BalanceNotEnough
+	VerifyCodeNotRight
+	CanNotFindOrder
+	InvitationCodeInvalid
+	InvalidRemoteHost
+	CanNotFindDepositOrder
+	DontRepeatEnsure
+	SendValidCodeFailed
+	SymbolInvalid
+	InvalidTradeTime
+	SymbolServerNotOpen
+	TradeRequestTimeOut
+	SMSExceedHourLimit
+	SMSExceedDayLimit
+	SMSExceedMinuteLimit
+	ClientVersionNeedUpdate
+	NotAllowParter
+	NotTakeScoreTime
+	RealTimeReconcileNotRight
+	HaveNotDepositBankCard
+	AbnormalAccount
+	CurOddsNotAllowTrade
+	ExceedTradeLimit
+	NotWithdrawTime
+	DepositWayNotOpen
+	NotEnoughTradeTimes
+	WithdrawExceedHourLimit
+	WithdrawExceedDayLimit
+	NOTALLOWEDDPR
+	CantCanelWithdraw
+	UserNameExist
+	NotAllowApproveCancel
+	GetCashierURLFailed
+	InvalidCallback
+	DepositZero
+	AliPayDepositTimeLimit
+	InvalidHandleTime
+	CurOddsOnlyTradeOnce
+	RequestTooFast
+	NotAllowApproveDeduct
+	BalanceCantDeduct
+	PlatformLossTooMuch
+	UpDownNotAllow
+	SDPNotAllow
+	NotAllowTrade
+	NotExceedWithdrawMin
+	InvalidOdds
+	InvalidCentralismTime
+	InvalidTradeMode
+	AtPercentFive
+	ForexNotAllowCenTrade
+	TemporarilyCloseService
+	SingleSymbolExceed
+	InvalidTradeAmount
+	GameNotOpen
+	NotRegistrationTime
+	NotUpToRequiredRank
+	RepeatedReg
+	HaveNotReg
+	OutOfGameTime
+	GameSessionClose
+	ImageTypeError
+	GeneratePosterFailed
+	NeedTradOnce
+	EmtPhoneNum
+	TmpNotAllowAutoTransfer
+	YDlogin
+)
 
 func getIssue(tt int64) {
 	t := time.Unix(tt,0)
@@ -105,9 +182,21 @@ func main() {
 	fmt.Printf("%+v\n,%+v\n",strings.Split(str,"."),strings.Split(str2,"."))
 
 	 */
+
+	/*
 	layout := "2006-01-02T15:04:05+08:00"
 	srctime := "2020-03-18T15:32:01+08:00"
 	dsttime, _ :=time.ParseInLocation(layout,srctime,time.Local)
-	fmt.Print(dsttime.Unix())
+	fmt.Println(dsttime.Unix())
+	fmt.Println(YDlogin)
+
+	 */
+
+	t := time.Now()
+	bt2 := time.Date(t.Year(),t.Month(),t.Day(),0,0,0,0,t.Location())
+
+	if t>bt2 {
+		log.Print("egege")
+	}
 
 }

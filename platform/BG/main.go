@@ -31,6 +31,7 @@ var (
 func main() {
 	//创建代理账号
 
+	/*
 
 		x := map[string]interface{}{}
 		x["random"] = "111111"
@@ -76,6 +77,8 @@ func main() {
 
 
 
+
+	 */
 
 
 	//创建账号
@@ -572,5 +575,47 @@ func main() {
 		defer dn.Body.Close()
 
 	*/
+
+	x := map[string]interface{}{}
+	x["random"] = "111118"
+
+	xmlfileread := []byte("111118"+sn+"HPn1jEZtD3"+secretCode)
+	has := md5.Sum(xmlfileread)
+	md5str := fmt.Sprintf("%x", has)
+
+
+	x["digest"] = md5str
+	x["sn"] = sn
+	x["loginId"] = "HPn1jEZtD3"
+	x["isMobileUrl"]=0
+
+	y := map[string]interface{}{}
+	y["id"] = "5555"
+	y["method"] = "open.video.game.url"
+	y["jsonrpc"] = "2.0"
+	y["params"] = x
+
+	m, _ := json.Marshal(y)
+	var jsonStr= []byte(m)
+	dn, _ := http.NewRequest("POST", baseurl+"open.video.game.url", bytes.NewBuffer(jsonStr))
+	dn.Header.Set("Content-Type", "application/json")
+	trans := http.Transport{
+		DisableKeepAlives:true,
+	}
+	client := &http.Client{
+		Transport:&trans,
+	}
+	resp,err := client.Do(dn)
+
+	if err != nil {
+		log.Printf("ERROR---- get url----err:%+v\n", err)
+	}
+
+
+	readBytes, _ := ioutil.ReadAll(resp.Body)
+
+	fmt.Printf("get url  return: %+v\n",string(readBytes))
+
+	defer dn.Body.Close()
 
 }

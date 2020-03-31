@@ -88,7 +88,7 @@ func PKCS5UnPadding(origData []byte) []byte {
 
 
 var (
-	DM =  "http://azfaster.com"
+	DM =  "NO_RETURN"
 	loginurl = "https://gci.spark222.com/forwardGame.do?"
 	baseurl = "https://gi.spark222.com/doBusiness.do"
 	cagent = "GI5_AGIN"
@@ -99,11 +99,11 @@ var (
 )
 
 func  getLoginURL() {
-	loginid := "1240134971134324736"
-	Platusername := "HPtPVMriEx"
+	loginid := "555555555"
+	Platusername := "HPn1jEZtD3"
 	PLTPassword := "123456"
 
-	data := "cagent="+cagent+fenge + "loginname=" + Platusername+fenge+ "actype=1" + fenge+ "password=" + PLTPassword + fenge+"dm="+DM+fenge  + "sid="+cagent+loginid+ fenge+ "lang=1"+fenge+"gameType=6"+fenge+"oddtype=A" + fenge+ "cur=CNY"
+	data := "cagent="+cagent+fenge + "loginname=" + Platusername+fenge+ "actype=1" + fenge+ "password=" + PLTPassword + fenge+"dm="+DM+fenge  + "sid="+cagent+loginid+ fenge+ "lang=1"+fenge+"gameType=YP800"+fenge+"oddtype=A" + fenge+ "cur=CNY"
 
 	srcBytes := []byte(data)
 	keyBytes := []byte(deskey)

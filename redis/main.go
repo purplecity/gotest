@@ -482,13 +482,52 @@ func RedisDWYKey(key,uid string,score float64,exp int64) error{
 	return nil
 }
 
-func RankHSet( key,filed string, value interface{}) error {
-	client,err := GetRedisRankClient()
+
+
+func GetTokenRedisClient() (*hpRedisClient,error) {
+	if hpclient == nil {
+		client := redis.NewClient(&redis.Options{
+			Addr:       RedisAddr,
+			Password:   RedisPassword,
+			DB:         RedisDB,
+			MaxRetries: RedisMaxRetries,
+		})
+		_, err := client.Ping().Result()
+		if err != nil {
+			log.Printf("ERROR----connect Cache failed----err:%v\n",err)
+			return nil,err
+		}
+		hpclient = &hpRedisClient{redisClient:client}
+	}
+	return hpclient,nil
+}
+
+//替换 是否相等
+func GetTokenRedis(uid string) (string,error) {
+	client,err := GetTokenRedisClient()
+	if err != nil {
+		return "",err
+	}
+	vc, err  := client.redisClient.Get(uid).Result()
+	if vc == "" {
+		log.Printf("hehe")
+	}
+	if err != nil {
+		log.Printf("ERROR----GetTokenRedis failed----err:%+v\n",vc)
+		return "",err
+	}
+	return vc,nil
+}
+
+
+func SetTokenRedis(key,value string,ext time.Duration) error {
+	client,err := GetTokenRedisClient()
 	if err != nil {
 		return err
 	}
-	_, err = client.HSet(key,filed,value).Result()
+	_,err = client.redisClient.Set(key,value,ext).Result()
 	if err != nil {
+		log.Printf("ERROR----SetTokenRedis failed----err:%+v\n",err)
 		return err
 	}
 	return nil
@@ -497,10 +536,11 @@ func RankHSet( key,filed string, value interface{}) error {
 
 
 
-
 func main () {
-	RedisDWYKey("testheheheheheh","0",float64(0),30)
-	RedisZadd("testheheheheheh","111",111)
+	GetTokenRedis("testhehehe")
+	print("hehe2")
+	//RedisDWYKey("testheheheheheh","0",float64(0),30)
+	//RedisZadd("testheheheheheh","111",111)
 
 	/*
 	RedisZadd("testzadd10","111",1.1)
@@ -555,5 +595,7 @@ func main () {
 	}
 
 	 */
+
+
 
 }
