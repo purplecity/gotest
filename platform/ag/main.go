@@ -99,11 +99,11 @@ var (
 )
 
 func  getLoginURL() {
-	loginid := "555555555"
+	loginid := "555555555555556"
 	Platusername := "HPn1jEZtD3"
 	PLTPassword := "123456"
 
-	data := "cagent="+cagent+fenge + "loginname=" + Platusername+fenge+ "actype=1" + fenge+ "password=" + PLTPassword + fenge+"dm="+DM+fenge  + "sid="+cagent+loginid+ fenge+ "lang=1"+fenge+"gameType=YP800"+fenge+"oddtype=A" + fenge+ "cur=CNY"
+	data := "cagent="+cagent+fenge + "loginname=" + Platusername+fenge+ "actype=1" + fenge+ "password=" + PLTPassword + fenge+"dm="+DM+fenge  + "sid="+cagent+loginid+ fenge+ "lang=1"+fenge+"gameType=8"+fenge+"oddtype=A" + fenge+ "cur=CNY"
 
 	srcBytes := []byte(data)
 	keyBytes := []byte(deskey)
